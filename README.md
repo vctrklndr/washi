@@ -1,4 +1,4 @@
-# washi°
+# `washi°`
 
 > A Vue.js project
 
