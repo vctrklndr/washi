@@ -15,6 +15,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  @import 'src/Assets/Styles/app.scss';
+<style lang="less">
+  @import 'src/Assets/Styles/app.less';
 </style>
