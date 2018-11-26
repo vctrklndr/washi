@@ -1,0 +1,27 @@
+.Page {
+    padding: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.Page-container {
+    max-width: 1230px;
+    margin-left: auto;
+    margin-right: auto;
+    //In desktop view we have a huge spacer up top.
+    //Certain mobile views with little content gets cramped without this space.
+    //This modifier creates some space above Page container in smaller viewports
+
+    &&--fullVCenter {
+        height: 100%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &&--extraWide {
+        max-width: @widthContainer + 200px;
+    }
+}

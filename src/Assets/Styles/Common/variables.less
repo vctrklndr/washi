@@ -1,1 +1,64 @@
-@brandColor: orange;
+// - Fonts -
+@baseFontSize: 16;
+@fontFamilyPrimary: 'Montserrat', sans-serif;
+@fontFamilySecondary: serif;
+@fontFamilyRegular: 400;
+@fontFamilyMedium: 500;
+@fontFamilySemiBold: 600; 
+@fontFamilyBold: 700; 
+
+// - Container Width -
+@widthContainer: 1230px;
+
+// - Text Sizes -
+@textSizeXXSmall: unit(12 / @baseFontSize, em); // 12px
+@textSizeXSmall: unit(14 / @baseFontSize, em); // 14px
+@textSizeSmall:  unit(15 / @baseFontSize, em); // 15px
+@textSizeMedium: unit(16 / @baseFontSize, em); // 16px
+@textSizeLarge:  unit(18 / @baseFontSize, em); // 18px
+@textSizeXLarge: unit(20 / @baseFontSize, em); // 20px
+@textSizeXXLarge: unit(24 / @baseFontSize, em); // 24px
+
+// - Colors -
+@brandColor: #0066ff; 
+@brandColorDarker: #0059df;
+
+//# boxshadow
+@shadowColor: rgba(43,9,63,0.24);
+@shadow: -1px 3px 15px 2px @shadowColor;
+@shadow: 0 0 50px 0 rgba(0, 0, 0, 0.12);
+
+//# borderRadius
+@radiusSm: 5px;
+@radiusMd: 10px;
+@radiusLg: 40px;
+
+// - Space -
+@spaceDefault: unit(20 / @baseFontSize, em);
+@spaceXSmall: @spaceDefault / 2; 
+@spaceSmall: @spaceDefault / 1.5;
+@spaceMedium: @spaceDefault;
+@spaceLarge: @spaceDefault * 1.5;
+@spaceXLarge: @spaceDefault * 2;
+@spaceXXLarge: @spaceDefault * 4;
+// - Breakpoint Widths -
+@widthXXSmall: (350 / @baseFontSize);
+@widthXSmall: (420 / @baseFontSize);
+@widthSmall: (544 / @baseFontSize);
+@widthMedium: (768 / @baseFontSize);
+@widthLarge: (920 / @baseFontSize); 
+@widthXLarge: (1600 / @baseFontSize);
+// - Breakpoint Media Queries -
+@bpXXSmall: ~ "only screen and (min-width: @{widthXXSmall}em), print";
+@bpXSmall: ~ "only screen and (min-width: @{widthXSmall}em), print";
+@bpSmall: ~ "only screen and (min-width: @{widthSmall}em), print";
+@bpMedium: ~ "only screen and (min-width: @{widthMedium}em), print";
+@bpLarge: ~ "only screen and (min-width: @{widthLarge}em), print";
+@bpXLarge: ~ "only screen and (min-width: @{widthXLarge}em)";
+@bpMaxSmall: ~ "only screen and (max-width: @{widthSmall}em), print";
+// - Size Prefixes -
+@prefixXSmall: ~ "xsm-"; 
+@prefixSmall: ~ "sm-";
+@prefixMedium: ~ "md-";
+@prefiLarge: ~ "lg-"; 
+@prefiXLarge: ~ "xlg-";
