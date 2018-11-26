@@ -21,6 +21,7 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
+    "normalize.less": "^1.0.0",
     "npm": "^6.4.1",
     "vue": "^2.0.1"
   },
