@@ -1,25 +1,10 @@
 <template>
-  <div>
-    <header class="Header">
-      <div class="Page-container">
-        <div class="Header-container">
-          <img class="Header-logo" src="src/Assets/Images/washi-logo.svg" width="200px">
-          <nav class="PageNav">
-            <ul class="PageNav-list">
-              <li class="PageNav-Link">Boka tvättid</li>
-              <li class="PageNav-Link">Regler</li>
-              <li class="PageNav-Link">Tvättråd</li>
-              <li class="PageNav-Link">Logga ut</li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
-    <div class="Page-container">
-      <h1>{{ message }}</h1>
-      <span class="Button">Hej</span>
+  <section class="Section">
+    <div class="Page-container u-textCenter">
+      <h1>{{message}}</h1>
+      <Button class="Button">Button</Button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
