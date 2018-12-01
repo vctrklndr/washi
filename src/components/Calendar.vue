@@ -14,7 +14,7 @@
       <li v-for="blank in firstDayOfMonth" :key="blank.id" style="width: 60px; height: 60px;">&nbsp;</li>
       <li style="width: 60px; height: 60px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: center; align-items: center;"
         v-for="date in daysInMonth"
-        :class="{'current-day': date == initialDate &amp;&amp; month == initialMonth && year == initialYear}"
+        :class="{'Calendar--currentDay': date === initialDate &amp;&amp; month === initialMonth && year === initialYear}"
         :key="date.id"
       >
         {{ date }}
@@ -48,17 +48,17 @@ export default {
         return this.dateContext.format('MMMM');
     },
     daysInMonth: function () {
-        return this.dateContext.daysInMonth();
+        return this.dateContext.daysInMonth('dddd');
     },
     currentDate: function () {
-        return this.dateContext.get('date');
+        return this.dateContext.get('D');
     },
     firstDayOfMonth: function () {
         const firstDay = moment(this.dateContext).subtract((this.currentDate - 1), 'days');
         return firstDay.weekday();
     },
     initialDate: function () {
-        return this.today.get('date');
+        return this.today.get('D');
     },
     initialMonth: function () {
         return this.today.format('MMMM');
