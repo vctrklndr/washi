@@ -1,16 +1,18 @@
 <template>
-  <div class="Calendar">
-    <div class="Calendar-Header">
-      <span @click="subtractMonth"> Vänster </span>
+  <div>
+    <div class="Calendar Calendar-Header" style="align-items: center;">
+      <span @click="subtractMonth"> < </span>
       <h4>{{month + ' - ' + year}}</h4>
-      <span @click="addMonth">Höger</span>
+      <span @click="addMonth"> > </span>
     </div>
-    <ul class="List">
-      <li v-for="day in days" :key="day.id"> {{day}} </li>
+    <ul class="Calendar List u-textCenter">
+      <li v-for="day in days" :key="day.id" style="width: 60px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px;">
+        {{day}}
+      </li>
     </ul>
-    <ul class="List">
-      <li v-for="blank in firstDayOfMonth" :key="blank.id">&nbsp;</li>
-      <li
+    <ul class="Calendar List" style="max-width: 420px;">
+      <li v-for="blank in firstDayOfMonth" :key="blank.id" style="width: 60px; height: 60px;">&nbsp;</li>
+      <li style="width: 60px; height: 60px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: center; align-items: center;"
         v-for="date in daysInMonth"
         :class="{'current-day': date == initialDate &amp;&amp; month == initialMonth && year == initialYear}"
         :key="date.id"
@@ -23,13 +25,19 @@
 
 <script>
 import moment from "moment";
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+})
 
 export default {
+  
   data(){
     return{
         today: moment(),
         dateContext: moment(),
-        days: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+        days: ['Mån', 'Tis', 'Ons', 'Tors', 'Fre', 'Lör', 'Sön']
     }
   },
   computed: {

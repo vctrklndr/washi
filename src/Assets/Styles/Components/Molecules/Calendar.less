@@ -1,0 +1,29 @@
+.Calendar {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 1em;
+	padding-bottom: @spaceLarge;
+
+	&.Calendar--times {
+		display: block;
+	}
+}
+
+.Calendar-Header {
+	color: @brandColor;
+	flex-basis: 100%;
+	font-size: @textSizeSmall;
+	height: 2em;
+	margin-bottom: 1em;
+	padding: 0 @spaceXSmall;
+	text-align: center;
+
+	.Calendar-selectedDate {
+		font-weight: @fontFamilySemiBold;
+	}
+
+	@media @bpLarge {
+		font-size: @textSizeMedium;
+		padding: 0;
+	}
+}
