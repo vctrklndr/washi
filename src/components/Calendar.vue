@@ -3,7 +3,7 @@
     <div class="Calendar" style="display: flex;">
       <ul class="List" style="display: flex; flex-wrap: wrap; margin-right: 10px;">
         <li style="
-                        background: #f0f3f2;
+            background: #f0f3f2;
             border: 2px solid transparent;
             border-radius: 2px;
             color: #e4e4e4;
