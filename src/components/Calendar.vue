@@ -1,24 +1,21 @@
 <template>
   <div>
-    <div class="Calendar Calendar-Header" style="align-items: center;">
-      <span @click="subtractMonth"> < </span>
+    <div class="Calendar Calendar-Header">
+      <span @click="subtractMonth"><</span>
       <h4>{{month + ' - ' + year}}</h4>
-      <span @click="addMonth"> > </span>
+      <span @click="addMonth">></span>
     </div>
-    <ul class="Calendar List u-textCenter">
-      <li v-for="day in days" :key="day.id" style="width: 60px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px;">
-        {{day}}
-      </li>
-    </ul>
-    <ul class="Calendar List" style="max-width: 420px;">
-      <li v-for="blank in firstDayOfMonth" :key="blank.id" style="width: 60px; height: 60px;">&nbsp;</li>
-      <li style="width: 60px; height: 60px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: center; align-items: center;"
+    <ul class="Calendar List">
+      <li v-for="day in days" :key="day.id">{{day}}</li>
+      <li v-for="blank in firstDayOfMonth" :key="blank.id">&nbsp;</li>
+      <li
         v-for="date in daysInMonth"
-        :class="{'Calendar--currentDay': date === initialDate &amp;&amp; month === initialMonth && year === initialYear}"
+        :class="{'Calendar-currentDay': 
+          date === initialDate &&
+          month === initialMonth && 
+          year === initialYear}"
         :key="date.id"
-      >
-        {{ date }}
-      </li>
+      >{{ date }}</li>
     </ul>
   </div>
 </template>
@@ -32,8 +29,7 @@ moment.updateLocale('en', {
 })
 
 export default {
-  
-  data(){
+  data() {
     return{
         today: moment(),
         dateContext: moment(),
@@ -48,7 +44,7 @@ export default {
         return this.dateContext.format('MMMM');
     },
     daysInMonth: function () {
-        return this.dateContext.daysInMonth('dddd');
+        return this.dateContext.daysInMonth('hej');
     },
     currentDate: function () {
         return this.dateContext.get('D');
@@ -76,5 +72,4 @@ export default {
     }
   }
 }
-//function  = () => {}
 </script>
