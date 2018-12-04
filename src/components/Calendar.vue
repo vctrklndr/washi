@@ -31,7 +31,7 @@
         ></button>
         <button
           v-for="date in daysInMonth"
-          @click="selectDate( date )"
+          @click="selectDate(date)"
           :key="date.id"
           :class="{
             'Calendar-day--today' : 
