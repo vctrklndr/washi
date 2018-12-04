@@ -1,26 +1,28 @@
 <template>
-  <div class="Grid">
+  <div class="Grid u-marginTlg">
     <div class="Grid-cell u-md-size6of10">
-      <div class="Calendar Calendar--daysHeading">
+      <div class="Calendar--daysHeading">
         <div class="Calendar-header">
           <div class="Calendar-controls">
-            <span @click="subtractMonth"><</span>
+            <span @click="subtractMonth" style="cursor: pointer;"><</span>
             <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
-            <span @click="addMonth">></span>
+            <span @click="addMonth" style="cursor: pointer;">></span>
           </div>
         </div>
-        <button
-          v-for="day in days"
-          class="Calendar-day Calendar-day--heading"
-          :key="day.id"
-          disabled
-        >
-          <div class="Calendar-day-content">
-            <div class="Calendar-dayNumber">{{day}}</div>
-          </div>
-        </button>
+        <div class="Calendar u-paddingBz">
+          <button
+            v-for="day in days"
+            class="Calendar-day Calendar-day--heading"
+            :key="day.id"
+            disabled
+          >
+            <div class="Calendar-day-content">
+              <div class="Calendar-dayNumber">{{day}}</div>
+            </div>
+          </button>
+        </div>
       </div>
-      <div class="Calendar">
+      <div class="Calendar u-marginTz">
         <button
           class="Calendar-day Calendar-day--noDate"
           v-for="blank in firstDayOfMonth"
@@ -43,11 +45,11 @@
         </button>
       </div>
     </div>
-    <div class="Calendar Calendar--times Grid-cell u-md-size4of10 u-marginTxsm">
+    <div class="Calendar--times Grid-cell u-md-size4of10">
       <div class="Calendar-header">
         <time class="Calendar-selectedDate">{{this.today.format('dddd' +' D ' + 'MMMM')}}</time>
       </div>
-      <button v-for="time in times" :key="time.id" class="Calendar-time Calendar-time--selected">
+      <button v-for="time in times" :key="time.id" class="Calendar-time">
         <time>{{time}}</time>
       </button>
     </div>
@@ -61,6 +63,7 @@ moment.updateLocale('en', {
     dow: 1,
   },
 })
+console.log(moment());
 
 export default {
   data() {

@@ -38,7 +38,7 @@
 	background: #ddd;
 	border: 2px solid transparent;
 	border-radius: 2px;
-	color: #fafafa;
+	color: #313131;
 	flex-basis: 100/7.5%;
 	//flex-grow: 1;
 	font-family: inherit;
@@ -55,6 +55,7 @@
 
     &&--heading {
         background-color: @brandColor;
+        color: #fafafa;
         height: 30px;
     }
     
@@ -76,10 +77,9 @@
 
 	&.Calendar-day--today {
         background-color: @brandColor;
+        color: #fafafa;
 	}
 }
-
-
 
 .Calendar-dayNumber{
 	font-size: 0.9em;
@@ -119,23 +119,8 @@
 	position: relative;
 	width: 100%;
 
-	&.Calendar-time--available {
-		background: gray;
-		color: blue;
-		cursor: pointer;
-
-		&:hover {
-			background-color: lightgray;
-		}
-	}
-
-	&.Calendar-time--selected {
+	&.Calendar-time {
 		background: #ddd;
-		color: #fafafa;
+		color: #313131;
 	}
-}
-
-.Calendar--passedDay {
-    font-weight: @fontFamilySemiBold;
-    background-color: red;
 }
