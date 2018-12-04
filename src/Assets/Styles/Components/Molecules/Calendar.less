@@ -3,7 +3,9 @@
 	flex-wrap: wrap;
 	margin-top: 1em;
 	padding-bottom: @spaceLarge;
-
+    &&--daysHeading {
+        padding-bottom: 0;
+    }
 	@media @bpMedium {
 		margin-top: 1em;
 	}
@@ -38,7 +40,7 @@
 	border-radius: 2px;
 	color: #fafafa;
 	flex-basis: 100/7.5%;
-	flex-grow: 1;
+	//flex-grow: 1;
 	font-family: inherit;
 	font-weight: @fontFamilyRegular;
 	margin: 1px;
@@ -49,6 +51,11 @@
 		content: "";
 		display: block;
 		padding-top: 85%;
+    }
+
+    &&--heading {
+        background-color: @brandColor;
+        height: 30px;
     }
     
 	.Calendar-day-content{
@@ -71,6 +78,8 @@
         background-color: @brandColor;
 	}
 }
+
+
 
 .Calendar-dayNumber{
 	font-size: 0.9em;
@@ -95,6 +104,34 @@
 			padding-left: 0 !important;
 			padding-right: 0 !important;
 		}
+	}
+}
+
+.Calendar-time {
+	background: transparent;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	color: lightgrey;
+	font-family: inherit;
+	font-weight: @fontFamilyRegular;
+	margin: 1px;
+	padding: @spaceDefault;
+	position: relative;
+	width: 100%;
+
+	&.Calendar-time--available {
+		background: gray;
+		color: blue;
+		cursor: pointer;
+
+		&:hover {
+			background-color: lightgray;
+		}
+	}
+
+	&.Calendar-time--selected {
+		background: #ddd;
+		color: #fafafa;
 	}
 }
 

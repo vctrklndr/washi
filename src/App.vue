@@ -3,7 +3,7 @@
     <navbar/>
     <div class="Page-container">
       <main class="Page-main">
-        <hello/>
+        <!--hello/-->
         <calendar/>
       </main>
     </div>

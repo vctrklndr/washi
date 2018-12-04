@@ -1,40 +1,56 @@
 <template>
-  <div class="Calendar Grid-cell u-md-size6of10">
-    <div class="Calendar-header">
-      <div class="Calendar-controls">
-        <span @click="subtractMonth"><</span>
-        <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
-        <span @click="addMonth">></span>
+  <div class="Grid">
+    <div class="Grid-cell u-md-size6of10">
+      <div class="Calendar Calendar--daysHeading">
+        <div class="Calendar-header">
+          <div class="Calendar-controls">
+            <span @click="subtractMonth"><</span>
+            <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
+            <span @click="addMonth">></span>
+          </div>
+        </div>
+        <button
+          v-for="day in days"
+          class="Calendar-day Calendar-day--heading"
+          :key="day.id"
+          disabled
+        >
+          <div class="Calendar-day-content">
+            <div class="Calendar-dayNumber">{{day}}</div>
+          </div>
+        </button>
+      </div>
+      <div class="Calendar">
+        <button
+          class="Calendar-day Calendar-day--noDate"
+          v-for="blank in firstDayOfMonth"
+          :key="blank.id"
+          disabled
+        ></button>
+        <button
+          v-for="date in daysInMonth"
+          :class="{
+          'Calendar-day--today' : 
+          date === initialDate &&
+          month === initialMonth && 
+          year === initialYear }"
+          class="Calendar-day"
+          :key="date.id"
+        >
+          <div class="Calendar-day-content">
+            <div class="Calendar-dayNumber">{{date}}</div>
+          </div>
+        </button>
       </div>
     </div>
-    <button
-      class="Calendar-day Calendar-day--noDate"
-      v-for="blank in firstDayOfMonth"
-      :key="blank.id"
-    ></button>
-    <button
-      v-for="date in daysInMonth"
-      :class="{
-        'Calendar-day--today' : 
-        date === initialDate &&
-        month === initialMonth && 
-        year === initialYear }"
-      class="Calendar-day"
-      :key="date.id"
-    >
-      <div class="Calendar-day-content">
-        <div class="Calendar-dayNumber">{{date}}</div>
+    <div class="Calendar Calendar--times Grid-cell u-md-size4of10 u-marginTxsm">
+      <div class="Calendar-header">
+        <time class="Calendar-selectedDate">{{this.today.format('dddd' +' D ' + 'MMMM')}}</time>
       </div>
-    </button>
-    <button
-      class="Calendar-day Calendar-day--noDate"
-      v-for="blank in lastDayOfMonth"
-      :key="blank.id"
-    >
-      <div class="Calendar-day-content">
-        <div class="Calendar-dayNumber">&nbsp;</div>
-      </div>
-    </button>
+      <button v-for="time in times" :key="time.id" class="Calendar-time Calendar-time--selected">
+        <time>{{time}}</time>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -51,7 +67,8 @@ export default {
     return {
       today: moment(),
       dateContext: moment(),
-      days: ['Mån', 'Tis', 'Ons', 'Tors', 'Fre', 'Lör', 'Sön']
+      days: ['M', 'T', 'O', 'T', 'F', 'L', 'S'],
+      times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00']
     }
   },
   computed: {
@@ -62,7 +79,7 @@ export default {
       return this.dateContext.format('MMMM');
     },
     daysInMonth: function () {
-      return this.dateContext.daysInMonth('hej');
+      return this.dateContext.daysInMonth('ddd');
     },
     currentDate: function () {
       return this.dateContext.get('D');
@@ -72,8 +89,9 @@ export default {
       return firstDay.weekday();
     },
     lastDayOfMonth: function () {
-      const lastDay = moment(this.dateContext).subtract((this.daysInMonth - this.daysInMonth), 'days');
-      return lastDay.weekday();
+      const lastDay = moment().day(0);
+      const weekday = lastDay.weekday();
+      return weekday;
     },
     initialDate: function () {
       return this.today.get('D');
