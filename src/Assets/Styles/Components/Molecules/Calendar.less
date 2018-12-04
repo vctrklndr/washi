@@ -4,12 +4,12 @@
 	margin-top: 1em;
 	padding-bottom: @spaceLarge;
 
-	&.Calendar--times {
-		display: block;
+	@media @bpMedium {
+		margin-top: 1em;
 	}
 }
 
-.Calendar-Header {
+.Calendar-header {
 	color: @brandColor;
 	flex-basis: 100%;
 	font-size: @textSizeSmall;
@@ -28,7 +28,77 @@
 	}
 }
 
-.Calendar-currentDay {
-    font-weight: bold;
-    background-color: #ddd;
+.Calendar-title {
+	font-size: @textSizeMedium;
+}
+
+.Calendar-day {
+	background: #ddd;
+	border: 2px solid transparent;
+	border-radius: 2px;
+	color: #fafafa;
+	flex-basis: 100/7.5%;
+	flex-grow: 1;
+	font-family: inherit;
+	font-weight: @fontFamilyRegular;
+	margin: 1px;
+	padding: 0;
+	text-align: center;
+	position: relative;
+	&:before{
+		content: "";
+		display: block;
+		padding-top: 85%;
+    }
+    
+	.Calendar-day-content{
+		position:  absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+    }
+    
+	&.Calendar-day--noDate {
+		background: transparent;
+	}
+
+	&.Calendar-day--today {
+        background-color: @brandColor;
+	}
+}
+
+.Calendar-dayNumber{
+	font-size: 0.9em;
+	@media bpSmall{
+		font-size: 1em;
+	} 
+}
+
+@media @bpMaxSmall {
+	.Calendar-wrapper--extend {
+		&.is-active {
+			overflow: visible;
+		}
+
+		.Grid {
+			margin-left: -30px !important;
+			margin-right: -30px !important;
+		}
+
+		.Calendar {
+			border-bottom: 0;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+	}
+}
+
+.Calendar--passedDay {
+    font-weight: @fontFamilySemiBold;
+    background-color: red;
 }

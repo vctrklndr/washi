@@ -1,22 +1,40 @@
 <template>
-  <div>
-    <div class="Calendar Calendar-Header">
-      <span @click="subtractMonth"><</span>
-      <h4>{{month + ' - ' + year}}</h4>
-      <span @click="addMonth">></span>
+  <div class="Calendar Grid-cell u-md-size6of10">
+    <div class="Calendar-header">
+      <div class="Calendar-controls">
+        <span @click="subtractMonth"><</span>
+        <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
+        <span @click="addMonth">></span>
+      </div>
     </div>
-    <ul class="Calendar List">
-      <li v-for="day in days" :key="day.id">{{day}}</li>
-      <li v-for="blank in firstDayOfMonth" :key="blank.id">&nbsp;</li>
-      <li
-        v-for="date in daysInMonth"
-        :class="{'Calendar-currentDay': 
-          date === initialDate &&
-          month === initialMonth && 
-          year === initialYear}"
-        :key="date.id"
-      >{{ date }}</li>
-    </ul>
+    <button
+      class="Calendar-day Calendar-day--noDate"
+      v-for="blank in firstDayOfMonth"
+      :key="blank.id"
+    ></button>
+    <button
+      v-for="date in daysInMonth"
+      :class="{
+        'Calendar-day--today' : 
+        date === initialDate &&
+        month === initialMonth && 
+        year === initialYear }"
+      class="Calendar-day"
+      :key="date.id"
+    >
+      <div class="Calendar-day-content">
+        <div class="Calendar-dayNumber">{{date}}</div>
+      </div>
+    </button>
+    <button
+      class="Calendar-day Calendar-day--noDate"
+      v-for="blank in lastDayOfMonth"
+      :key="blank.id"
+    >
+      <div class="Calendar-day-content">
+        <div class="Calendar-dayNumber">&nbsp;</div>
+      </div>
+    </button>
   </div>
 </template>
 
@@ -30,45 +48,57 @@ moment.updateLocale('en', {
 
 export default {
   data() {
-    return{
-        today: moment(),
-        dateContext: moment(),
-        days: ['Mån', 'Tis', 'Ons', 'Tors', 'Fre', 'Lör', 'Sön']
+    return {
+      today: moment(),
+      dateContext: moment(),
+      days: ['Mån', 'Tis', 'Ons', 'Tors', 'Fre', 'Lör', 'Sön']
     }
   },
   computed: {
     year: function () {
-        return this.dateContext.format('Y');
+      return this.dateContext.format('Y');
     },
     month: function () {
-        return this.dateContext.format('MMMM');
+      return this.dateContext.format('MMMM');
     },
     daysInMonth: function () {
-        return this.dateContext.daysInMonth('hej');
+      return this.dateContext.daysInMonth('hej');
     },
     currentDate: function () {
-        return this.dateContext.get('D');
+      return this.dateContext.get('D');
     },
     firstDayOfMonth: function () {
-        const firstDay = moment(this.dateContext).subtract((this.currentDate - 1), 'days');
-        return firstDay.weekday();
+      const firstDay = moment(this.dateContext).subtract((this.currentDate - 1), 'days');
+      return firstDay.weekday();
+    },
+    lastDayOfMonth: function () {
+      const lastDay = moment(this.dateContext).subtract((this.daysInMonth - this.daysInMonth), 'days');
+      return lastDay.weekday();
     },
     initialDate: function () {
-        return this.today.get('D');
+      return this.today.get('D');
     },
     initialMonth: function () {
-        return this.today.format('MMMM');
+      return this.today.format('MMMM');
     },
     initialYear: function () {
-        return this.today.format('Y');
+      return this.today.format('Y');
     }
   },
   methods: {
+    update: function () {
+      if(
+        date === initialDate &&
+        month === initialMonth && 
+        year === initialYear) {
+        return true;
+      }
+    },
     addMonth: function () {
-        this.dateContext = moment(this.dateContext).add(1, 'month');
+      this.dateContext = moment(this.dateContext).add(1, 'month');
     },
     subtractMonth: function () {
-        this.dateContext = moment(this.dateContext).subtract(1, 'month');
+      this.dateContext = moment(this.dateContext).subtract(1, 'month');
     }
   }
 }
