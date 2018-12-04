@@ -31,7 +31,7 @@
         ></button>
         <button
           v-for="date in daysInMonth"
-          v-on:click="selectDate( date )"
+          @click="selectDate( date )"
           :key="date.id"
           :class="{
             'Calendar-day--today' : 
@@ -50,11 +50,11 @@
       <div class="Calendar-header">
         <time class="Calendar-selectedDate">{{displayDate}}</time>
       </div>
-      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" v-on:click="selectTime( index + 1  )">
+      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" @click="selectTime( index + 1  )">
         <time>{{time}}</time>
       </button>
       <div style="display: flex; justify-content: center;">
-        <button class="Button u-marginTlg" v-on:click="bookTime(selectedDate, selectedTime)">Boka tid</button>
+        <button class="Button u-marginTlg" @click="bookTime(selectedDate, selectedTime)">Boka tid</button>
       </div>
     </div>
   </div>
@@ -74,11 +74,11 @@ export default {
     return {
       today: moment(),
       dateContext: moment(),
+      displayDate: moment().format('dddd' +' D ' + 'MMMM'),
       days: ['M', 'T', 'O', 'T', 'F', 'L', 'S'],
       times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00'],
       selectedDate: '',
-      selectedTime: '',
-      displayDate: moment().format('dddd' +' D ' + 'MMMM'),
+      selectedTime: ''
     }
   },
   computed: {
@@ -119,28 +119,21 @@ export default {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
     },
     selectDate: function (date){
-   
-      const month = this.dateContext.format('MM')
-      const year = this.dateContext.format('YYYY')
-
+      const month = this.dateContext.format('MM');
+      const year = this.dateContext.format('YYYY');
       const day = moment(year + month + date).format('YYYY-MM-DD');
 
       this.selectedDate = day;
       this.selectedTime= '';
-      this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM')
-      console.log(this.selectedDate)
-      
-      
+      this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
+      console.log(this.selectedDate);
     },
     selectTime: function( time ){      
-      this.selectedTime = "tid"+time
-      console.log(this.selectedTime)
+      this.selectedTime = "tid"+time;
+      console.log(this.selectedTime);
     },
     bookTime: function(date, time){
-
-      console.log(date,time);
-      
-
+      console.log(date,time)
     }
   }
 }
