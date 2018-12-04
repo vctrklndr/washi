@@ -48,35 +48,27 @@
     </div>
     <div class="Calendar--times Grid-cell u-md-size4of10">
       <div class="Calendar-header">
-        <time class="Calendar-selectedDate">{{this.today.format('dddd' +' D ' + 'MMMM')}}</time>
+        <time class="Calendar-selectedDate">{{displayDate}}</time>
       </div>
-      <button v-for="time in times" :key="time.id" class="Calendar-time" v-on:click="selectTime( time )">
+      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" v-on:click="selectTime( index + 1  )">
         <time>{{time}}</time>
-        
       </button>
+      <div style="display: flex; justify-content: center;">
+        <button class="Button u-marginTlg" v-on:click="bookTime(selectedDate, selectedTime)">Boka tid</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import moment from "moment";
-moment.updateLocale('en', {
+moment.updateLocale('sv', {
   week: {
     dow: 1,
   },
 })
 
-
-var store = {
-  debug: true,
-  state: {
-    day: 'Hello!'
-  }
-}
-
 export default {
-
-  
 
   data() {
     return {
@@ -84,6 +76,9 @@ export default {
       dateContext: moment(),
       days: ['M', 'T', 'O', 'T', 'F', 'L', 'S'],
       times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00'],
+      selectedDate: '',
+      selectedTime: '',
+      displayDate: moment().format('dddd' +' D ' + 'MMMM'),
     }
   },
   computed: {
@@ -128,14 +123,24 @@ export default {
       const month = this.dateContext.format('MM')
       const year = this.dateContext.format('YYYY')
 
-      const day = moment(year + month + date ,  ).format('YYYY-MM-DD');
+      const day = moment(year + month + date).format('YYYY-MM-DD');
 
-      store.state.day = day;
-      console.log(day)
+      this.selectedDate = day;
+      this.selectedTime= '';
+      this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM')
+      console.log(this.selectedDate)
+      
       
     },
-    selectTime: function( time ){
-      console.log(time)
+    selectTime: function( time ){      
+      this.selectedTime = "tid"+time
+      console.log(this.selectedTime)
+    },
+    bookTime: function(date, time){
+
+      console.log(date,time);
+      
+
     }
   }
 }
