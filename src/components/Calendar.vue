@@ -50,7 +50,7 @@
       <div class="Calendar-header">
         <time class="Calendar-selectedDate">{{displayDate}}</time>
       </div>
-      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" @click="selectTime( index + 1  )">
+      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" @click="selectTime(index + 1)">
         <time>{{time}}</time>
       </button>
       <div style="display: flex; justify-content: center;">
@@ -128,12 +128,15 @@ export default {
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
     },
-    selectTime: function( time ){      
-      this.selectedTime = "tid"+time;
-      console.log(this.selectedTime);
+    selectTime: function(time){      
+      this.selectedTime = "tid" + time;
+        console.log(this.selectedTime);
     },
     bookTime: function(date, time){
-      console.log(date,time)
+      if(date !== "" && time !== "") {
+        console.log(date, time)
+      }
+      return null;
     }
   }
 }
