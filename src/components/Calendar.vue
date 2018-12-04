@@ -4,9 +4,9 @@
       <div class="Calendar--daysHeading">
         <div class="Calendar-header">
           <div class="Calendar-controls">
-            <span @click="subtractMonth" style="cursor: pointer;"><</span>
+            <span @click="subtractMonth" style="cursor: pointer;"> &lt; Föregående</span>
             <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
-            <span @click="addMonth" style="cursor: pointer;">></span>
+            <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
         </div>
         <div class="Calendar u-paddingBz">
@@ -31,16 +31,17 @@
         ></button>
         <button
           v-for="date in daysInMonth"
-          :class="{
-          'Calendar-day--today' : 
-          date === initialDate &&
-          month === initialMonth && 
-          year === initialYear }"
-          class="Calendar-day"
+          v-on:click="clicker( date )"
           :key="date.id"
+          :class="{
+            'Calendar-day--today' : 
+            date === initialDate &&
+            month === initialMonth && 
+            year === initialYear }"
+          class="Calendar-day"
         >
           <div class="Calendar-day-content">
-            <div class="Calendar-dayNumber">{{date}}</div>
+            <div class="Calendar-dayNumber"> {{date}}</div>
           </div>
         </button>
       </div>
@@ -63,7 +64,6 @@ moment.updateLocale('en', {
     dow: 1,
   },
 })
-console.log(moment());
 
 export default {
   data() {
@@ -81,8 +81,11 @@ export default {
     month: function () {
       return this.dateContext.format('MMMM');
     },
+    dayOfMonth: function() {
+      return this.dateContext.format('D')
+    },
     daysInMonth: function () {
-      return this.dateContext.daysInMonth('ddd');
+      return this.dateContext.daysInMonth();
     },
     currentDate: function () {
       return this.dateContext.get('D');
@@ -90,11 +93,6 @@ export default {
     firstDayOfMonth: function () {
       const firstDay = moment(this.dateContext).subtract((this.currentDate - 1), 'days');
       return firstDay.weekday();
-    },
-    lastDayOfMonth: function () {
-      const lastDay = moment().day(0);
-      const weekday = lastDay.weekday();
-      return weekday;
     },
     initialDate: function () {
       return this.today.get('D');
@@ -107,19 +105,15 @@ export default {
     }
   },
   methods: {
-    update: function () {
-      if(
-        date === initialDate &&
-        month === initialMonth && 
-        year === initialYear) {
-        return true;
-      }
-    },
     addMonth: function () {
       this.dateContext = moment(this.dateContext).add(1, 'month');
     },
     subtractMonth: function () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
+    },
+    clicker: function (date){
+      console.log(date);
+      console.log(this.dateContext.format('M'))
     }
   }
 }
