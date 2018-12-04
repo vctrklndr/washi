@@ -50,11 +50,21 @@
       <div class="Calendar-header">
         <time class="Calendar-selectedDate">{{displayDate}}</time>
       </div>
-      <button v-for="(time, index) in times" :key="time.id" class="Calendar-time" @click="selectTime(index + 1)">
+      <button
+        v-for="(time, index) in times"
+        :key="time.id"
+        class="Calendar-time"
+        @click="selectTime(index + 1)"
+      >
         <time>{{time}}</time>
       </button>
       <div style="display: flex; justify-content: center;">
-        <button class="Button u-marginTlg" @click="bookTime(selectedDate, selectedTime)">Boka tid</button>
+        <button 
+          @click="bookTime(selectedDate, selectedTime)"
+          class="Button u-marginTlg"
+        >
+          Boka tid
+        </button>
       </div>
     </div>
   </div>
