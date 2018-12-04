@@ -4,7 +4,7 @@
       <div class="Calendar--daysHeading">
         <div class="Calendar-header">
           <div class="Calendar-controls">
-            <span @click="subtractMonth" style="cursor: pointer;"> &lt; Föregående</span>
+            <span @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
             <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
             <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
@@ -31,7 +31,7 @@
         ></button>
         <button
           v-for="date in daysInMonth"
-          v-on:click="clicker( date )"
+          v-on:click="selectDate( date )"
           :key="date.id"
           :class="{
             'Calendar-day--today' : 
@@ -41,7 +41,7 @@
           class="Calendar-day"
         >
           <div class="Calendar-day-content">
-            <div class="Calendar-dayNumber"> {{date}}</div>
+            <div class="Calendar-dayNumber">{{date}}</div>
           </div>
         </button>
       </div>
@@ -50,8 +50,9 @@
       <div class="Calendar-header">
         <time class="Calendar-selectedDate">{{this.today.format('dddd' +' D ' + 'MMMM')}}</time>
       </div>
-      <button v-for="time in times" :key="time.id" class="Calendar-time">
+      <button v-for="time in times" :key="time.id" class="Calendar-time" v-on:click="selectTime( time )">
         <time>{{time}}</time>
+        
       </button>
     </div>
   </div>
@@ -65,13 +66,24 @@ moment.updateLocale('en', {
   },
 })
 
+
+var store = {
+  debug: true,
+  state: {
+    day: 'Hello!'
+  }
+}
+
 export default {
+
+  
+
   data() {
     return {
       today: moment(),
       dateContext: moment(),
       days: ['M', 'T', 'O', 'T', 'F', 'L', 'S'],
-      times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00']
+      times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00'],
     }
   },
   computed: {
@@ -111,10 +123,21 @@ export default {
     subtractMonth: function () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
     },
-    clicker: function (date){
-      console.log(date);
-      console.log(this.dateContext.format('M'))
+    selectDate: function (date){
+   
+      const month = this.dateContext.format('MM')
+      const year = this.dateContext.format('YYYY')
+
+      const day = moment(year + month + date ,  ).format('YYYY-MM-DD');
+
+      store.state.day = day;
+      console.log(day)
+      
+    },
+    selectTime: function( time ){
+      console.log(time)
     }
   }
 }
+
 </script>
