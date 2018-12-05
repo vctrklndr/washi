@@ -74,11 +74,6 @@
 	&.Calendar-day--noDate {
 		background: transparent;
 	}
-
-	&.Calendar-day--today {
-        font-weight: @fontFamilyBold;
-        color: @brandColor;
-	}
 }
 
 .Calendar-dayNumber{
@@ -130,4 +125,14 @@
     color: #ddd;
     pointer-events: none;
     outline: none;
+}
+
+.Calendar-day--today {
+    font-weight: @fontFamilyBold;
+    color: @brandColor;
+}
+
+.Calendar-day--active {
+    background-color: @brandColor;
+    color: #fafafa;
 }

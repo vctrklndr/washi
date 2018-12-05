@@ -41,12 +41,16 @@
           @click="selectDate(date)"
           :key="date.id"
           :class="{
-            'Calendar-day--before' : 
+            'Calendar-day--today':
+              date === initialDate && 
+              month === initialMonth &&
+              year === initialYear,
+            'Calendar-day--before': 
               date < today.format('D') &&
               month === today.format('MMMM') &&
               year === today.format('YYYY')
           }"
-          class="Calendar-day"
+          class="Calendar-day" 
         >
           <div class="Calendar-day-content">
             <div class="Calendar-dayNumber">{{date}}</div>
@@ -156,14 +160,15 @@ export default {
       this.selectedTime= '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
+      console.log(this.isActive);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
-        console.log(this.selectedTime);
+      console.log(this.selectedTime);
     },
     bookTime: function(date, time){
       if(date !== "" && time !== "") {
-        console.log(date, time)
+        console.log(date,time)
       }
       return null;
     }
