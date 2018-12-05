@@ -74,9 +74,7 @@ moment.updateLocale('sv', {
     dow: 1,
   },
 })
-
 export default {
-
   data() {
     return {
       today: moment(),
@@ -90,7 +88,7 @@ export default {
   },
   computed: {
     year: function () {
-      return this.dateContext.format('YYYY');
+      return this.dateContext.format('Y');
     },
     month: function () {
       return this.dateContext.format('MMMM');
@@ -115,7 +113,7 @@ export default {
       return this.today.format('MMMM');
     },
     initialYear: function () {
-      return this.today.format('YYYY');
+      return this.today.format('Y');
     }
   },
   methods: {
@@ -134,8 +132,6 @@ export default {
       this.selectedTime= '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
-      console.log(this.initialYear);
-      console.log(this.year);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
