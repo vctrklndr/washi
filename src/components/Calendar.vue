@@ -6,7 +6,7 @@
           <div class="Calendar-controls">
             <span v-if="month !== initialMonth || year !== initialYear" @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
             <span v-else>&nbsp;</span>
-            <time class="Calendar-selectedDate"> {{month + ' - ' + year}} </time>
+            <time class="Calendar-selectedDate"> {{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}} </time>
             <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
         </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="Calendar--times Grid-cell u-md-size4of10">
       <div class="Calendar-header">
-        <time class="Calendar-selectedDate">{{displayDate}}</time>
+        <time class="Calendar-selectedDate">{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
       </div>
       <button
         v-for="(time, index) in times"
@@ -69,6 +69,7 @@
 
 <script>
 import moment from "moment";
+import 'moment/locale/sv';
 moment.updateLocale('sv', {
   week: {
     dow: 1,
