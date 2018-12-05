@@ -35,9 +35,10 @@
           :key="date.id"
           :class="{
             'Calendar-day--today' : 
-            date === initialDate &&
-            month === initialMonth && 
-            year === initialYear }"
+              date === initialDate &&
+              month === initialMonth &&
+              year === initialYear  
+          }"
           class="Calendar-day"
         >
           <div class="Calendar-day-content">
@@ -59,12 +60,7 @@
         <time>{{time}}</time>
       </button>
       <div style="display: flex; justify-content: center;">
-        <button 
-          @click="bookTime(selectedDate, selectedTime)"
-          class="Button u-marginTlg"
-        >
-          Boka tid
-        </button>
+        <button @click="bookTime(selectedDate, selectedTime)" class="Button u-marginTlg">Boka tid</button>
       </div>
     </div>
   </div>
@@ -102,7 +98,7 @@ export default {
       return this.dateContext.format('D')
     },
     daysInMonth: function () {
-      return this.dateContext.daysInMonth();
+      return this.dateContext.daysInMonth('D');
     },
     currentDate: function () {
       return this.dateContext.get('D');
@@ -129,7 +125,7 @@ export default {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
     },
     selectDate: function (date){
-      const month = this.dateContext.format('MM');
+      const month = this.dateContext.format('MMMM');
       const year = this.dateContext.format('YYYY');
       const day = moment(year + month + date).format('YYYY-MM-DD');
 
@@ -137,6 +133,7 @@ export default {
       this.selectedTime= '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
+      this.convertStringsToNumber(date);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
@@ -147,6 +144,13 @@ export default {
         console.log(date, time)
       }
       return null;
+    },
+    convertStringsToNumber: function(day) {
+      const year = this.dateContext.format('YYYY');
+      const month = this.dateContext.format('MMMM');
+      const date = moment(year + month + day).format('YYYY-MM-DD');
+      console.log(moment(date).isBefore(moment().format('YYYY-MM-DD')));
+      
     }
   }
 }
