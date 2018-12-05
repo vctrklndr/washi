@@ -4,9 +4,15 @@
       <div class="Calendar--daysHeading">
         <div class="Calendar-header">
           <div class="Calendar-controls">
-            <span v-if="month !== initialMonth || year !== initialYear" @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
+            <span
+              v-if="month !== initialMonth || year !== initialYear"
+              @click="subtractMonth"
+              style="cursor: pointer;"
+            >&lt; Föregående</span>
             <span v-else>&nbsp;</span>
-            <time class="Calendar-selectedDate"> {{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}} </time>
+            <time
+              class="Calendar-selectedDate"
+            >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
             <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
         </div>
@@ -50,7 +56,9 @@
     </div>
     <div class="Calendar--times Grid-cell u-md-size4of10">
       <div class="Calendar-header">
-        <time class="Calendar-selectedDate">{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
+        <time
+          class="Calendar-selectedDate"
+        >{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
       </div>
       <button
         v-for="(time, index) in times"
@@ -61,7 +69,17 @@
         <time>{{time}}</time>
       </button>
       <div style="display: flex; justify-content: center;">
-        <button @click="bookTime(selectedDate, selectedTime)" class="Button u-marginTlg">Boka tid</button>
+        <button
+          v-if="selectedDate !== '' && selectedTime !== ''"
+          @click="bookTime(selectedDate, selectedTime)"
+          class="Button u-marginTlg"
+        >Boka tid</button>
+        <button
+          v-else
+          @click="bookTime(selectedDate, selectedTime)"
+          class="Button Button--disabled u-marginTlg"
+          disabled
+        >Boka tid</button>
       </div>
     </div>
   </div>
@@ -115,6 +133,11 @@ export default {
     },
     initialYear: function () {
       return this.today.format('Y');
+    },
+    isDisable: function (date) {
+      if(date !== this.initialDate) {
+        return true;
+      } return false;
     }
   },
   methods: {
