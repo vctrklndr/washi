@@ -1,4 +1,4 @@
-![Washi logo](https://i.imgur.com/3BVA36U.png)
+![Washi logo](https://i.imgur.com/EtVnrH0.png)
 
 > A Vue.js project
 
