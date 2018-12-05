@@ -6,6 +6,7 @@
         <nav class="PageNav">
           <ul class="PageNav-list">
             <li class="PageNav-Link">Boka tvättid</li>
+            <li class="PageNav-Link">Hjälp</li>
             <li class="PageNav-Link">Regler</li>
             <li class="PageNav-Link">Tvättråd</li>
             <li class="PageNav-Link">Logga ut</li>
