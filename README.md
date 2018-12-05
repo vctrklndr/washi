@@ -1,4 +1,4 @@
-# `washi°`
+![Washi logo](https://i.imgur.com/3BVA36U.png)
 
 > A Vue.js project
 
