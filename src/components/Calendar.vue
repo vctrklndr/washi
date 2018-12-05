@@ -5,7 +5,7 @@
         <div class="Calendar-header">
           <div class="Calendar-controls">
             <span @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
-            <time class="Calendar-selectedDate">{{month + ' - ' + year}}</time>
+            <time class="Calendar-selectedDate"> {{month + ' - ' + year}} </time>
             <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
         </div>
@@ -34,10 +34,10 @@
           @click="selectDate(date)"
           :key="date.id"
           :class="{
-            'Calendar-day--today' : 
-              date === initialDate &&
-              month === initialMonth &&
-              year === initialYear  
+            'Calendar-day--before' : 
+              date < today.format('D') &&
+              month === today.format('MMMM') &&
+              year === today.format('YYYY')
           }"
           class="Calendar-day"
         >
@@ -95,7 +95,7 @@ export default {
       return this.dateContext.format('MMMM');
     },
     dayOfMonth: function() {
-      return this.dateContext.format('D')
+      return this.dateContext.format('D');
     },
     daysInMonth: function () {
       return this.dateContext.daysInMonth('D');
@@ -133,7 +133,6 @@ export default {
       this.selectedTime= '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
-      this.convertStringsToNumber(date);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
@@ -144,13 +143,6 @@ export default {
         console.log(date, time)
       }
       return null;
-    },
-    convertStringsToNumber: function(day) {
-      const year = this.dateContext.format('YYYY');
-      const month = this.dateContext.format('MMMM');
-      const date = moment(year + month + day).format('YYYY-MM-DD');
-      console.log(moment(date).isBefore(moment().format('YYYY-MM-DD')));
-      
     }
   }
 }
