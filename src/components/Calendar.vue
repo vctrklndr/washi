@@ -4,7 +4,8 @@
       <div class="Calendar--daysHeading">
         <div class="Calendar-header">
           <div class="Calendar-controls">
-            <span @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
+            <span v-if="month !== initialMonth || year !== initialYear" @click="subtractMonth" style="cursor: pointer;">&lt; Föregående</span>
+            <span v-else>&nbsp;</span>
             <time class="Calendar-selectedDate"> {{month + ' - ' + year}} </time>
             <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
           </div>
@@ -89,7 +90,7 @@ export default {
   },
   computed: {
     year: function () {
-      return this.dateContext.format('Y');
+      return this.dateContext.format('YYYY');
     },
     month: function () {
       return this.dateContext.format('MMMM');
@@ -114,7 +115,7 @@ export default {
       return this.today.format('MMMM');
     },
     initialYear: function () {
-      return this.today.format('Y');
+      return this.today.format('YYYY');
     }
   },
   methods: {
@@ -133,6 +134,8 @@ export default {
       this.selectedTime= '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
+      console.log(this.initialYear);
+      console.log(this.year);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
