@@ -1,7 +1,7 @@
 <template>
   <section class="Section">
     <div class="Page-container u-textCenter">
-      <h1>Hjälp</h1>
+      <h1 class="Heading">Hjälp</h1>
     </div>
   </section>
 </template>

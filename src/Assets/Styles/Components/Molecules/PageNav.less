@@ -5,16 +5,25 @@
 .PageNav-list {
     padding: 0;
     list-style: none;
+    display: flex;
 }
 
 .PageNav-Link {
-    background-color: @brandColor;
+    margin: 0 5px;
+    background-color: @brandColorDarker;
     border-radius: @radiusLg;
     color: #fafafa;
     display: inline-block;
     font-size: .875em;
     font-weight: 600;
-    padding: .83333333em;
+    padding: .83333333em 1.2em;
     position: relative;
     text-decoration: none;
+    letter-spacing: .02rem;
+}
+.PageNav-Link:hover {
+    background-color: #fafafa;
+    color: @brandColor;
+    transition: 400ms;
+    cursor: pointer;
 }

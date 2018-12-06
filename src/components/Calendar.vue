@@ -1,7 +1,7 @@
 <template>
   <section class="Section">
     <div class="u-textCenter">
-      <h1>Boka tvättid</h1>
+      <h1 class="Heading">Boka tvättid</h1>
     </div>
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10">
