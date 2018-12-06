@@ -21,7 +21,7 @@
 	text-align: center;
 
 	.Calendar-selectedDate {
-		font-weight: @fontFamilySemiBold;
+		font-family: @fontFamilyBold;
 	}
 
 	@media @bpLarge {
@@ -41,8 +41,7 @@
 	color: #313131;
 	flex-basis: 100/7.5%;
 	//flex-grow: 1;
-	font-family: inherit;
-	font-weight: @fontFamilyRegular;
+	font-family: @fontFamilyRegular;
 	margin: 1px;
 	padding: 0;
 	text-align: center;
@@ -107,8 +106,7 @@
 	border: 2px solid transparent;
 	border-radius: 2px;
 	color: lightgrey;
-	font-family: inherit;
-	font-weight: @fontFamilyRegular;
+	font-family: @fontFamilyRegular;
 	margin: 1px;
 	padding: @spaceDefault;
 	position: relative;
@@ -128,7 +126,7 @@
 }
 
 .Calendar-day--today {
-    font-weight: @fontFamilyBold;
+    font-family: @fontFamilyBold;
     color: @brandColor;
 }
 

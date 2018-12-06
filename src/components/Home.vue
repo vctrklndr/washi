@@ -1,7 +1,7 @@
 <template>
   <section class="Section">
     <div class="Page-container u-textCenter">
-      <h1 class="Heading">{{message}}</h1>
+      <h1 class="Heading Heading--h1">{{message}}</h1>
     </div>
   </section>
 </template>

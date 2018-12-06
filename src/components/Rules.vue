@@ -1,7 +1,7 @@
 <template>
   <section class="Section">
     <div class="Page-container">
-      <h1 class="Heading">Regler</h1>
+      <h1 class="Heading Heading--h1">Regler</h1>
     </div>
   </section>
 </template>
