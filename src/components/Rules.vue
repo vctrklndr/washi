@@ -1,18 +1,13 @@
 <template>
   <section class="Section">
     <div class="Page-container u-textCenter">
-      <h1>{{message}}</h1>
+      <h1>Regler</h1>
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'home',
-  data () {
-    return {
-      message: 'Välkommen till världens guffigaste tvättstuga!'
-    }
-  }
+  name: 'help'
 }
 </script>
