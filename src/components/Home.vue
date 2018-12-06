@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'home',
   data () {
     return {
       message: 'Välkommen till världens guffigaste tvättstuga!'

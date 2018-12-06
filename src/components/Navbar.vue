@@ -2,11 +2,11 @@
   <header class="Header">
     <div class="Page-container">
       <div class="Header-container">
-        <img class="Header-logo" src="src/Assets/Images/washi-logo.svg">
+        <router-link to="/"><img class="Header-logo" src="src/Assets/Images/washi-logo.svg"></router-link>
         <nav class="PageNav">
           <ul class="PageNav-list">
-            <li class="PageNav-Link">Boka tvättid</li>
-            <li class="PageNav-Link">Hjälp</li>
+            <li class="PageNav-Link"><router-link to="/boka">Boka tvättid</router-link></li>
+            <li class="PageNav-Link"><router-link to="/hjalp">Hjälp</router-link></li>
             <li class="PageNav-Link">Regler</li>
             <li class="PageNav-Link">Tvättråd</li>
             <li class="PageNav-Link">Logga ut</li>
