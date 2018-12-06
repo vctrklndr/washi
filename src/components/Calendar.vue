@@ -1,92 +1,97 @@
 <template>
-  <div class="Grid u-marginTlg">
-    <div class="Grid-cell u-md-size6of10">
-      <div class="Calendar--daysHeading">
-        <div class="Calendar-header">
-          <div class="Calendar-controls">
-            <span
-              v-if="month !== initialMonth || year !== initialYear"
-              @click="subtractMonth"
-              style="cursor: pointer;"
-            >&lt; Föregående</span>
-            <span v-else>&nbsp;</span>
-            <time
-              class="Calendar-selectedDate"
-            >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-            <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
+  <section class="Section">
+    <div class="u-textCenter">
+      <h1>Boka tvättid</h1>
+    </div>
+    <div class="Grid u-marginTlg">
+      <div class="Grid-cell u-md-size6of10">
+        <div class="Calendar--daysHeading">
+          <div class="Calendar-header">
+            <div class="Calendar-controls">
+              <span
+                v-if="month !== initialMonth || year !== initialYear"
+                @click="subtractMonth"
+                style="cursor: pointer;"
+              >&lt; Föregående</span>
+              <span v-else>&nbsp;</span>
+              <time
+                class="Calendar-selectedDate"
+              >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
+              <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
+            </div>
+          </div>
+          <div class="Calendar u-paddingBz">
+            <button
+              v-for="day in days"
+              class="Calendar-day Calendar-day--heading"
+              :key="day.id"
+              disabled
+            >
+              <div class="Calendar-day-content">
+                <div class="Calendar-dayNumber">{{day}}</div>
+              </div>
+            </button>
           </div>
         </div>
-        <div class="Calendar u-paddingBz">
+        <div class="Calendar u-marginTz">
           <button
-            v-for="day in days"
-            class="Calendar-day Calendar-day--heading"
-            :key="day.id"
+            class="Calendar-day Calendar-day--noDate"
+            v-for="blank in firstDayOfMonth"
+            :key="blank.id"
             disabled
+          ></button>
+          <button
+            v-for="date in daysInMonth"
+            @click="selectDate(date)"
+            :key="date.id"
+            :class="{
+              'Calendar-day--today':
+                date === initialDate && 
+                month === initialMonth &&
+                year === initialYear,
+              'Calendar-day--before': 
+                date < today.format('D') &&
+                month === today.format('MMMM') &&
+                year === today.format('YYYY')
+            }"
+            class="Calendar-day" 
           >
             <div class="Calendar-day-content">
-              <div class="Calendar-dayNumber">{{day}}</div>
+              <div class="Calendar-dayNumber">{{date}}</div>
             </div>
           </button>
         </div>
       </div>
-      <div class="Calendar u-marginTz">
+      <div class="Calendar--times Grid-cell u-md-size4of10">
+        <div class="Calendar-header">
+          <time
+            class="Calendar-selectedDate"
+          >{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
+        </div>
         <button
-          class="Calendar-day Calendar-day--noDate"
-          v-for="blank in firstDayOfMonth"
-          :key="blank.id"
-          disabled
-        ></button>
-        <button
-          v-for="date in daysInMonth"
-          @click="selectDate(date)"
-          :key="date.id"
-          :class="{
-            'Calendar-day--today':
-              date === initialDate && 
-              month === initialMonth &&
-              year === initialYear,
-            'Calendar-day--before': 
-              date < today.format('D') &&
-              month === today.format('MMMM') &&
-              year === today.format('YYYY')
-          }"
-          class="Calendar-day" 
+          v-for="(time, index) in times"
+          :key="time.id"
+          class="Calendar-time"
+          @click="selectTime(index + 1)"
         >
-          <div class="Calendar-day-content">
-            <div class="Calendar-dayNumber">{{date}}</div>
-          </div>
+          <time>{{time}}</time>
         </button>
+        <div style="display: flex; justify-content: center;">
+          <button
+            v-if="selectedDate !== '' && selectedTime !== ''"
+            @click="bookTime(selectedDate, selectedTime)"
+            class="Button u-marginTlg"
+          >Boka tid</button>
+          <button
+            v-else
+            @click="bookTime(selectedDate, selectedTime)"
+            class="Button Button--disabled u-marginTlg"
+            disabled
+          >Boka tid</button>
+        </div>
       </div>
     </div>
-    <div class="Calendar--times Grid-cell u-md-size4of10">
-      <div class="Calendar-header">
-        <time
-          class="Calendar-selectedDate"
-        >{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
-      </div>
-      <button
-        v-for="(time, index) in times"
-        :key="time.id"
-        class="Calendar-time"
-        @click="selectTime(index + 1)"
-      >
-        <time>{{time}}</time>
-      </button>
-      <div style="display: flex; justify-content: center;">
-        <button
-          v-if="selectedDate !== '' && selectedTime !== ''"
-          @click="bookTime(selectedDate, selectedTime)"
-          class="Button u-marginTlg"
-        >Boka tid</button>
-        <button
-          v-else
-          @click="bookTime(selectedDate, selectedTime)"
-          class="Button Button--disabled u-marginTlg"
-          disabled
-        >Boka tid</button>
-      </div>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
