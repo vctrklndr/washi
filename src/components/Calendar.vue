@@ -1,6 +1,6 @@
 <template>
   <section class="Section">
-    <div class="u-textCenter">
+    <div>
       <h1 class="Heading">Boka tvättid</h1>
     </div>
     <div class="Grid u-marginTlg">

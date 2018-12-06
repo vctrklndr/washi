@@ -1,6 +1,6 @@
 <template>
   <section class="Section">
-    <div class="Page-container u-textCenter">
+    <div class="Page-container">
       <h1 class="Heading">Hjälp</h1>
     </div>
   </section>

@@ -6,6 +6,16 @@
           <img class="Header-logo" src="src/Assets/Images/washi-logo.svg">
         </router-link>
         <nav class="PageNav">
+          <div
+            class="Hamburger"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           <ul class="PageNav-list">
             <li>
               <router-link class="PageNav-Link" to="/boka">Boka tvättid</router-link>
@@ -26,3 +36,11 @@
     </div>
   </header>
 </template>
+
+<script>
+console.log("Hej");
+
+export default {
+  name: 'navbar'
+}
+</script>
