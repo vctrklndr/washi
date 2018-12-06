@@ -3,12 +3,10 @@
     <div class="Page-container">
       <div class="Header-container">
         <router-link to="/">
-          <img class="Header-logo" src="src/Assets/Images/washi-logo.svg">
+          <img class="Header-logo" src="src/Assets/Images/washi-logo.svg" alt="Washi logo">
         </router-link>
         <nav class="PageNav">
-          <div
-            class="Hamburger"
-          >
+          <div class="Hamburger">
             <span></span>
             <span></span>
             <span></span>
