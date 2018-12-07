@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <navbar />
-      <main class="Page-main">
     <div class="Page-container">
+      <main class="Page-main">
         <router-view></router-view>
-    </div>
       </main>
+    </div>
     <w-footer />
   </div>
 </template>
