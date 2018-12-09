@@ -16,7 +16,10 @@
             <time
               class="Calendar-selectedDate"
             >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-            <span @click="addMonth" class="Calendar-controls">Nästa &gt;</span>
+            <span 
+              @click="addMonth"
+              class="Calendar-controls"
+            >Nästa &gt;</span>
           </div>
           <div class="Calendar u-paddingBz">
             <button
