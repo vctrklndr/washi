@@ -7,18 +7,16 @@
       <div class="Grid-cell u-md-size6of10">
         <div class="Calendar--daysHeading">
           <div class="Calendar-header">
-            <div class="Calendar-controls">
-              <span
-                v-if="month !== initialMonth || year !== initialYear"
-                @click="subtractMonth"
-                style="cursor: pointer;"
-              >&lt; Föregående</span>
-              <span v-else>&nbsp;</span>
-              <time
-                class="Calendar-selectedDate"
-              >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-              <span @click="addMonth" style="cursor: pointer;">Nästa &gt;</span>
-            </div>
+            <span
+              v-if="month !== initialMonth || year !== initialYear"
+              @click="subtractMonth"
+              class="Calendar-controls"
+            >&lt; Föregående</span>
+            <span v-else>&nbsp;</span>
+            <time
+              class="Calendar-selectedDate"
+            >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
+            <span @click="addMonth" class="Calendar-controls">Nästa &gt;</span>
           </div>
           <div class="Calendar u-paddingBz">
             <button
@@ -54,7 +52,7 @@
                 month === today.format('MMMM') &&
                 year === today.format('YYYY')
             }"
-            class="Calendar-day" 
+            class="Calendar-day"
           >
             <div class="Calendar-day-content">
               <div class="Calendar-dayNumber">{{date}}</div>
