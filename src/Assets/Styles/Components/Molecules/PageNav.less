@@ -1,15 +1,40 @@
 .PageNav {
     display: block;
+    height: 71px;
 }
 
 .PageNav-list {
     padding: 0;
     list-style: none;
-    display: flex;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 71px);
+    background-color: @brandColor;
+    z-index: 10;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 400ms;
+    @media @bpMedium {
+        opacity: 1;
+        display: flex;
+        position: relative;
+        background-color: transparent;
+        top: auto;
+        left: auto;
+        width: auto;
+        height: auto;
+        transition: opacity 400ms;
+    }
+}
+
+.PageNav-list--open {
+    opacity: 1;
 }
 
 .PageNav-Link {
-    margin: 0 5px;
+    margin: 10px 5px;
     background-color: @brandColorDarker;
     border-radius: @radiusLg;
     color: @washiWhite;
@@ -20,6 +45,9 @@
     position: relative;
     text-decoration: none;
     letter-spacing: .02rem;
+    @media @bpMedium {
+        margin: 0 5px;
+    }
 }
 
 .PageNav-Link:hover {

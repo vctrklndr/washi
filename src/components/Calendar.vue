@@ -163,7 +163,7 @@ export default {
       const day = moment(year + month + date).format('YYYY-MM-DD');
 
       this.selectedDate = day;
-      this.selectedTime= '';
+      this.selectedTime = '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
       console.log(this.isActive);
