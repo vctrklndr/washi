@@ -93,9 +93,12 @@
       </div>
     </div>
   </section>
+  
 </template>
 
 <script>
+
+
 import moment from "moment";
 import 'moment/locale/sv';
 moment.updateLocale('sv', {
@@ -104,6 +107,7 @@ moment.updateLocale('sv', {
   },
 })
 export default {
+  
   data() {
     return {
       today: moment(),
@@ -112,7 +116,12 @@ export default {
       days: ['M', 'T', 'O', 'T', 'F', 'L', 'S'],
       times: ['06.00 – 09.00', '09.00 – 12.00', '12.00 – 15.00', '15.00 – 18.00', '18.00 – 21.00'],
       selectedDate: '',
-      selectedTime: ''
+      selectedTime: '',
+      errorMessage : "",
+      successMessage : "",
+      users: [],
+      newUser: {userId: "", apartmentNumber: "", password: ""},
+      clickedUser: {},
     }
   },
   computed: {
@@ -150,7 +159,12 @@ export default {
       } return false;
     }
   },
+  mounted: function () {
+		console.log("Hi KK");
+		this.getAllUsers();
+	},
   methods: {
+    
     addMonth: function () {
       this.dateContext = moment(this.dateContext).add(1, 'month');
     },
@@ -171,7 +185,79 @@ export default {
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
       console.log(this.selectedTime);
-    },
+    },getAllUsers: function(){
+			axios.get("http://localhost:8888/VuePHP/api.php?action=read")
+			.then(function(response){
+        console.log(response);
+				if (response.data.error) {
+          this.errorMessage = response.data.message;
+          console.log("bögbajs")
+				}else{
+          this.users = response.data.users;
+          console.log(this.users)
+				}
+			});
+		},
+		saveUser:function(){
+
+			var formData = app.toFormData(app.newUser);
+			axios.post("http://localhost:8888/VuePHP/api.php?action=create", formData)
+				.then(function(response){
+					console.log(response);
+					app.newUser = {userId: "", apartmentNumber: "", password: ""};
+					if (response.data.error) {
+						app.errorMessage = response.data.message;
+					}else{
+						app.successMessage = response.data.message;
+						app.getAllUsers();
+					}
+				});
+			},
+			updateUser:function(){
+
+			var formData = app.toFormData(app.clickedUser);
+			axios.post("http://localhost:8888/VuePHP/api.php?action=update", formData)
+				.then(function(response){
+					console.log(response);
+					app.clickedUser = {};
+					if (response.data.error) {
+						app.errorMessage = response.data.message;
+					}else{
+						app.successMessage = response.data.message;
+						app.getAllUsers();
+					}
+				});
+			},
+			deleteUser:function(){
+
+			var formData = app.toFormData(app.clickedUser);
+			axios.post("http://localhost:8888/VuePHP/api.php?action=delete", formData)
+				.then(function(response){
+					console.log(response);
+					app.clickedUser = {};
+					if (response.data.error) {
+						app.errorMessage = response.data.message;
+					}else{
+						app.successMessage = response.data.message;
+						app.getAllUsers();
+					}
+				});
+			},
+			selectUser(user){
+				app.clickedUser = user;
+			},
+
+			toFormData: function(obj){
+				var form_data = new FormData();
+			      for ( var key in obj ) {
+			          form_data.append(key, obj[key]);
+			      }
+			      return form_data;
+			},
+			clearMessage: function(){
+				app.errorMessage = "";
+				app.successMessage = "";
+			},
     bookTime: function(date, time){
       if(date !== "" && time !== "") {
         console.log(date,time)
