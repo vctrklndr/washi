@@ -3,10 +3,15 @@
     <div class="Page-container">
       <div class="Header-container">
         <router-link to="/">
-          <img class="Header-logo" src="src/Assets/Images/washi-logo.svg" alt="Washi logo">
+          <img
+            @click="closeMenu"
+            class="Header-logo"
+            src="src/Assets/Images/washi-logo.svg"
+            alt="Washi logo"
+          >
         </router-link>
         <nav class="PageNav">
-          <div class="Hamburger" @click="toggleMenu">
+          <div class="Hamburger" :class="{'Hamburger--open': isActive}" @click="toggleMenu">
             <span></span>
             <span></span>
             <span></span>
@@ -49,7 +54,6 @@ export default {
       this.isActive = !this.isActive;
     },
     closeMenu: function () {
-      console.log("Hejsansvejsan");
       this.isActive = false;
     }
   }
