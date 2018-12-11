@@ -1,5 +1,5 @@
 <template>
-  <section class="Section">
+  <section class="Section Section--contain">
     <div class="Page-container">
       <h1 class="Heading Heading--h1 Heading-line u-marginBz">Tvättråd</h1>
       <p>Här förklarar vi de vanligaste tvättsymbolerna.</p>

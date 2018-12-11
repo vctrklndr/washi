@@ -1,5 +1,5 @@
 <template>
-  <section class="Section">
+  <section class="Section Section--contain">
     <div>
       <h1 class="Heading Heading--h1 Heading-line">Boka tvättid</h1>
     </div>

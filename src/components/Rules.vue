@@ -1,5 +1,5 @@
 <template>
-  <section class="Section">
+  <section class="Section Section--contain">
     <div class="Page-container">
       <h1 class="Heading Heading--h1 Heading-line">Regler</h1>
       <h4 class="Heading Heading--h2">Regler att följa:</h4>
