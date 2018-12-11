@@ -50,7 +50,7 @@ export default {
       console.log(this);
     }
   },
-  mounted: function() {
+  created: function() {
     this.renderFunction();
   },
   data() {
