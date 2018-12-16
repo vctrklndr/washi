@@ -143,11 +143,6 @@ export default {
     },
     initialYear: function () {
       return this.today.format('Y');
-    },
-    isDisable: function (date) {
-      if(date !== this.initialDate) {
-        return true;
-      } return false;
     }
   },
   methods: {
@@ -166,7 +161,6 @@ export default {
       this.selectedTime = '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
-      console.log(this.isActive);
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;

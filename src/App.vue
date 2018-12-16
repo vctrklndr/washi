@@ -14,7 +14,7 @@
 import Navbar from "./components/Navbar.vue";
 import WFooter from "./components/WFooter.vue";
 export default {
-  name: "main",
+  name: "app",
   components: {
     Navbar,
     WFooter
