@@ -1,28 +1,27 @@
 <template>
   <div id="app">
     <navbar/>
-    <main class="Page-main">
       <div class="Page-container">
+    <main class="Page-main">
         <router-view></router-view>
-      </div>
     </main>
+      </div>
     <w-footer/>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
-import WFooter from './components/WFooter.vue';
+import Navbar from "./components/Navbar.vue";
+import WFooter from "./components/WFooter.vue";
 export default {
-  name: 'app',
+  name: "main",
   components: {
     Navbar,
     WFooter
   }
-}
+};
 </script>
 
 <style lang="less">
-  @import 'src/Assets/Styles/app.less';
+@import "src/Assets/Styles/app.less";
 </style>
-
