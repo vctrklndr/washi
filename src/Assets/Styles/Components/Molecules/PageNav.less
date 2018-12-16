@@ -18,7 +18,7 @@
   flex-direction: column;
   z-index: 10;
   text-align: center;
-  opacity: 0;
+  display: none;
   margin: -71px 0 0 0;
 
   @media @bpMedium {
@@ -34,7 +34,7 @@
     margin: 0;
   }
   &&--open {
-    opacity: 1;
+    display: flex;
     -webkit-animation: slide-in-top 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     animation: slide-in-top 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
