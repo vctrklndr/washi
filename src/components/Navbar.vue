@@ -11,7 +11,7 @@
           >
         </router-link>
         <nav class="PageNav">
-          <div class="Hamburger" :class="{'Hamburger--open': isActive}" @click="toggleMenu">
+          <div class="Hamburger" :class="{'Hamburger--open': isActive}" @click="toggleMenu(); disableScroll();">
             <span></span>
             <span></span>
             <span></span>
@@ -41,22 +41,33 @@
 </template>
 
 <script>
-
 export default {
-  name: 'navbar',
+  name: "navbar",
   data() {
     return {
       isActive: false
-    }
+    };
   },
   methods: {
-    toggleMenu: function () {
+    toggleMenu: function() {
       this.isActive = !this.isActive;
     },
-    closeMenu: function () {
+    disableScroll: function() {
+      const app = document.getElementById("app");
+      if (app.classList.contains('disable-scroll')){
+        app.classList.remove('disable-scroll');     
+      } else {
+        app.classList.add('disable-scroll');   
+      }
+    },
+    closeMenu: function() {
       this.isActive = false;
+      const app = document.getElementById("app");
+      app.classList.remove("disable-scroll");
+      window.scrollTo({
+        top: 0
+      });
     }
   }
-}
-
+};
 </script>
