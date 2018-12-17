@@ -7,7 +7,7 @@
         och kunna utföra sitt tvättande på ett bra sätt. Lämna tvättstugan på samma
         sätt som Du önskar att den skall vara när Du kommer för att tvätta.
       </p>
-      <ul class="u-md-size1of2 u-marginTxlg">
+      <ul class="u-md-size1of2 u-marginTlg">
         <li class="List-item u-textLarge ">Den som inte tar bort luddet ska dö</li>
         <li class="List-item">Du kan tvätta mellan klockan
           <span class="u-textHighlight u-textLarge ">07.00</span> och
