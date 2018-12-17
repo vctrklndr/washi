@@ -190,7 +190,7 @@ export default {
 
       console.log(this.selectedTime);
     },getAllUsers: function(){
-			axios.get("http://localhost:8888/VuePHP/api.php?action=read")
+			axios.get("http://mikahl.se/VuePHP/api.php?action=read")
 			.then(function(response){
         console.log(response);
 				if (response.data.error) {
@@ -205,7 +205,7 @@ export default {
 		saveUser:function(){
 
 			var formData = this.toFormData(this.newBooking);
-			axios.post("http://localhost:8888/VuePHP/api.php?action=create", formData)
+			axios.post("http://mikahl.se/VuePHP/api.php?action=create", formData)
 				.then(function(response){
           console.log(response);
           //this.newUser = {userId: "", apartmentNumber: "", password: ""};
