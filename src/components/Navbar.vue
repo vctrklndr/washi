@@ -2,7 +2,7 @@
   <header class="Header">
     <div class="Page-container">
       <div class="Header-container">
-        <router-link to="/home">
+        <router-link to="/">
           <img
             @click="closeMenu"
             class="Header-logo"
