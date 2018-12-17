@@ -80,7 +80,7 @@
         <div style="display: flex; justify-content: center;">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="bookTime(selectedDate, selectedTime)"
+            @click="saveUser"
             class="Button u-marginTlg"
           >Boka tid</button>
           <button
@@ -120,7 +120,8 @@ export default {
       errorMessage : "",
       successMessage : "",
       users: [],
-      newUser: {userId: "", apartmentNumber: "", password: ""},
+      newBooking: {selectedDate: '' , selectedTime: ''},
+      newUser: {selectedTime: "mumma", apartmentNumber: "gumma", password: "fumma"},
       clickedUser: {},
     }
   },
@@ -181,9 +182,12 @@ export default {
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
       console.log(this.isActive);
+      //this.newBooking = {selectedDate: day};
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
+      this.newBooking = {selectedDate: this.selectedDate, selectedTime: "tid" + time};
+
       console.log(this.selectedTime);
     },getAllUsers: function(){
 			axios.get("http://localhost:8888/VuePHP/api.php?action=read")
@@ -191,7 +195,7 @@ export default {
         console.log(response);
 				if (response.data.error) {
           this.errorMessage = response.data.message;
-          console.log("bögbajs")
+          console.log("testing")
 				}else{
           this.users = response.data.users;
           console.log(this.users)
@@ -200,16 +204,17 @@ export default {
 		},
 		saveUser:function(){
 
-			var formData = app.toFormData(app.newUser);
+			var formData = this.toFormData(this.newBooking);
 			axios.post("http://localhost:8888/VuePHP/api.php?action=create", formData)
 				.then(function(response){
-					console.log(response);
-					app.newUser = {userId: "", apartmentNumber: "", password: ""};
+          console.log(response);
+          //this.newUser = {userId: "", apartmentNumber: "", password: ""};
+           //selectedTime 
 					if (response.data.error) {
-						app.errorMessage = response.data.message;
+						this.errorMessage = response.data.message;
 					}else{
-						app.successMessage = response.data.message;
-						app.getAllUsers();
+						this.successMessage = response.data.message;
+						this.getAllUsers();
 					}
 				});
 			},
@@ -248,6 +253,7 @@ export default {
 			},
 
 			toFormData: function(obj){
+        console.log(obj)
 				var form_data = new FormData();
 			      for ( var key in obj ) {
 			          form_data.append(key, obj[key]);
