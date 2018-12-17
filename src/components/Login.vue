@@ -5,17 +5,12 @@
     <input class="Input" id="username" type="text" placeholder="Användarnamn" />
     <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
     <input class="Input" id="password" type="password" placeholder="Lösenord" />
-    <a href="#/main" class="Button u-marginTlg">Logga in</a>
-    <router-link class="Link u-textXSmall" to="/">Admin</router-link>
+    <button class="Button u-marginTlg">Logga in</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "app"
+  name: "login"
 };
 </script>
-
-<style lang="less">
-@import "src/Assets/Styles/app.less";
-</style>
