@@ -45,6 +45,7 @@
             v-for="date in daysInMonth"
             @click="selectDate(date)"
             :key="date.id"
+            :id="setDateId(date)"
             :class="{
               'Calendar-day--today':
                 date === initialDate && 
@@ -74,6 +75,8 @@
           :key="time.id"
           class="Calendar-time"
           @click="selectTime(index + 1)"
+          :id = "'tid' + (index + 1)"
+          
         >
           <time>{{time}}</time>
         </button>
@@ -119,9 +122,8 @@ export default {
       selectedTime: '',
       errorMessage : "",
       successMessage : "",
-      users: [],
+      bookings: {},
       newBooking: {selectedDate: '' , selectedTime: ''},
-      newUser: {selectedTime: "mumma", apartmentNumber: "gumma", password: "fumma"},
       clickedUser: {},
     }
   },
@@ -157,15 +159,22 @@ export default {
   },
   mounted: function () {
 		console.log("Hi KK");
-		this.getAllUsers();
-	},
+    this.getAllUsers();
+  },
   methods: {
-    
+
     addMonth: function () {
       this.dateContext = moment(this.dateContext).add(1, 'month');
     },
     subtractMonth: function () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month');
+    },
+
+    setDateId: function (date) {
+      const month = this.dateContext.format('MMMM');
+      const year = this.dateContext.format('YYYY');
+      const day = moment(year + month + date).format('YYYY-MM-DD');
+      return day
     },
     selectDate: function (date){
       const month = this.dateContext.format('MMMM');
@@ -175,25 +184,24 @@ export default {
       this.selectedDate = day;
       this.selectedTime = '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
-      console.log(this.selectedDate);
-      console.log(this.isActive);
-      //this.newBooking = {selectedDate: day};
+      console.log(this.selectedDate)
+
     },
     selectTime: function(time){      
       this.selectedTime = "tid" + time;
       this.newBooking = {selectedDate: this.selectedDate, selectedTime: "tid" + time};
-
       console.log(this.selectedTime);
+
     },getAllUsers: function(){
 			axios.get("http://mikahl.se/VuePHP/api.php?action=read")
 			.then(function(response){
-        console.log(response);
+        console.log(response.data.bookings);
 				if (response.data.error) {
-          this.errorMessage = response.data.message;
-          console.log("testing")
+          app.errorMessage = response.data.message;
 				}else{
-          this.users = response.data.users;
-          console.log(this.users)
+          app.bookings = response.data.bookings;
+          
+          console.log(app.bookings);
 				}
 			});
 		},
@@ -203,12 +211,11 @@ export default {
 			axios.post("http://mikahl.se/VuePHP/api.php?action=create", formData)
 				.then(function(response){
           console.log(response);
-          //this.newUser = {userId: "", apartmentNumber: "", password: ""};
-           //selectedTime 
+
 					if (response.data.error) {
-						this.errorMessage = response.data.message;
+						app.errorMessage = response.data.message;
 					}else{
-						this.successMessage = response.data.message;
+						app.successMessage = response.data.message;
 						this.getAllUsers();
 					}
 				});
@@ -218,7 +225,7 @@ export default {
 			var formData = app.toFormData(app.clickedUser);
 			axios.post("http://localhost:8888/VuePHP/api.php?action=update", formData)
 				.then(function(response){
-					console.log(response);
+					console.log(response).data.bookings;
 					app.clickedUser = {};
 					if (response.data.error) {
 						app.errorMessage = response.data.message;
@@ -267,5 +274,6 @@ export default {
     }
   }
 }
+
 
 </script>
