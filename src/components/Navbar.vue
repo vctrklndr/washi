@@ -2,7 +2,7 @@
   <header class="Header">
     <div class="Page-container">
       <div class="Header-container">
-        <router-link to="/">
+        <router-link to="/home">
           <img
             @click="closeMenu"
             class="Header-logo"
@@ -32,7 +32,9 @@
             <li @click="closeMenu">
               <router-link class="PageNav-Link" to="/tvattrad">Tvättråd</router-link>
             </li>
-            <li class="PageNav-Link">Logga ut</li>
+            <li @click="closeMenu">
+              <router-link class="PageNav-Link" to="/">Logga ut</router-link>
+            </li>
           </ul>
         </nav>
       </div>

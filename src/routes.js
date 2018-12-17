@@ -1,7 +1,7 @@
 import Calendar from './components/Calendar.vue';
 import Help from './components/Help.vue';
-import Login from './components/Login.vue';
 import Home from './components/Home.vue';
+import Login from './components/Login.vue';
 import Rules from './components/Rules.vue';
 import Washing from './components/Washing.vue';
 
