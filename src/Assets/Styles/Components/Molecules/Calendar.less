@@ -134,7 +134,15 @@
     color: @brandColor;
 }
 
-.Calendar-day--active {
+.Calendar-day:active {
     background-color: @brandColor;
     color: @washiWhite;
+}
+
+.Calendar-day:hover,
+.Calendar-time:hover {
+	background-color: @brandColor;
+	color: @washiWhite;
+	transition: all 800ms;
+	cursor: pointer;
 }

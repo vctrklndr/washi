@@ -1,30 +1,86 @@
 .PageNav {
-    display: block;
+  display: block;
+  height: 71px;
 }
 
 .PageNav-list {
-    padding: 0;
-    list-style: none;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  top: 71px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: @brandColor;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+  text-align: center;
+  display: none;
+  margin: -71px 0 0 0;
+
+  @media @bpMedium {
     display: flex;
+    flex-direction: row;
+    position: relative;
+    background-color: transparent;
+    top: 16px;
+    left: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+  &&--open {
+    display: flex;
+    -webkit-animation: slide-in-top 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: slide-in-top 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 }
 
 .PageNav-Link {
+  margin: 10px 5px;
+  background-color: @brandColorDarker;
+  border-radius: @radiusLg;
+  color: @washiWhite;
+  display: inline-block;
+  font-size: 1.2em;
+  font-family: @fontFamilySemiBold;
+  padding: 0.83333333em 1.2em;
+  position: relative;
+  text-decoration: none;
+  letter-spacing: 0.02rem;
+  @media @bpMedium {
     margin: 0 5px;
-    background-color: @brandColorDarker;
-    border-radius: @radiusLg;
-    color: @washiWhite;
-    display: inline-block;
     font-size: .875em;
-    font-family: @fontFamilySemiBold;
-    padding: .83333333em 1.2em;
-    position: relative;
-    text-decoration: none;
-    letter-spacing: .02rem;
+  }
 }
 
 .PageNav-Link:hover {
-    background-color: @washiWhite;
-    color: @brandColor;
-    transition: all 800ms;
-    cursor: pointer;
+  background-color: @washiWhite;
+  color: @brandColor;
+  transition: all 800ms;
+  cursor: pointer;
+}
+
+@-webkit-keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
 }

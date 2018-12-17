@@ -4,4 +4,22 @@
     font-family: @fontFamilyBold;
     font-size: @textSizeXXLarge;
   }
+
+  &&--h2 {
+    font-family: @fontFamilyBold;
+    font-size: @textSizeMedium;
+  }
+  &&--altColor {
+    color: pink;
+  }
+}
+
+.Heading-line::after {
+  content: '';
+  vertical-align: middle;
+  width: 50px;
+  height: 6px;
+  margin: 0 0 7px 10px;
+  background-color: @brandColor;
+  display: inline-block;
 }

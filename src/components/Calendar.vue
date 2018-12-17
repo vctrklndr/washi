@@ -1,7 +1,7 @@
 <template>
-  <section class="Section">
+  <section class="Section Section--contain">
     <div>
-      <h1 class="Heading Heading--h1">Boka tvättid</h1>
+      <h1 class="Heading Heading--h1 Heading-line">Boka tvättid</h1>
     </div>
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10">
@@ -153,11 +153,6 @@ export default {
     },
     initialYear: function () {
       return this.today.format('Y');
-    },
-    isDisable: function (date) {
-      if(date !== this.initialDate) {
-        return true;
-      } return false;
     }
   },
   mounted: function () {
@@ -178,7 +173,7 @@ export default {
       const day = moment(year + month + date).format('YYYY-MM-DD');
 
       this.selectedDate = day;
-      this.selectedTime= '';
+      this.selectedTime = '';
       this.displayDate = moment(year + month + date).format('dddd' +' D ' + 'MMMM');
       console.log(this.selectedDate);
       console.log(this.isActive);
