@@ -8,10 +8,6 @@ import Washing from './components/Washing.vue';
 export default [
   {
     path: '/',
-    component: Login
-  },
-  {
-    path: '/home',
     component: Home
   },
   {

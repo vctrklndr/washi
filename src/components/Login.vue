@@ -1,18 +1,17 @@
 <template>
-  <div class="Login-container u-marginTlg">
-    <img class="Login-logo u-marginVlg" src="src/Assets/Images/washi-logo-brandcolor.svg" alt="Logo" />
+  <div class="Login-container">
+    <img class="Login-logo u-marginVlg" src="src/Assets/Images/washi-logo.svg" alt="Logo" />
     <label class="Input-label u-textXSmall" for="username">Användarnamn:</label>
     <input class="Input" id="username" type="text" placeholder="Användarnamn" />
     <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
     <input class="Input" id="password" type="password" placeholder="Lösenord" />
-    <a href="#/main" class="Button u-marginTlg">Logga in</a>
-    <router-link class="Link u-textXSmall" to="/">Admin</router-link>
+    <button class="Button Button--altColor u-marginTlg">Logga in</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "app"
+  name: "login"
 };
 </script>
 
