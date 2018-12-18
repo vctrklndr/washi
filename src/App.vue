@@ -1,31 +1,38 @@
 <template>
   <div id="app">
-    <navbar v-if="loggedIn === true"/>
-    <login v-if="loggedIn !== true" />
-    <div class="Page-container" v-if="loggedIn === true">
-      <main class="Page-main">
-        <router-view></router-view>
-      </main>
+    <user v-if="loggedIn === true"/>
+    <div v-else class="Login-container">
+      <img
+        class="Login-logo u-marginVlg"
+        src="src/Assets/Images/washi-logo.svg"
+        alt="Logo"
+      >
+      <label class="Input-label u-textXSmall" for="username">Användarnamn:</label>
+      <input class="Input" id="username" type="text" placeholder="Användarnamn">
+      <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
+      <input class="Input" id="password" type="password" placeholder="Lösenord">
+      <button @click="loginUser()" class="Button Button--altColor u-marginTlg">Logga in</button>
     </div>
-    <w-footer v-if="loggedIn === true"/>
   </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar.vue";
-import WFooter from "./components/WFooter.vue";
-import Login from "./components/Login.vue";
+import User from "./User/User.vue";
+
 export default {
   name: "app",
   components: {
-    Navbar,
-    WFooter,
-    Login
+    User
   },
   data() {
     return {
-      loggedIn: true
+      loggedIn: false
     };
+  },
+  methods: {
+    loginUser: function() {
+      this.loggedIn = true;
+    }
   }
 };
 </script>

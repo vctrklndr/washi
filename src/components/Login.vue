@@ -14,7 +14,3 @@ export default {
   name: "login"
 };
 </script>
-
-<style lang="less">
-@import "src/Assets/Styles/app.less";
-</style>
