@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <user v-if="loggedIn === true"/>
-    <div v-else class="Login-container u-marginTlg">
+    <div v-else class="Login-container">
       <img
         class="Login-logo u-marginVlg"
-        src="src/Assets/Images/washi-logo-brandcolor.svg"
+        src="src/Assets/Images/washi-logo.svg"
         alt="Logo"
       >
       <label class="Input-label u-textXSmall" for="username">Användarnamn:</label>
       <input class="Input" id="username" type="text" placeholder="Användarnamn">
       <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
       <input class="Input" id="password" type="password" placeholder="Lösenord">
-      <button @click="loginUser()" class="Button u-marginTlg">Logga in</button>
+      <button @click="loginUser()" class="Button Button--altColor u-marginTlg">Logga in</button>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="Login-container u-marginTlg">
-    <img class="Login-logo u-marginVlg" src="src/Assets/Images/washi-logo-brandcolor.svg" alt="Logo" />
+    <img class="Login-logo u-marginVlg" src="src/Assets/Images/washi-logo.svg" alt="Logo" />
     <label class="Input-label u-textXSmall" for="username">Användarnamn:</label>
     <input class="Input" id="username" type="text" placeholder="Användarnamn" />
     <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
