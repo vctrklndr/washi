@@ -1,9 +1,16 @@
 <template>
   <div class="Login-container">
-    <img class="Login-logo u-marginBsm" src="src/Assets/Images/washi-logo.svg">
+    <img class="Login-logo" src="src/Assets/Images/washi-logo.svg">
     <p
-      class="u-textAltColor u-textWeightBold"
-    >Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid.</p>
+      class="u-textWeightBold u-marginVmd"
+      :class="{
+        'u-textAltColor':
+        errorMessage === 'Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid.',
+        'Login-errorMessage':
+        errorMessage === 'Lägenhetsnumret eller lösenordet stämmer inte.' ||
+        errorMessage === 'Du har glömt att fylla i lägenhetsnummer och/eller lösenord.',
+      }"
+    >{{errorMessage}}</p>
     <label class="Input-label" for="username">Lägenhetsnummer:</label>
     <input
       class="Input"
@@ -20,15 +27,9 @@
       v-model="input.password"
       placeholder="Lösenord"
     >
-    <span v-if="errorMessage !== ''" class="Login-errorMessage u-marginVsm">{{errorMessage}}</span>
+    <!-- <span v-if="errorMessage !== ''" class="Login-errorMessage u-marginVsm">{{errorMessage}}</span> -->
     <button
-      class="Button Button--large Button--altColor"
-      :class="{
-        'u-marginTz':
-        errorMessage !== '',
-        'u-marginTmd':
-        errorMessage === ''
-        }"
+      class="Button Button--large Button--altColor u-marginTmd"
       type="button"
       @click="login()"
     >Login</button>
@@ -44,7 +45,7 @@ export default {
         username: "",
         password: ""
       },
-      errorMessage: ""
+      errorMessage: "Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid."
     };
   },
   methods: {
