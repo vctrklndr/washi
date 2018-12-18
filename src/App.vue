@@ -86,7 +86,7 @@ export default {
     setAuthenticated(status) {
       this.authenticated = status;
     },
-    logout() {
+    logout: function() {
       this.authenticated = false;
     },
     toggleMenu: function() {

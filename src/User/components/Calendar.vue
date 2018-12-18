@@ -76,7 +76,6 @@
           class="Calendar-time"
           @click="selectTime(index + 1)"
           :id = "'tid' + (index + 1)"
-          
         >
           <time>{{time}}</time>
         </button>
