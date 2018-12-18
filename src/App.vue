@@ -51,7 +51,8 @@
         </div>
       </div>
     </header>
-    <div class="Page-container">
+    <div 
+    class="Page-container">
       <main class="Page-main">
         <router-view @authenticated="setAuthenticated"/>
       </main>

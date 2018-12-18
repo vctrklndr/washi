@@ -2,7 +2,7 @@
   <div class="Login-container">
     <img class="Login-logo" src="src/Assets/Images/washi-logo.svg">
     <p
-      class="u-textWeightBold u-marginVmd"
+      class="u-textWeightBold u-textCenter u-marginVmd"
       :class="{
         'u-textAltColor':
         errorMessage === 'Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid.',
@@ -27,7 +27,6 @@
       v-model="input.password"
       placeholder="Lösenord"
     >
-    <!-- <span v-if="errorMessage !== ''" class="Login-errorMessage u-marginVsm">{{errorMessage}}</span> -->
     <button
       class="Button Button--large Button--altColor u-marginTmd"
       type="button"
@@ -45,7 +44,8 @@ export default {
         username: "",
         password: ""
       },
-      errorMessage: "Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid."
+      errorMessage:
+        "Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid."
     };
   },
   methods: {
