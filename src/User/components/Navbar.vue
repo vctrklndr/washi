@@ -2,7 +2,7 @@
   <header class="Header">
     <div class="Page-container">
       <div class="Header-container">
-        <router-link to="/">
+        <router-link to="/home">
           <img
             @click="closeMenu"
             class="Header-logo"
@@ -11,7 +11,11 @@
           >
         </router-link>
         <nav class="PageNav">
-          <div class="Hamburger" :class="{'Hamburger--open': isActive}" @click="toggleMenu(); disableScroll();">
+          <div
+            class="Hamburger"
+            :class="{'Hamburger--open': isActive}"
+            @click="toggleMenu(); disableScroll();"
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -33,7 +37,12 @@
               <router-link class="PageNav-Link" to="/tvattrad">Tvättråd</router-link>
             </li>
             <li @click="closeMenu">
-              <router-link class="PageNav-Link" to="/">Logga ut</router-link>
+              <router-link
+                class="PageNav-Link"
+                to="/login"
+                @click.native="logout()"
+                replace
+              >Logga ut</router-link>
             </li>
           </ul>
         </nav>
@@ -56,10 +65,10 @@ export default {
     },
     disableScroll: function() {
       const app = document.getElementById("app");
-      if (app.classList.contains('disable-scroll')){
-        app.classList.remove('disable-scroll');     
+      if (app.classList.contains("disable-scroll")) {
+        app.classList.remove("disable-scroll");
       } else {
-        app.classList.add('disable-scroll');   
+        app.classList.add("disable-scroll");
       }
     },
     closeMenu: function() {

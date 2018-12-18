@@ -1,28 +1,41 @@
+import LoginComponent from "./components/Login.vue";
+import Home from './User/components/Home.vue';
 import Calendar from './User/components/Calendar.vue';
 import Help from './User/components/Help.vue';
-import Home from './User/components/Home.vue';
 import Rules from './User/components/Rules.vue';
 import Washing from './User/components/Washing.vue';
 
 export default [
   {
-    path: '/',
+    path: "/",
+    redirect: {
+      name: "login"
+    }
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginComponent
+  },
+  {
+    path: "/home",
+    name: "home",
     component: Home
   },
   {
-    path: '/boka',
+    path: "/boka",
     component: Calendar
   },
   {
-    path: '/hjalp',
+    path: "/hjalp",
     component: Help
   },
   {
-    path: '/regler',
+    path: "/regler",
     component: Rules
   },
   {
-    path: '/tvattrad',
+    path: "/tvattrad",
     component: Washing
   }
-]
+];
