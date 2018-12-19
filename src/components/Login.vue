@@ -29,7 +29,6 @@
     >
     <button
       class="Button Button--large Button--altColor u-marginTmd"
-      type="button"
       @click="login()"
     >Login</button>
   </div>
