@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import WFooter from "./User/components/Footer.vue";
+import WFooter from "./components/Footer.vue";
 export default {
   name: "App",
   components: {

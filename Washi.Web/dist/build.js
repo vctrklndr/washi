@@ -1,1 +1,0 @@
-console.error("Error: Couldn't find preset \"es2015\" relative to directory \"/Applications/MAMP/htdocs/washi°\" while parsing file: /Applications/MAMP/htdocs/washi°/Washi.Web/src/main.js");
