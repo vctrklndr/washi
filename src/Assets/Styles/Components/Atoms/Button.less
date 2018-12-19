@@ -14,11 +14,23 @@
     &&--disabled {
         background-color: #ddd;
     }
+    &&--altColor {
+        background-color: @washiWhite;
+        color: @brandColor;
+    }
+    &&--altColor:focus {
+        outline-color: yellow;
+    }
+    &&--large {
+        margin: 0;
+        font-size: 1.2em;
+        padding: .8em 2em;
+    }
 }
 
 .Button:hover {
   background-color: @brandColorDarker;
   color: @washiWhite;
-  transition: all 800ms;
+  transition: background-color 800ms, color 800ms;
   cursor: pointer;
 }

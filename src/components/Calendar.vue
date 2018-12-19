@@ -73,7 +73,11 @@
           :key="time.id"
           class="Calendar-time"
           @click="selectTime(index + 1)"
+<<<<<<< HEAD:src/User/components/Calendar.vue
           :id="'tid' + (index + 1)"
+=======
+          :id = "'tid' + (index + 1)"
+>>>>>>> a3df6ad444606a528bfc9a028a9e44de59cc72e4:src/components/Calendar.vue
         >
           <time>{{time}}</time>
         </button>

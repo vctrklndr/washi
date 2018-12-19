@@ -1,13 +1,22 @@
-html, body, #app {
-    height: 100%;
+html,
+body,
+#app {
+  height: 100%;
 }
 
 body {
-    font-family: @fontFamilyPrimary;
-    letter-spacing: .02rem;
-    box-sizing: border-box;
+  font-family: @fontFamilyPrimary;
+  letter-spacing: 0.02rem;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
 }
 
 .disable-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
