@@ -1,6 +1,6 @@
 <template>
   <div class="Login-container">
-    <img class="Login-logo" src="src/Assets/Images/washi-logo-alt.svg">
+    <img class="Login-logo" src="src/Assets/Images/washi-logo.svg">
     <span
       class="u-textWeightBold u-textCenter u-marginVmd"
       :class="{
