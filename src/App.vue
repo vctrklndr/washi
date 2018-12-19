@@ -70,10 +70,6 @@ export default {
   data() {
     return {
       authenticated: false,
-      mockAccount: {
-        username: "1203",
-        password: "123"
-      },
       isActive: false
     };
   },

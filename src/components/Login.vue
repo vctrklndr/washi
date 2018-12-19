@@ -15,8 +15,8 @@
     <input
       class="Input"
       type="text"
-      name="username"
-      v-model="input.username"
+      name="apartmentNumber"
+      v-model="input.apartmentNumber"
       placeholder="Lägenhetsnummer"
     >
     <label class="Input-label u-marginTmd" for="password">Lösenord:</label>
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       input: {
-        username: "",
+        apartmentNumber: "",
         password: ""
       },
       errorMessage:
@@ -49,17 +49,48 @@ export default {
     };
   },
   methods: {
+    bajs: function() {
+      console.log("borka");
+    },
+    validateUser: function() {
+      var formData = this.toFormData(this.input);
+      console.log(formData);
+      axios
+        .post("http://mikahl.se/VuePHP/users.php?action=login", formData)
+        .then(response => {
+          console.log(response);
+          if (response.data.error) {
+            console.log(response.data.message);
+            this.errorMessage =
+              "Lägenhetsnumret eller lösenordet stämmer inte.";
+          } else {
+            this.$emit("authenticated", true);
+            this.$router.replace({ name: "home" });
+
+            console.log(response.data);
+          }
+        });
+    },
+    toFormData: function(obj) {
+      console.log(obj);
+      var form_data = new FormData();
+      for (var key in obj) {
+        form_data.append(key, obj[key]);
+      }
+      return form_data;
+    },
+
     login: function() {
-      if (this.input.username !== "" && this.input.password !== "") {
-        if (
-          this.input.username === this.$parent.mockAccount.username &&
-          this.input.password === this.$parent.mockAccount.password
-        ) {
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "home" });
-        } else {
-          this.errorMessage = "Lägenhetsnumret eller lösenordet stämmer inte.";
-        }
+      if (this.input.apartmentNumber !== "" && this.input.password !== "") {
+        // if (
+        //   this.input.username === this.$parent.mockAccount.username &&
+        //   this.input.password === this.$parent.mockAccount.password
+        // ) {
+        //   //this.$emit("authenticated", true);
+        this.validateUser();
+        //   //this.$router.replace({ name: "home" });
+        // } else {
+        // }
       } else {
         this.errorMessage =
           "Du har glömt att fylla i lägenhetsnummer och/eller lösenord.";

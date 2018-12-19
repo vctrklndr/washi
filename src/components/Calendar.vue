@@ -73,11 +73,7 @@
           :key="time.id"
           class="Calendar-time"
           @click="selectTime(index + 1)"
-<<<<<<< HEAD:src/User/components/Calendar.vue
           :id="'tid' + (index + 1)"
-=======
-          :id = "'tid' + (index + 1)"
->>>>>>> a3df6ad444606a528bfc9a028a9e44de59cc72e4:src/components/Calendar.vue
         >
           <time>{{time}}</time>
         </button>
@@ -239,7 +235,7 @@ export default {
       var formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
-        .then(function(response) {
+        .then(response => {
           console.log(response).data.bookings;
           app.clickedUser = {};
           if (response.data.error) {
