@@ -1,0 +1,84 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.Main-login {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../Images/background-2.svg');
+}
+
+.Main {
+  height: 100%;
+  background-color: #ddd;
+}
+
+.Login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px 3px 3px 1px;
+  border-color: #000;
+}
+
+.Logo {
+  width: 100%;
+  max-width: 200px;
+}
+
+.Logo-header {
+  height: 30px;
+  margin-right: 40px;
+}
+
+.Input {
+  margin: 0 0 10px 0;
+  padding: 10px 0 10px 10px;
+  width: 250px;
+}
+
+
+.Heading {
+  margin: 0;
+}
+
+.Heading--small {
+  font-size: 1rem;
+}
+
+.Header {
+  padding: 20px 40px;
+  background-color: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.PageNav {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.PageNav-link {
+  display: inline-block;
+}
+
+.u-flex {
+  display: flex;
+}
+
+.u-verticalCenter {
+  align-items: center;
+}
