@@ -1,9 +1,9 @@
 import LoginComponent from "./components/Login.vue";
-import Home from './User/components/Home.vue';
-import Calendar from './User/components/Calendar.vue';
-import Help from './User/components/Help.vue';
-import Rules from './User/components/Rules.vue';
-import Washing from './User/components/Washing.vue';
+import Home from './components/Home.vue';
+import Calendar from './components/Calendar.vue';
+import Help from './components/Help.vue';
+import Rules from './components/Rules.vue';
+import Washing from './components/Washing.vue';
 
 export default [
   {

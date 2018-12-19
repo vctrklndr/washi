@@ -1,7 +1,7 @@
 <template>
   <div class="Login-container">
-    <img class="Login-logo" src="src/Assets/Images/washi-logo.svg">
-    <p
+    <img class="Login-logo" src="src/Assets/Images/washi-logo-alt.svg">
+    <span
       class="u-textWeightBold u-textCenter u-marginVmd"
       :class="{
         'u-textAltColor':
@@ -10,7 +10,7 @@
         errorMessage === 'Lägenhetsnumret eller lösenordet stämmer inte.' ||
         errorMessage === 'Du har glömt att fylla i lägenhetsnummer och/eller lösenord.',
       }"
-    >{{errorMessage}}</p>
+    >{{errorMessage}}</span>
     <label class="Input-label" for="username">Lägenhetsnummer:</label>
     <input
       class="Input"
