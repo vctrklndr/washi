@@ -2,11 +2,11 @@
   <div class="Login-container">
     <img class="Login-logo" src="src/Assets/Images/washi-logo.svg">
     <span
-      class="u-textWeightBold u-textCenter u-marginVmd"
+      class="u-textWeightBold u-textCenter"
       :class="{
-        'u-textAltColor':
+        'u-textAltColor u-marginVlg':
         errorMessage === 'Logga in med ditt lägenhetsnummer och lösenord för att boka tvättid.',
-        'Login-errorMessage':
+        'Login-errorMessage u-marginVmd':
         errorMessage === 'Lägenhetsnumret eller lösenordet stämmer inte.' ||
         errorMessage === 'Du har glömt att fylla i lägenhetsnummer och/eller lösenord.',
       }"
