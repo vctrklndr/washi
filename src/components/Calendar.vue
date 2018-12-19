@@ -49,10 +49,11 @@
                 month === initialMonth &&
                 year === initialYear,
               'Calendar-day--disabled':
-              checkIfBooked('2018-12-18') ||
+                 checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
-                year === today.format('YYYY')
+                year === today.format('YYYY'),
+
             }"
             class="Calendar-day"
           >
@@ -74,6 +75,10 @@
           class="Calendar-time"
           @click="selectTime(index + 1)"
           :id="'tid' + (index + 1)"
+          :class="{
+              'Calendar-time--disabled' :
+                 checkBookedTimes(index + 1)
+            }"
         >
           <time>{{time}}</time>
         </button>
@@ -163,27 +168,45 @@ export default {
   mounted: function() {
     //this.bookings.dates = this.groupBy(app.savedBookingsFromDB, "bookingDate");
     //console.log(this.bookings.dates["2018-12-18"].length);
-    console.log(app.savedBookingsFromDB);
-    console.log(app.formattedBookings);
+    //console.log(this.$parent.formattedData["2018-12-28"].length);
+    //this.checkIfBooked();
+    console.log("mounted");
+    console.log(this.$parent.formattedData);
   },
   methods: {
-    checkIfBooked: function(date) {
-      //console.log(this.booking[date]);
-      // console.log(this.bookings[date]);
-      // console.log(date);
-      // if (this.bookings.dates[date] === 5) {
-      //   console.log("joråsatteh");
-      //   return true;
-      // }
+    checkIfFullyBooked: function(date) {
+      var bookings = this.$parent.formattedData;
+
+      if (bookings.hasOwnProperty(date) === false) {
+        console.log(false);
+        console.log(date);
+      } else if (
+        bookings.hasOwnProperty(date) === true &&
+        this.$parent.formattedData[date].length >= 5
+      ) {
+        console.log(true);
+        console.log(date);
+        return true;
+      }
     },
-    // group all bookings per day
-    // groupBy: (arrayToGroup, keyToGroupBy) => {
-    //   return arrayToGroup.reduce((previous, current) => {
-    //     (previous[current[keyToGroupBy]] =
-    //       previous[current[keyToGroupBy]] || []).push(current);
-    //     return previous;
-    //   }, {});
-    // },
+    checkBookedTimes(slot) {
+      var time = "tid" + slot;
+      var date = this.selectedDate;
+      var bookings = this.$parent.formattedData;
+
+      if (bookings.hasOwnProperty(date) === false) {
+        console.log(false);
+        console.log(date);
+      } else if (bookings.hasOwnProperty(date) === true) {
+        console.log(bookings[date][0]);
+        for (var i = 0; i < bookings[date].length; i++) {
+          if (time === bookings[date][i].bookingTime) {
+            console.log("detta kommer aldrig funka");
+            return true;
+          }
+        }
+      }
+    },
     addMonth: function() {
       this.dateContext = moment(this.dateContext).add(1, "month");
     },
@@ -206,7 +229,7 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
-      console.log(this.selectedDate);
+      //console.log(this.selectedDate);
     },
     selectTime: function(time) {
       this.selectedTime = "tid" + time;
@@ -235,7 +258,7 @@ export default {
       var formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
-        .then(response => {
+        .then(function(response) {
           console.log(response).data.bookings;
           app.clickedUser = {};
           if (response.data.error) {
