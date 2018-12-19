@@ -1,19 +1,5 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <user v-if="loggedIn === true"/>
-    <div v-else class="Login-container u-marginTlg">
-      <img
-        class="Login-logo u-marginVlg"
-        src="src/Assets/Images/washi-logo-brandcolor.svg"
-        alt="Logo"
-      >
-      <label class="Input-label u-textXSmall" for="username">Användarnamn:</label>
-      <input class="Input" id="username" type="text" placeholder="Användarnamn">
-      <label class="Input-label u-marginTsm u-textXSmall" for="username">Lösenord:</label>
-      <input class="Input" id="password" type="password" placeholder="Lösenord">
-      <button @click="loginUser(); formatBookings()" class="Button u-marginTlg">Logga in</button>
-=======
     <header class="Header" v-if="authenticated">
       <div class="Page-container">
         <div class="Header-container">
@@ -65,12 +51,10 @@
         </div>
       </div>
     </header>
-    <div 
-    class="Page-container">
+    <div class="Page-container">
       <main class="Page-main">
         <router-view @authenticated="setAuthenticated"/>
       </main>
->>>>>>> a3df6ad444606a528bfc9a028a9e44de59cc72e4
     </div>
     <w-footer v-if="authenticated"/>
   </div>
@@ -79,56 +63,6 @@
 <script>
 import WFooter from "./components/Footer.vue";
 export default {
-<<<<<<< HEAD
-  name: "app",
-  data() {
-    return {
-      loggedIn: false,
-      savedBookingsFromDB: [],
-      formattedBookings: []
-    };
-  },
-
-  mounted: function() {
-    this.getAllUsers();
-    //formatData();
-    //this.bookings.dates = this.groupBy(app.savedBookingsFromDB, "bookingDate");
-  },
-  components: {
-    User
-  },
-  methods: {
-    formatBookings: function() {
-      console.log(app.formattedBookings);
-      this.formattedBookings = this.groupBy(
-        this.savedBookingsFromDB,
-        "bookingDate"
-      );
-      console.log(this.formattedBookings);
-    },
-    loginUser: function() {
-      this.loggedIn = true;
-    },
-    groupBy: (arrayToGroup, keyToGroupBy) => {
-      return arrayToGroup.reduce((previous, current) => {
-        (previous[current[keyToGroupBy]] =
-          previous[current[keyToGroupBy]] || []).push(current);
-        return previous;
-      }, {});
-    },
-    getAllUsers: function() {
-      axios
-        .get("http://mikahl.se/VuePHP/api.php?action=read")
-        .then(function(response) {
-          if (response.data.error) {
-            app.errorMessage = response.data.message;
-          } else {
-            console.log(response.data);
-            app.savedBookingsFromDB = response.data.bookings;
-            console.log(app.savedBookingsFromDB);
-          }
-        });
-=======
   name: "App",
   components: {
     WFooter
@@ -173,7 +107,6 @@ export default {
       window.scrollTo({
         top: 0
       });
->>>>>>> a3df6ad444606a528bfc9a028a9e44de59cc72e4
     }
   }
 };
