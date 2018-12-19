@@ -1,6 +1,9 @@
 .PageNav {
   display: block;
   height: 71px;
+  @media @bpMedium {
+    height: auto;
+  }
 }
 
 .PageNav-list {
@@ -25,7 +28,7 @@
     flex-direction: row;
     position: relative;
     background-color: transparent;
-    top: 16px;
+    top: auto;
     left: auto;
     width: auto;
     height: auto;
