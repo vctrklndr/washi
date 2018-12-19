@@ -49,12 +49,14 @@ export default {
     };
   },
   methods: {
-    bajs: function() {
-      console.log("borka");
+    setCookie: function(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     },
     validateUser: function() {
       var formData = this.toFormData(this.input);
-      console.log(formData);
       axios
         .post("http://mikahl.se/VuePHP/users.php?action=login", formData)
         .then(response => {
@@ -66,7 +68,8 @@ export default {
           } else {
             this.$emit("authenticated", true);
             this.$router.replace({ name: "home" });
-
+            this.setCookie("username", this.input.apartmentNumber, 2);
+            console.log(this.input.apartmentNumber);
             console.log(response.data);
           }
         });
@@ -82,15 +85,7 @@ export default {
 
     login: function() {
       if (this.input.apartmentNumber !== "" && this.input.password !== "") {
-        // if (
-        //   this.input.username === this.$parent.mockAccount.username &&
-        //   this.input.password === this.$parent.mockAccount.password
-        // ) {
-        //   //this.$emit("authenticated", true);
         this.validateUser();
-        //   //this.$router.replace({ name: "home" });
-        // } else {
-        // }
       } else {
         this.errorMessage =
           "Du har glömt att fylla i lägenhetsnummer och/eller lösenord.";
