@@ -69,15 +69,42 @@ export default {
   },
   data() {
     return {
+      formattedData: [],
       authenticated: false,
       isActive: false
     };
   },
+
   mounted() {
+    this.getAllUsers();
     this.checkCookie();
     console.log(this.getCookie("username"));
   },
   methods: {
+    getAllUsers: function() {
+      axios
+        .get("http://mikahl.se/VuePHP/api.php?action=read")
+        .then(response => {
+          if (response.data.error) {
+            app.errorMessage = response.data.message;
+          } else {
+            console.log(response.data.bookings);
+            this.formattedData = this.groupBy(
+              response.data.bookings,
+              "bookingDate"
+            );
+            console.log(this.formattedData);
+          }
+        });
+    },
+    // group all bookings per day
+    groupBy: (arrayToGroup, keyToGroupBy) => {
+      return arrayToGroup.reduce((previous, current) => {
+        (previous[current[keyToGroupBy]] =
+          previous[current[keyToGroupBy]] || []).push(current);
+        return previous;
+      }, {});
+    },
     getCookie: function(cname) {
       var name = cname + "=";
       var decodedCookie = decodeURIComponent(document.cookie);
@@ -101,7 +128,6 @@ export default {
         this.authenticated = true;
       }
     },
-
     setAuthenticated(status) {
       this.authenticated = status;
     },
