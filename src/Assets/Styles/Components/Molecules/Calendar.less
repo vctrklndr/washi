@@ -101,23 +101,19 @@
 .Calendar-day--disabled {
   background-color: #f3f3f3;
   color: #ddd;
-  pointer-events: none;
-  outline: none;
 }
 
 .Calendar-time--disabled {
   background-color: #f3f3f3;
   color: #ddd;
-  pointer-events: none;
-  outline: none;
 }
+
 
 .Calendar-day--today {
   font-family: @fontFamilyBold;
   color: @brandColor;
 }
 
-.Calendar-day:active,
 .Calendar-day:focus,
 .Calendar-time:focus {
   background-color: @brandColor;
@@ -132,8 +128,18 @@
   cursor: pointer;
 }
 
+.Calendar-day--disabled:hover,
+.Calendar-time--disabled:hover {
+  background-color: #f3f3f3;
+  color: #ddd;
+  cursor: auto;
+}
+
 .Calendar-day--noDate:hover {
   background-color: transparent;
-  pointer-events: none;
-  outline: none;
+  cursor: auto;
+}
+
+.Calendar-day--heading:hover {
+  cursor: auto;
 }

@@ -56,7 +56,12 @@
 
             }"
             class="Calendar-day"
-          >
+            :disabled="
+              checkIfFullyBooked(setDateId(date)) ||
+              date < today.format('D') &&
+              month === today.format('MMMM') &&
+              year === today.format('YYYY')"
+            >
             <div class="Calendar-day-content">
               <div class="Calendar-dayNumber">{{date}}</div>
             </div>
@@ -76,9 +81,10 @@
           @click="selectTime(index + 1)"
           :id="'tid' + (index + 1)"
           :class="{
-              'Calendar-time--disabled' :
-                 checkBookedTimes(index + 1)
+            'Calendar-time--disabled' :
+              checkBookedTimes(index + 1)
             }"
+          :disabled="checkBookedTimes(index + 1)"
         >
           <time>{{time}}</time>
         </button>
@@ -86,15 +92,14 @@
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
             @click="saveUser"
-            class="Button u-marginTlg"
+            class="Button Button--large u-marginTlg"
           >Boka tid</button>
           <button
             v-else
             @click="bookTime(selectedDate, selectedTime)"
-            class="Button Button--disabled u-marginTlg"
+            class="Button Button--large Button--disabled u-marginTlg"
             disabled
           >Boka tid</button>
-          <div></div>
         </div>
       </div>
     </div>
