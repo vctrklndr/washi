@@ -49,11 +49,10 @@
                 month === initialMonth &&
                 year === initialYear,
               'Calendar-day--disabled':
-                 checkIfFullyBooked(setDateId(date)) ||
+                checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
                 year === today.format('YYYY'),
-
             }"
             class="Calendar-day"
             :disabled="
