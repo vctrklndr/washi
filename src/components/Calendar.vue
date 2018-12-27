@@ -40,9 +40,9 @@
           ></button>
           <button
             v-for="date in daysInMonth"
-            @click="selectDate(date)"
             :key="date.id"
             :id="setDateId(date)"
+            @click="selectDate(date), addActive(setDateId(date))"
             :class="{
               'Calendar-day--today':
                 date === initialDate && 
@@ -60,7 +60,7 @@
               date < today.format('D') &&
               month === today.format('MMMM') &&
               year === today.format('YYYY')"
-            >
+          >
             <div class="Calendar-day-content">
               <div class="Calendar-dayNumber">{{date}}</div>
             </div>
@@ -309,6 +309,18 @@ export default {
         console.log(date, time);
       }
       return null;
+    },
+    addActive: function(id) {
+      alert(id);
+      const mumma = document.getElementById(id);
+      if (
+        mumma.getAttribute("style") === null ||
+        mumma.getAttribute("style") === "" 
+      ) {
+        mumma.style.backgroundColor = "red";
+      } else if (mums.getAttribute("style") === "red") {
+        mumma.removeAttribute("style");
+      }
     }
   }
 };
