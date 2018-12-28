@@ -41,14 +41,14 @@
           <button
             v-for="(date, index) in daysInMonth"
             :key="date.id"
-            :id="setDateId(date)"
             @click="selectDate(date), setActiveDate(date, index)"
+            :id="setDateId(date)"
             :class="{
-              'Calendar-day--selected': activeDateIndex === index,
               'Calendar-day--today':
                 date === initialDate && 
                 month === initialMonth &&
                 year === initialYear,
+              'Calendar-day--selected': activeDateIndex === index,
               'Calendar-day--disabled':
                 checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
