@@ -39,11 +39,12 @@
             disabled
           ></button>
           <button
-            v-for="date in daysInMonth"
+            v-for="(date, index) in daysInMonth"
             :key="date.id"
             :id="setDateId(date)"
-            @click="selectDate(date), addActive(setDateId(date))"
+            @click="selectDate(date), setActiveDate(date, index)"
             :class="{
+              'Calendar-day--selected': activeDateIndex === index,
               'Calendar-day--today':
                 date === initialDate && 
                 month === initialMonth &&
@@ -52,7 +53,7 @@
                 checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
-                year === today.format('YYYY'),
+                year === today.format('YYYY')
             }"
             class="Calendar-day"
             :disabled="
@@ -77,9 +78,10 @@
           v-for="(time, index) in times"
           :key="time.id"
           class="Calendar-time"
-          @click="selectTime(index + 1)"
+          @click="selectTime(index + 1), setActiveTime(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
+            'Calendar-time--selected': activeTimeIndex === index,
             'Calendar-time--disabled' :
               checkBookedTimes(index + 1)
             }"
@@ -133,7 +135,9 @@ export default {
       successMessage: "",
       bookings: [],
       newBooking: { selectedDate: "", selectedTime: "" },
-      clickedUser: {}
+      clickedUser: {},
+      activeDateIndex: undefined,
+      activeTimeIndex: undefined
     };
   },
   computed: {
@@ -174,8 +178,8 @@ export default {
     //console.log(this.bookings.dates["2018-12-18"].length);
     //console.log(this.$parent.formattedData["2018-12-28"].length);
     //this.checkIfBooked();
-    console.log("mounted");
-    console.log(this.$parent.formattedData);
+    // console.log("mounted");
+    // console.log(this.$parent.formattedData);
   },
   methods: {
     checkIfFullyBooked: function(date) {
@@ -216,6 +220,7 @@ export default {
     },
     subtractMonth: function() {
       this.dateContext = moment(this.dateContext).subtract(1, "month");
+      this.activeDateIndex = undefined;
     },
     setDateId: function(date) {
       const month = this.dateContext.format("MMMM");
@@ -241,8 +246,8 @@ export default {
         selectedDate: this.selectedDate,
         selectedTime: "tid" + time
       };
-      console.log(this.selectedTime);
-      console.log(this.groupBy(app.bookings, "bookingDate"));
+      // console.log(this.selectedTime);
+      // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     saveUser: function() {
       var formData = this.toFormData(this.newBooking);
@@ -310,17 +315,12 @@ export default {
       }
       return null;
     },
-    addActive: function(id) {
-      alert(id);
-      const mumma = document.getElementById(id);
-      if (
-        mumma.getAttribute("style") === null ||
-        mumma.getAttribute("style") === "" 
-      ) {
-        mumma.style.backgroundColor = "red";
-      } else if (mums.getAttribute("style") === "red") {
-        mumma.removeAttribute("style");
-      }
+    setActiveDate: function(date, index) {
+      this.activeDateIndex = index;
+      this.activeTimeIndex = undefined;
+    },
+    setActiveTime: function(time, index) {
+      this.activeTimeIndex = index;
     }
   }
 };
