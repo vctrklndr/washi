@@ -260,10 +260,10 @@ export default {
         // console.log(false);
         // console.log(date);
       } else if (bookings.hasOwnProperty(date) === true) {
-        console.log(bookings[date][0]);
+        //console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
           if (time === bookings[date][i].bookingTime) {
-            console.log("detta kommer aldrig funka");
+            //console.log("detta kommer aldrig funka");
             return true;
           }
         }
