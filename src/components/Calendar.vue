@@ -229,18 +229,26 @@ export default {
     // console.log(this.$parent.formattedData);
   },
   methods: {
+    addMonth: function() {
+      this.dateContext = moment(this.dateContext).add(1, "month");
+      this.activeDateIndex = undefined;
+    },
+    subtractMonth: function() {
+      this.dateContext = moment(this.dateContext).subtract(1, "month");
+      this.activeDateIndex = undefined;
+    },
     checkIfFullyBooked: function(date) {
       var bookings = this.$parent.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
-        console.log(false);
-        console.log(date);
+        // console.log(false);
+        // console.log(date);
       } else if (
         bookings.hasOwnProperty(date) === true &&
         this.$parent.formattedData[date].length >= 5
       ) {
-        console.log(true);
-        console.log(date);
+        // console.log(true);
+        // console.log(date);
         return true;
       }
     },
@@ -250,8 +258,8 @@ export default {
       var bookings = this.$parent.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
-        console.log(false);
-        console.log(date);
+        // console.log(false);
+        // console.log(date);
       } else if (bookings.hasOwnProperty(date) === true) {
         console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
