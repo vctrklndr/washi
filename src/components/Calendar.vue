@@ -4,7 +4,7 @@
       <h1 class="Heading Heading--h1 Heading-line">Boka tvättid</h1>
     </div>
     <div class="Grid u-marginTlg">
-      <div class="Grid-cell u-md-size6of10">
+      <div class="Grid-cell u-md-size6of10 Calendar--spacing">
         <div class="Calendar--daysHeading">
           <h2 class="Heading Heading--h2 Calendar-header u-marginTz">
             <span
@@ -102,7 +102,7 @@
         >
           <time>{{time}}</time>
         </button>
-        <div style="display: flex; justify-content: center;">
+        <div class="u-textCenter">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
             @click="saveUser"
@@ -203,12 +203,7 @@ export default {
         return +1;
       } else if (lastDayOfMonth === sunday) {
         return 0;
-      } else
-        return Number(
-          moment(this.dateContext)
-            .endOf("month")
-            .format("d")
-        );
+      } else return lastDayOfMonth;
     },
     initialDate: function() {
       return this.today.get("D");
