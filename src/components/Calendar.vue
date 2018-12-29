@@ -34,12 +34,7 @@
           </div>
         </div>
         <div class="Calendar u-marginTz">
-          <button
-            class="Calendar-day Calendar-day--noDate"
-            v-for="blank in firstDayOfMonth"
-            :key="blank.id"
-            disabled
-          ></button>
+          <blank v-for="blank in firstDayOfMonth" :key="blank.id"/>
           <button
             v-for="(date, index) in daysInMonth"
             :key="date.id"
@@ -68,23 +63,10 @@
               <div class="Calendar-dayNumber">{{date}}</div>
             </div>
           </button>
-          <button
-            class="Calendar-day Calendar-day--noDate"
-            v-for="blank in lastDayOfMonth"
-            :key="blank.id"
-            disabled
-          ></button>
+          <blank v-for="blank in lastDayOfMonth" :key="blank.id"/>
         </div>
       </div>
-      <div v-if="selectedDate === ''" class="Calendar--times Grid-cell u-md-size4of10 u-textCenter">
-        <div>
-          <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Boka tvättid</h2>
-          <p class="u-marginAz">
-            För att boka tvättid väljer du ett datum i kalendern, väljer en ledig tid
-            och trycker på knappen "Boka tid".
-          </p>
-        </div>
-      </div>
+      <booking-information v-if="selectedDate === ''"/>
       <div v-else class="Calendar--times Grid-cell u-md-size4of10">
         <div class="Heading Heading--h2 Calendar-header u-marginTz">
           <time
@@ -126,12 +108,18 @@
 <script>
 import moment from "moment";
 import "moment/locale/sv";
+import Blank from "./Blank.vue";
+import BookingInformation from "./BookingInformation.vue";
 moment.updateLocale("sv", {
   week: {
     dow: 1
   }
 });
 export default {
+  components: {
+    Blank,
+    BookingInformation
+  },
   data() {
     return {
       today: moment(),
