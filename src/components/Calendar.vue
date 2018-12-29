@@ -6,13 +6,13 @@
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10 Calendar--spacing">
         <div class="Calendar--daysHeading">
-          <h2 class="Heading Heading--h2 Calendar-header u-marginTz">
+          <h2 class="Heading Heading--h2 Calendar-header u-marginTz u-flex u-spaceBetween">
             <span
               v-if="month !== initialMonth || year !== initialYear"
               @click="subtractMonth()"
               class="Calendar-controls"
             >&lt; Föregående</span>
-            <span v-else>&nbsp;</span>
+            <span v-else class="Calendar-controls Calendar-controls--disabled" aria-disabled="true">&lt; Föregående</span>
             <time>{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
             <span @click="addMonth()" class="Calendar-controls">Nästa &gt;</span>
           </h2>
