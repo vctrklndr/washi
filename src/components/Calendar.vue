@@ -7,18 +7,18 @@
       <div class="Grid-cell u-md-size6of10 Calendar--spacing">
         <div class="Calendar--daysHeading">
           <h2 class="Heading Heading--h2 Calendar-header u-marginTz u-flex u-spaceBetween">
-            <span
+            <button
               v-if="month !== initialMonth || year !== initialYear"
               @click="subtractMonth()"
-              class="Calendar-controls"
-            >&lt; Föregående</span>
-            <span
+              class="Calendar-button"
+            >&lt; Föregående</button>
+            <button
               v-else
-              class="Calendar-controls Calendar-controls--disabled"
-              aria-disabled="true"
-            >&lt; Föregående</span>
+              class="Calendar-button Calendar-button--disabled"
+              disabled
+            >&lt; Föregående</button>
             <time>{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-            <span @click="addMonth()" class="Calendar-controls">Nästa &gt;</span>
+            <button @click="addMonth()" class="Calendar-button">Nästa &gt;</button>
           </h2>
           <div class="Calendar u-paddingBz">
             <button
@@ -109,12 +109,11 @@
         <div class="u-textCenter">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveUser"
+            @click="saveUser()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
           <button
             v-else
-            @click="bookTime(selectedDate, selectedTime)"
             class="Button Button--large Button--disabled u-marginTlg"
             disabled
           >Boka tid</button>
@@ -343,7 +342,6 @@ export default {
     selectUser(user) {
       app.clickedUser = user;
     },
-
     toFormData: function(obj) {
       console.log(obj);
       var form_data = new FormData();
@@ -355,12 +353,6 @@ export default {
     clearMessage: function() {
       app.errorMessage = "";
       app.successMessage = "";
-    },
-    bookTime: function(date, time) {
-      if (date !== "" && time !== "") {
-        console.log(date, time);
-      }
-      return null;
     },
     setActiveDate: function(date, index) {
       this.activeDateIndex = index;
