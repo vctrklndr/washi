@@ -6,18 +6,16 @@
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10">
         <div class="Calendar--daysHeading">
-          <div class="Calendar-header">
+          <h2 class="Heading Heading--h2 Calendar-header u-marginTz">
             <span
               v-if="month !== initialMonth || year !== initialYear"
-              @click="subtractMonth"
+              @click="subtractMonth()"
               class="Calendar-controls"
             >&lt; Föregående</span>
             <span v-else>&nbsp;</span>
-            <time
-              class="Calendar-selectedDate"
-            >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-            <span @click="addMonth" class="Calendar-controls">Nästa &gt;</span>
-          </div>
+            <time>{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
+            <span @click="addMonth()" class="Calendar-controls">Nästa &gt;</span>
+          </h2>
           <div class="Calendar u-paddingBz">
             <button
               v-for="day in days"
@@ -66,10 +64,25 @@
               <div class="Calendar-dayNumber">{{date}}</div>
             </div>
           </button>
+          <button
+            class="Calendar-day Calendar-day--noDate"
+            v-for="blank in lastDayOfMonth"
+            :key="blank.id"
+            disabled
+          ></button>
         </div>
       </div>
-      <div class="Calendar--times Grid-cell u-md-size4of10">
-        <div class="Calendar-header">
+      <div v-if="selectedDate === ''" class="Calendar--times Grid-cell u-md-size4of10 u-textCenter">
+        <div>
+          <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Boka tvättid</h2>
+          <p class="u-marginAz">
+            För att boka tvättid väljer du ett datum i kalendern, väljer en ledig tid
+            och trycker på knappen "Boka tid".
+          </p>
+        </div>
+      </div>
+      <div v-else class="Calendar--times Grid-cell u-md-size4of10">
+        <div class="Heading Heading--h2 Calendar-header u-marginTz">
           <time
             class="Calendar-selectedDate"
           >{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
@@ -162,6 +175,40 @@ export default {
         "days"
       );
       return firstDay.weekday();
+    },
+    lastDayOfMonth: function() {
+      const lastDayOfMonth = Number(
+        moment(this.dateContext)
+          .endOf("month")
+          .format("d")
+      );
+      const monday = 1;
+      const tuesday = 2;
+      const wednesday = 3;
+      const thursday = 4;
+      const friday = 5;
+      const saturday = 6;
+      const sunday = 0;
+      if (lastDayOfMonth === monday) {
+        return +6;
+      } else if (lastDayOfMonth === tuesday) {
+        return +5;
+      } else if (lastDayOfMonth === wednesday) {
+        return +4;
+      } else if (lastDayOfMonth === thursday) {
+        return +3;
+      } else if (lastDayOfMonth === friday) {
+        return +2;
+      } else if (lastDayOfMonth === saturday) {
+        return +1;
+      } else if (lastDayOfMonth === sunday) {
+        return 0;
+      } else
+        return Number(
+          moment(this.dateContext)
+            .endOf("month")
+            .format("d")
+        );
     },
     initialDate: function() {
       return this.today.get("D");
