@@ -12,7 +12,11 @@
               @click="subtractMonth()"
               class="Calendar-controls"
             >&lt; Föregående</span>
-            <span v-else class="Calendar-controls Calendar-controls--disabled" aria-disabled="true">&lt; Föregående</span>
+            <span
+              v-else
+              class="Calendar-controls Calendar-controls--disabled"
+              aria-disabled="true"
+            >&lt; Föregående</span>
             <time>{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
             <span @click="addMonth()" class="Calendar-controls">Nästa &gt;</span>
           </h2>
