@@ -262,14 +262,6 @@ export default {
         }
       }
     },
-    addMonth: function() {
-      this.dateContext = moment(this.dateContext).add(1, "month");
-      this.activeDateIndex = undefined;
-    },
-    subtractMonth: function() {
-      this.dateContext = moment(this.dateContext).subtract(1, "month");
-      this.activeDateIndex = undefined;
-    },
     setDateId: function(date) {
       const month = this.dateContext.format("MMMM");
       const year = this.dateContext.format("YYYY");
