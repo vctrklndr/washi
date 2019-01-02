@@ -53,8 +53,6 @@
                 year === today.format('YYYY'),
               'Calendar-day--bookedByUser':
                 checkUserBookingDate(setDateId(date))
-                
-
             }"
             class="Calendar-day"
             :disabled="
@@ -84,11 +82,11 @@
           @click="selectTime(index + 1), setActiveTime(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
-              'Calendar-time--green' :
-              checkUserBookingTime(index + 1),
             'Calendar-time--selected': activeTimeIndex === index,
             'Calendar-time--disabled' :
-              checkBookedTimes(index + 1)
+              checkBookedTimes(index + 1),
+            'Calendar-time--green' :
+              checkUserBookingTime(index + 1)
             }"
           :disabled="checkBookedTimes(index + 1)"
         >
