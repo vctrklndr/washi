@@ -95,7 +95,7 @@
         <div class="u-textCenter">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveUser()"
+            @click="saveBooking()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
           <button v-else class="Button Button--large Button--disabled u-marginTlg" disabled>Boka tid</button>
