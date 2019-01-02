@@ -7,7 +7,6 @@ function getAllUsers() {
       if (response.data.error) {
         app.errorMessage = response.data.message;
       } else {
-        var users = response.data
         for (let i = 0; i < response.data.users.length; i++) {
           var user = response.data.users
           console.log(user[i])
@@ -29,14 +28,32 @@ function getAllUsers() {
       var deleteButtons = document.getElementsByClassName('deleteButtons')
       for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener('click', function () {
-          var idNumber = this.parentElement.id
-
-          axios.delete('http://mikahl.se/VuePHP/users.php?action=delete', {
-            data: { users: idNumber }
+          var userId = { id: this.parentElement.id };
+          var formData = toFormData(userId);
+          axios.post("http://mikahl.se/VuePHP/users.php?action=delete", formData)
+          .then(function (response) {
+            if(response.data.error) {
+              var errorMessage = response.data.message;
+              console.log(errorMessage);
+              console.log(id);
+            } else {
+              var successMessage = response.data.message;
+              console.log(successMessage);
+              console.log(id);
+            }
           })
         })
       }
     })
 };
+
+function toFormData(obj) {
+  console.log(obj);
+  var form_data = new FormData();
+  for (var key in obj) {
+    form_data.append(key, obj[key]);
+  }
+  return form_data;
+}
 
 getAllUsers();
