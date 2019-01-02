@@ -53,6 +53,9 @@
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
                 year === today.format('YYYY'),
+              'Calendar-day--bookedByUser':
+                checkUserBookingDate(setDateId(date))
+                
 
             }"
             class="Calendar-day"
@@ -77,7 +80,9 @@
           :id="'tid' + (index + 1)"
           :class="{
               'Calendar-time--disabled' :
-                 checkBookedTimes(index + 1)
+                 checkBookedTimes(index + 1),
+              'Calendar-time--green' :
+              checkUserBookingTime(index + 1)
             }"
         >
           <time>{{time}}</time>
@@ -85,7 +90,7 @@
         <div style="display: flex; justify-content: center;">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveUser"
+            @click="saveBooking"
             class="Button u-marginTlg"
           >Boka tid</button>
           <button
@@ -112,6 +117,7 @@ moment.updateLocale("sv", {
 export default {
   data() {
     return {
+      isActive: false,
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
@@ -128,7 +134,7 @@ export default {
       errorMessage: "",
       successMessage: "",
       bookings: [],
-      newBooking: { selectedDate: "", selectedTime: "" },
+      newBooking: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
       clickedUser: {}
     };
   },
@@ -166,21 +172,64 @@ export default {
     }
   },
   mounted: function() {
-    //this.bookings.dates = this.groupBy(app.savedBookingsFromDB, "bookingDate");
-    //console.log(this.bookings.dates["2018-12-18"].length);
-    //console.log(this.$parent.formattedData["2018-12-28"].length);
-    //this.checkIfBooked();
+    console.log(this.$parent.loggedInUser);
     console.log("mounted");
     console.log(this.$parent.formattedData);
   },
   methods: {
+    toggleActive: function() {},
+    getCookie: function(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    },
+    checkUserBookingDate: function(date) {
+      var apartmentNumber = this.getCookie("username");
+      var bookings = this.$parent.formattedData;
+      console.log(this.$parent.loggedInUser);
+      if (bookings.hasOwnProperty(date)) {
+        for (var i = 0; i < bookings[date].length; i++) {
+          if (apartmentNumber === bookings[date][i].apartmentNumber) {
+            console.log("lägg på grön färg");
+            return true;
+          }
+        }
+      }
+    },
+    checkUserBookingTime: function(slot) {
+      var time = "tid" + slot;
+      var date = this.selectedDate;
+      var bookings = this.$parent.formattedData;
+      var apartmentNumber = this.getCookie("username");
+
+      if (bookings.hasOwnProperty(date) === true) {
+        console.log(bookings[date][0]);
+        for (var i = 0; i < bookings[date].length; i++) {
+          if (
+            time === bookings[date][i].bookingTime &&
+            apartmentNumber === bookings[date][i].apartmentNumber
+          ) {
+            console.log("Grön FÄRG TILL ALLA");
+            return true;
+          }
+        }
+      }
+    },
+
     checkIfFullyBooked: function(date) {
       var bookings = this.$parent.formattedData;
 
-      if (bookings.hasOwnProperty(date) === false) {
-        console.log(false);
-        console.log(date);
-      } else if (
+      if (
         bookings.hasOwnProperty(date) === true &&
         this.$parent.formattedData[date].length >= 5
       ) {
@@ -194,10 +243,7 @@ export default {
       var date = this.selectedDate;
       var bookings = this.$parent.formattedData;
 
-      if (bookings.hasOwnProperty(date) === false) {
-        console.log(false);
-        console.log(date);
-      } else if (bookings.hasOwnProperty(date) === true) {
+      if (bookings.hasOwnProperty(date) === true) {
         console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
           if (time === bookings[date][i].bookingTime) {
@@ -235,12 +281,13 @@ export default {
       this.selectedTime = "tid" + time;
       this.newBooking = {
         selectedDate: this.selectedDate,
-        selectedTime: "tid" + time
+        selectedTime: "tid" + time,
+        apartmentNumber: this.$parent.loggedInUser
       };
       console.log(this.selectedTime);
       console.log(this.groupBy(app.bookings, "bookingDate"));
     },
-    saveUser: function() {
+    saveBooking: function() {
       var formData = this.toFormData(this.newBooking);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
@@ -269,7 +316,7 @@ export default {
           }
         });
     },
-    deleteUser: function() {
+    deleteBooking: function() {
       var formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=delete", formData)
@@ -284,10 +331,6 @@ export default {
           }
         });
     },
-    selectUser(user) {
-      app.clickedUser = user;
-    },
-
     toFormData: function(obj) {
       console.log(obj);
       var form_data = new FormData();
