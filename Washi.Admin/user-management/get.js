@@ -1,6 +1,7 @@
 var URL = 'http://mikahl.se/VuePHP/users.php?action=read'
 
-function getAllUsers () {
+// Load and delete users
+function getAllUsers() {
   axios
     .get(URL)
     .then(function (response) {
@@ -31,21 +32,21 @@ function getAllUsers () {
           var userId = { id: this.parentElement.id }
           var formData = toFormData(userId)
           axios.post("http://mikahl.se/VuePHP/users.php?action=delete", formData)
-          .then(function (response) {
-            if(response.data.error) {
-              var errorMessage = response.data.message
-              console.log(errorMessage)
-            } else {
-              var successMessage = response.data.message
-              console.log(successMessage)
-            }
-          })
+            .then(function (response) {
+              if (response.data.error) {
+                var errorMessage = response.data.message
+                console.log(errorMessage)
+              } else {
+                var successMessage = response.data.message
+                console.log(successMessage)
+              }
+            })
         })
       }
     })
 };
 
-function toFormData(obj) {
+function toFormData (obj) {
   console.log(obj)
   var formData = new FormData()
   for (var key in obj) {
@@ -54,4 +55,33 @@ function toFormData(obj) {
   return formData
 }
 
+// Create new user
+function createNewUser () {
+  var createUserButton = document.getElementById('createUserButton')
+
+  createUserButton.addEventListener('click', function () {
+    var apartmentNumberInput = document.getElementById('appNo').value
+    var passwordInput = document.getElementById('password').value
+
+    var user = {
+      'apartmentNumber': apartmentNumberInput,
+      'password': passwordInput
+    }
+
+    var newUser = toFormData(user)
+    axios.post("http://mikahl.se/VuePHP/users.php?action=create", newUser)
+      .then(function (response) {
+        console.log(response)
+        if (response.data.error) {
+          var errorMessage = response.data.message
+          console.log(errorMessage)
+        } else {
+          var successMessage = response.data.message
+          console.log(successMessage)
+        }
+      })
+  })
+}
+
 getAllUsers()
+createNewUser()
