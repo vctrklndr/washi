@@ -30,17 +30,28 @@
   </header>
   <main class="Main">
     <div class="AdminUser-container">
-      <h2 class="u-marginTz">Administrera användare</h2>
-      <label for=""><strong>Lägg till ny användare:</strong></label>
-      <input class="Input" type="text" id="addUser" placeholder="Lägenhetsnummer">
-      <button>Lägg till</button>
-      <h4>Ta bort användare:</h4>
-      <ul class="u-marginTz">
-        <li>1203 &#x2715;</li>
-        <li>1206 &#x2715;</li>
-      </ul>
-
+      <form class="user-form" method="post">
+        <div class="input-container">
+          <label for="appNo">Lägenhetsnummer:</label>
+          <input type="text" name="appNo"><br>
+        </div>
+        <div class="input-container">
+          <label for="password">Lösenord:</label>
+          <input type="password" name="password"><br>
+        </div>
+          <input type="submit">
+      </form>
+    </div>
+    <div class="current-users-container">
+      <h1>
+        Användare:
+      </h1>
+      <div class="list-of-users">
+        <div id="userlist" class="users"></div>
+      </div>
     </div>
   </main>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./user-management/get.js"></script>
 </html>
