@@ -27,10 +27,7 @@
       v-model="input.password"
       placeholder="Lösenord"
     >
-    <button
-      class="Button Button--large Button--altColor u-marginTmd"
-      @click="login()"
-    >Login</button>
+    <button class="Button Button--large Button--altColor u-marginTmd" @click="login()">Login</button>
   </div>
 </template>
 
@@ -53,6 +50,8 @@ export default {
       d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
       var expires = "expires=" + d.toUTCString();
       document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+      this.$parent.loggedInUser = cname;
     },
     validateUser: function() {
       var formData = this.toFormData(this.input);

@@ -71,7 +71,8 @@ export default {
     return {
       formattedData: [],
       authenticated: false,
-      isActive: false
+      isActive: false,
+      loggedInUser: ""
     };
   },
 
@@ -123,6 +124,7 @@ export default {
     checkCookie: function() {
       var user = this.getCookie("username");
       if (user != "") {
+        this.loggedInUser = this.getCookie("username");
         this.$router.replace({ name: "home" });
         this.$emit("authenticated", true);
         this.authenticated = true;

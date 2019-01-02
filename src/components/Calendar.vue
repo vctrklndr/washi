@@ -50,7 +50,9 @@
                 checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
-                year === today.format('YYYY')
+                year === today.format('YYYY'),
+              'Calendar-day--booked':
+                checkUserBookingDate(setDateId(date))
             }"
             class="Calendar-day"
             :disabled="
@@ -77,28 +79,31 @@
           v-for="(time, index) in times"
           :key="time.id"
           class="Calendar-time"
-          @click="selectTime(index + 1), setActiveTime(time, index)"
+          @click="selectTime(index + 1), setActiveTime(time, index), cancelBooking(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
             'Calendar-time--selected': activeTimeIndex === index,
             'Calendar-time--disabled' :
-              checkBookedTimes(index + 1)
+              checkBookedTimes(index + 1),
+            'Calendar-time--booked' :
+              checkUserBookingTime(index + 1)
             }"
-          :disabled="checkBookedTimes(index + 1)"
+          :disabled="!checkUserBookingTime(index + 1) && checkBookedTimes(index + 1)"
         >
           <time>{{time}}</time>
         </button>
         <div class="u-textCenter">
           <button
-            v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveUser()"
+            v-if="booked === true"
+            @click="deleteBooking()"
+            class="Button Button--large u-marginTlg"
+          >Avboka tid</button>
+          <button
+            v-else-if="selectedDate !== '' && selectedTime !== ''"
+            @click="newBooking()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
-          <button
-            v-else
-            class="Button Button--large Button--disabled u-marginTlg"
-            disabled
-          >Boka tid</button>
+          <button v-else class="Button Button--large Button--disabled u-marginTlg" disabled>Boka tid</button>
         </div>
       </div>
     </div>
@@ -122,6 +127,7 @@ export default {
   },
   data() {
     return {
+      isActive: false,
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
@@ -138,10 +144,11 @@ export default {
       errorMessage: "",
       successMessage: "",
       bookings: [],
-      newBooking: { selectedDate: "", selectedTime: "" },
+      bookingInfo: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
       clickedUser: {},
       activeDateIndex: undefined,
-      activeTimeIndex: undefined
+      activeTimeIndex: undefined,
+      booked: false
     };
   },
   computed: {
@@ -207,14 +214,58 @@ export default {
     }
   },
   mounted: function() {
-    //this.bookings.dates = this.groupBy(app.savedBookingsFromDB, "bookingDate");
-    //console.log(this.bookings.dates["2018-12-18"].length);
-    //console.log(this.$parent.formattedData["2018-12-28"].length);
-    //this.checkIfBooked();
-    // console.log("mounted");
-    // console.log(this.$parent.formattedData);
+    console.log(this.$parent.loggedInUser);
+    console.log("mounted");
+    console.log(this.$parent.formattedData);
   },
   methods: {
+    toggleActive: function() {},
+    getCookie: function(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    },
+    checkUserBookingDate: function(date) {
+      var apartmentNumber = this.getCookie("username");
+      var bookings = this.$parent.formattedData;
+      //console.log(this.$parent.loggedInUser);
+      if (bookings.hasOwnProperty(date)) {
+        for (var i = 0; i < bookings[date].length; i++) {
+          if (apartmentNumber === bookings[date][i].apartmentNumber) {
+            //console.log("lägg på grön färg");
+            return true;
+          }
+        }
+      }
+    },
+    checkUserBookingTime: function(slot) {
+      var time = "tid" + slot;
+      var date = this.selectedDate;
+      var bookings = this.$parent.formattedData;
+      var apartmentNumber = this.getCookie("username");
+
+      if (bookings.hasOwnProperty(date) === true) {
+        for (var i = 0; i < bookings[date].length; i++) {
+          if (
+            time === bookings[date][i].bookingTime &&
+            apartmentNumber === bookings[date][i].apartmentNumber
+          ) {
+            //console.log("Grön FÄRG TILL ALLA");
+            return true;
+          }
+        }
+      }
+    },
     addMonth: function() {
       this.dateContext = moment(this.dateContext).add(1, "month");
       this.activeDateIndex = undefined;
@@ -272,23 +323,32 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
+      this.booked = false;
       //console.log(this.selectedDate);
     },
     selectTime: function(time) {
       this.selectedTime = "tid" + time;
-      this.newBooking = {
+      this.bookingInfo = {
         selectedDate: this.selectedDate,
-        selectedTime: "tid" + time
+        selectedTime: "tid" + time,
+        apartmentNumber: this.$parent.loggedInUser
       };
       // console.log(this.selectedTime);
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
-    saveUser: function() {
-      var formData = this.toFormData(this.newBooking);
+    newBooking: function() {
+      var loggedInUser = { username: this.getCookie("username") };
+      console.log;
+      this.deleteBooking();
+      this.saveBooking();
+    },
+
+    saveBooking: function() {
+      var formData = this.toFormData(this.bookingInfo);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
 
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -302,7 +362,7 @@ export default {
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
         .then(function(response) {
-          console.log(response).data.bookings;
+          //console.log(response).data.bookings;
           app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -312,23 +372,20 @@ export default {
           }
         });
     },
-    deleteUser: function() {
-      var formData = app.toFormData(app.clickedUser);
+    deleteBooking: function() {
+      var formData = this.toFormData(this.bookingInfo);
+      console.log(formData);
       axios
-        .post("http://localhost:8888/VuePHP/api.php?action=delete", formData)
+        .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
         .then(function(response) {
           console.log(response);
-          app.clickedUser = {};
+          //app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
           } else {
             app.successMessage = response.data.message;
-            app.getAllUsers();
           }
         });
-    },
-    selectUser(user) {
-      app.clickedUser = user;
     },
     toFormData: function(obj) {
       console.log(obj);
@@ -336,6 +393,7 @@ export default {
       for (var key in obj) {
         form_data.append(key, obj[key]);
       }
+      console.log(form_data);
       return form_data;
     },
     clearMessage: function() {
@@ -348,6 +406,17 @@ export default {
     },
     setActiveTime: function(time, index) {
       this.activeTimeIndex = index;
+    },
+    cancelBooking: function(time, index) {
+      if (
+        this.selectDate !== "" &&
+        this.activeTimeIndex === index &&
+        this.checkUserBookingTime(index + 1)
+      ) {
+        this.booked = true;
+      } else if(this.booked = true) {
+        this.booked = false;
+      }
     }
   }
 };
