@@ -48,10 +48,10 @@
 }
 
 .Calendar-day {
-  background: #ddd;
+  background: @lighterGrey;
   border: 2px solid transparent;
   border-radius: 2px;
-  color: #313131;
+  color: @darkerGrey;
   flex-basis: 100/7.5%;
   flex-grow: 1;
   font-family: @fontFamilyRegular;
@@ -96,10 +96,10 @@
 }
 
 .Calendar-time {
-  background-color: #ddd;
+  background-color: @lighterGrey;
   border: 2px solid transparent;
   border-radius: 2px;
-  color: #313131;
+  color: @darkerGrey;
   font-family: @fontFamilyRegular;
   margin: 1px;
   padding: @spaceDefault;
@@ -109,12 +109,12 @@
 
 .Calendar-day--disabled {
   background-color: #f3f3f3;
-  color: #ddd;
+  color: @lighterGrey;
 }
 
 .Calendar-time--disabled {
   background-color: #f3f3f3;
-  color: #ddd;
+  color: @lighterGrey;
 }
 
 
@@ -140,7 +140,7 @@
 .Calendar-day--disabled:hover,
 .Calendar-time--disabled:hover {
   background-color: #f3f3f3;
-  color: #ddd;
+  color: @lighterGrey;
   cursor: auto;
 }
 
@@ -158,14 +158,14 @@
 	color: @brandColor; 
 }
 
-.Calendar-day--bookedByUser,
-.Calendar-time--green {
-	background-color: green;
+.Calendar-day--booked,
+.Calendar-time--booked {
+	background-color: #ffba00;
 	color: @washiWhite;
 }
 
-.Calendar-time--green:hover {
-	background-color: green;
+.Calendar-time--booked:hover {
+	background-color: @brandColor;
 	color: @washiWhite;
 	cursor: pointer;
 }

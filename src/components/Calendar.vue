@@ -51,7 +51,7 @@
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
                 year === today.format('YYYY'),
-              'Calendar-day--bookedByUser':
+              'Calendar-day--booked':
                 checkUserBookingDate(setDateId(date))
             }"
             class="Calendar-day"
@@ -85,7 +85,7 @@
             'Calendar-time--selected': activeTimeIndex === index,
             'Calendar-time--disabled' :
               checkBookedTimes(index + 1),
-            'Calendar-time--green' :
+            'Calendar-time--booked' :
               checkUserBookingTime(index + 1)
             }"
           :disabled="!checkUserBookingTime(index + 1) && checkBookedTimes(index + 1)"
@@ -94,11 +94,10 @@
         </button>
         <div class="u-textCenter">
           <button
-            v-if="
-            booked === true
-          "
+            v-if="booked === true"
+            @click="deleteBooking()"
             class="Button Button--large u-marginTlg"
-          >Avboka</button>
+          >Avboka tid</button>
           <button
             v-else-if="selectedDate !== '' && selectedTime !== ''"
             @click="saveBooking()"
@@ -368,6 +367,7 @@ export default {
         });
     },
     deleteBooking: function() {
+      alert('Din bokning kommer nu avbokas.')
       var formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=delete", formData)
