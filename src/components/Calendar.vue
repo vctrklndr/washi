@@ -373,7 +373,6 @@ export default {
         });
     },
     deleteBooking: function() {
-      alert('Din bokning kommer nu avbokas.')
       var formData = this.toFormData(this.bookingInfo);
       console.log(formData);
       axios
