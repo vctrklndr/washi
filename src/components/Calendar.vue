@@ -125,7 +125,7 @@ export default {
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
-      days: ["M", "T", "O", "T", "F", "L", "S"],
+      days: ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"],
       times: [
         "06.00 – 09.00",
         "09.00 – 12.00",
