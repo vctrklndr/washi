@@ -41,6 +41,7 @@ function getAllUsers() {
                 console.log(successMessage)
               }
             })
+            location.reload();
         })
       }
     })
@@ -80,6 +81,7 @@ function createNewUser () {
           console.log(successMessage)
         }
       })
+      location.reload();
   })
 }
 
