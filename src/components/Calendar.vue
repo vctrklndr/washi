@@ -95,7 +95,7 @@
         <div class="u-textCenter">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveBooking()"
+            @click="newBooking()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
           <button v-else class="Button Button--large Button--disabled u-marginTlg" disabled>Boka tid</button>
@@ -139,7 +139,7 @@ export default {
       errorMessage: "",
       successMessage: "",
       bookings: [],
-      nnewBooking: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
+      bookingInfo: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
       clickedUser: {},
       activeDateIndex: undefined,
       activeTimeIndex: undefined
@@ -249,7 +249,6 @@ export default {
       var apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
-        console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
           if (
             time === bookings[date][i].bookingTime &&
@@ -322,7 +321,7 @@ export default {
     },
     selectTime: function(time) {
       this.selectedTime = "tid" + time;
-      this.newBooking = {
+      this.bookingInfo = {
         selectedDate: this.selectedDate,
         selectedTime: "tid" + time,
         apartmentNumber: this.$parent.loggedInUser
@@ -330,8 +329,15 @@ export default {
       // console.log(this.selectedTime);
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
+    newBooking: function() {
+      var loggedInUser = { username: this.getCookie("username") };
+      console.log;
+      this.deleteBooking();
+      this.saveBooking();
+    },
+
     saveBooking: function() {
-      var formData = this.toFormData(this.newBooking);
+      var formData = this.toFormData(this.bookingInfo);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
@@ -360,17 +366,17 @@ export default {
         });
     },
     deleteBooking: function() {
-      var formData = app.toFormData(app.clickedUser);
+      var formData = this.toFormData(this.bookingInfo);
+      console.log(formData);
       axios
-        .post("http://localhost:8888/VuePHP/api.php?action=delete", formData)
+        .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
         .then(function(response) {
           console.log(response);
-          app.clickedUser = {};
+          //app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
           } else {
             app.successMessage = response.data.message;
-            app.getAllUsers();
           }
         });
     },
@@ -380,6 +386,7 @@ export default {
       for (var key in obj) {
         form_data.append(key, obj[key]);
       }
+      console.log(form_data);
       return form_data;
     },
     clearMessage: function() {
