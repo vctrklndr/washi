@@ -1,11 +1,11 @@
 var URL = 'http://mikahl.se/VuePHP/users.php?action=read'
 
-function getAllUsers() {
+function getAllUsers () {
   axios
     .get(URL)
     .then(function (response) {
       if (response.data.error) {
-        app.errorMessage = response.data.message;
+        app.errorMessage = response.data.message
       } else {
         for (let i = 0; i < response.data.users.length; i++) {
           var user = response.data.users
@@ -28,18 +28,16 @@ function getAllUsers() {
       var deleteButtons = document.getElementsByClassName('deleteButtons')
       for (const deleteButton of deleteButtons) {
         deleteButton.addEventListener('click', function () {
-          var userId = { id: this.parentElement.id };
-          var formData = toFormData(userId);
+          var userId = { id: this.parentElement.id }
+          var formData = toFormData(userId)
           axios.post("http://mikahl.se/VuePHP/users.php?action=delete", formData)
           .then(function (response) {
             if(response.data.error) {
-              var errorMessage = response.data.message;
-              console.log(errorMessage);
-              console.log(id);
+              var errorMessage = response.data.message
+              console.log(errorMessage)
             } else {
-              var successMessage = response.data.message;
-              console.log(successMessage);
-              console.log(id);
+              var successMessage = response.data.message
+              console.log(successMessage)
             }
           })
         })
@@ -48,12 +46,12 @@ function getAllUsers() {
 };
 
 function toFormData(obj) {
-  console.log(obj);
-  var form_data = new FormData();
+  console.log(obj)
+  var formData = new FormData()
   for (var key in obj) {
-    form_data.append(key, obj[key]);
+    formData.append(key, obj[key])
   }
-  return form_data;
+  return formData
 }
 
-getAllUsers();
+getAllUsers()

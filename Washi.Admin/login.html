@@ -30,17 +30,17 @@
   </header>
   <main class="Main">
     <div class="AdminUser-container">
-      <form class="user-form" method="post">
+      <div class="user-form" method="post">
         <div class="input-container">
           <label for="appNo">Lägenhetsnummer:</label>
-          <input type="text" name="appNo"><br>
+          <input type="text" id="appNo" name="appNo"><br>
         </div>
         <div class="input-container">
           <label for="password">Lösenord:</label>
-          <input type="password" name="password"><br>
+          <input type="password" id="password" name="password"><br>
         </div>
-          <input type="submit">
-      </form>
+          <button id="createUserButton">Skapa användare</button>
+      </div>
     </div>
     <div class="current-users-container">
       <h1>
@@ -54,4 +54,5 @@
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="./user-management/get.js"></script>
+<script src="./user-management/createUser.js"></script>
 </html>
