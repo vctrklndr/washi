@@ -79,7 +79,7 @@
           v-for="(time, index) in times"
           :key="time.id"
           class="Calendar-time"
-          @click="selectTime(index + 1), setActiveTime(time, index)"
+          @click="selectTime(index + 1), setActiveTime(time, index), cancelBooking(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
             'Calendar-time--selected': activeTimeIndex === index,
@@ -88,13 +88,19 @@
             'Calendar-time--green' :
               checkUserBookingTime(index + 1)
             }"
-          :disabled="checkBookedTimes(index + 1)"
+          :disabled="!checkUserBookingTime(index + 1) && checkBookedTimes(index + 1)"
         >
           <time>{{time}}</time>
         </button>
         <div class="u-textCenter">
           <button
-            v-if="selectedDate !== '' && selectedTime !== ''"
+            v-if="
+            booked === true
+          "
+            class="Button Button--large u-marginTlg"
+          >Avboka</button>
+          <button
+            v-else-if="selectedDate !== '' && selectedTime !== ''"
             @click="saveBooking()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
@@ -126,7 +132,7 @@ export default {
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
-      days: ["M", "T", "O", "T", "F", "L", "S"],
+      days: ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"],
       times: [
         "06.00 – 09.00",
         "09.00 – 12.00",
@@ -142,7 +148,8 @@ export default {
       nnewBooking: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
       clickedUser: {},
       activeDateIndex: undefined,
-      activeTimeIndex: undefined
+      activeTimeIndex: undefined,
+      booked: false
     };
   },
   computed: {
@@ -232,11 +239,11 @@ export default {
     checkUserBookingDate: function(date) {
       var apartmentNumber = this.getCookie("username");
       var bookings = this.$parent.formattedData;
-      console.log(this.$parent.loggedInUser);
+      //console.log(this.$parent.loggedInUser);
       if (bookings.hasOwnProperty(date)) {
         for (var i = 0; i < bookings[date].length; i++) {
           if (apartmentNumber === bookings[date][i].apartmentNumber) {
-            console.log("lägg på grön färg");
+            //console.log("lägg på grön färg");
             return true;
           }
         }
@@ -249,13 +256,13 @@ export default {
       var apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
-        console.log(bookings[date][0]);
+        //console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
           if (
             time === bookings[date][i].bookingTime &&
             apartmentNumber === bookings[date][i].apartmentNumber
           ) {
-            console.log("Grön FÄRG TILL ALLA");
+            //console.log("Grön FÄRG TILL ALLA");
             return true;
           }
         }
@@ -318,6 +325,7 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
+      this.booked = false;
       //console.log(this.selectedDate);
     },
     selectTime: function(time) {
@@ -335,7 +343,7 @@ export default {
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
 
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -349,7 +357,7 @@ export default {
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
         .then(function(response) {
-          console.log(response).data.bookings;
+          //console.log(response).data.bookings;
           app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -392,6 +400,17 @@ export default {
     },
     setActiveTime: function(time, index) {
       this.activeTimeIndex = index;
+    },
+    cancelBooking: function(time, index) {
+      if (
+        this.selectDate !== "" &&
+        this.activeTimeIndex === index &&
+        this.checkUserBookingTime(index + 1)
+      ) {
+        this.booked = true;
+      } else if(this.booked = true) {
+        this.booked = false;
+      }
     }
   }
 };

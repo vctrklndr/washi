@@ -153,19 +153,27 @@
   cursor: auto;
 }
 
-.Calendar-day--selected,
-.Calendar-time--selected {
-  background-color: @brandColor;
-  color: @washiWhite;
-}
 
 .Calendar-day--today:hover {
-  color: @brandColor; 
+	color: @brandColor; 
 }
 
 .Calendar-day--bookedByUser,
 .Calendar-time--green {
 	background-color: green;
+	color: @washiWhite;
+}
+
+.Calendar-time--green:hover {
+	background-color: green;
+	color: @washiWhite;
+	cursor: pointer;
+}
+
+.Calendar-day--selected,
+.Calendar-time--selected {
+	background-color: @brandColor;
+	color: @washiWhite;
 }
 
 .Calendar--spacing {
