@@ -24,19 +24,19 @@
             <span></span>
           </div>
           <ul class="PageNav-list" :class="{'PageNav-list--open': isActive}">
-            <li @click="closeMenu">
+            <li @click="closeMenu()">
               <router-link class="PageNav-Link" to="/boka">Boka tvättid</router-link>
             </li>
-            <li @click="closeMenu">
+            <li @click="closeMenu()">
               <router-link class="PageNav-Link" to="/hjalp">Hjälp</router-link>
             </li>
-            <li @click="closeMenu">
+            <li @click="closeMenu()">
               <router-link class="PageNav-Link" to="/regler">Regler</router-link>
             </li>
-            <li @click="closeMenu">
+            <li @click="closeMenu()">
               <router-link class="PageNav-Link" to="/tvattrad">Tvättråd</router-link>
             </li>
-            <li @click="closeMenu">
+            <li @click="closeMenu()">
               <router-link
                 class="PageNav-Link"
                 to="/login"

@@ -4,20 +4,22 @@
       <h1 class="Heading Heading--h1 Heading-line">Boka tvättid</h1>
     </div>
     <div class="Grid u-marginTlg">
-      <div class="Grid-cell u-md-size6of10">
+      <div class="Grid-cell u-md-size6of10 Calendar--spacing">
         <div class="Calendar--daysHeading">
-          <div class="Calendar-header">
-            <span
+          <h2 class="Heading Heading--h2 Calendar-header u-marginTz u-flex u-spaceBetween">
+            <button
               v-if="month !== initialMonth || year !== initialYear"
-              @click="subtractMonth"
-              class="Calendar-controls"
-            >&lt; Föregående</span>
-            <span v-else>&nbsp;</span>
-            <time
-              class="Calendar-selectedDate"
-            >{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
-            <span @click="addMonth" class="Calendar-controls">Nästa &gt;</span>
-          </div>
+              @click="subtractMonth()"
+              class="Calendar-button"
+            >&lt; Föregående</button>
+            <button
+              v-else
+              class="Calendar-button Calendar-button--disabled"
+              disabled
+            >&lt; Föregående</button>
+            <time>{{month.charAt(0).toUpperCase() + month.slice(1) + ' - ' + year}}</time>
+            <button @click="addMonth()" class="Calendar-button">Nästa &gt;</button>
+          </h2>
           <div class="Calendar u-paddingBz">
             <button
               v-for="day in days"
@@ -32,24 +34,20 @@
           </div>
         </div>
         <div class="Calendar u-marginTz">
+          <blank v-for="blank in firstDayOfMonth" :key="blank.id"/>
           <button
-            class="Calendar-day Calendar-day--noDate"
-            v-for="blank in firstDayOfMonth"
-            :key="blank.id"
-            disabled
-          ></button>
-          <button
-            v-for="date in daysInMonth"
-            @click="selectDate(date)"
+            v-for="(date, index) in daysInMonth"
             :key="date.id"
+            @click="selectDate(date), setActiveDate(date, index)"
             :id="setDateId(date)"
             :class="{
               'Calendar-day--today':
                 date === initialDate && 
                 month === initialMonth &&
                 year === initialYear,
+              'Calendar-day--selected': activeDateIndex === index,
               'Calendar-day--disabled':
-                 checkIfFullyBooked(setDateId(date)) ||
+                checkIfFullyBooked(setDateId(date)) ||
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
                 year === today.format('YYYY'),
@@ -59,15 +57,22 @@
 
             }"
             class="Calendar-day"
+            :disabled="
+              checkIfFullyBooked(setDateId(date)) ||
+              date < today.format('D') &&
+              month === today.format('MMMM') &&
+              year === today.format('YYYY')"
           >
             <div class="Calendar-day-content">
               <div class="Calendar-dayNumber">{{date}}</div>
             </div>
           </button>
+          <blank v-for="blank in lastDayOfMonth" :key="blank.id"/>
         </div>
       </div>
-      <div class="Calendar--times Grid-cell u-md-size4of10">
-        <div class="Calendar-header">
+      <booking-information v-if="selectedDate === ''"/>
+      <div v-else class="Calendar--times Grid-cell u-md-size4of10">
+        <div class="Heading Heading--h2 Calendar-header u-marginTz">
           <time
             class="Calendar-selectedDate"
           >{{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}}</time>
@@ -76,30 +81,26 @@
           v-for="(time, index) in times"
           :key="time.id"
           class="Calendar-time"
-          @click="selectTime(index + 1)"
+          @click="selectTime(index + 1), setActiveTime(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
-              'Calendar-time--disabled' :
-                 checkBookedTimes(index + 1),
               'Calendar-time--green' :
-              checkUserBookingTime(index + 1)
+              checkUserBookingTime(index + 1),
+            'Calendar-time--selected': activeTimeIndex === index,
+            'Calendar-time--disabled' :
+              checkBookedTimes(index + 1)
             }"
+          :disabled="checkBookedTimes(index + 1)"
         >
           <time>{{time}}</time>
         </button>
-        <div style="display: flex; justify-content: center;">
+        <div class="u-textCenter">
           <button
             v-if="selectedDate !== '' && selectedTime !== ''"
-            @click="saveBooking"
-            class="Button u-marginTlg"
+            @click="saveUser()"
+            class="Button Button--large u-marginTlg"
           >Boka tid</button>
-          <button
-            v-else
-            @click="bookTime(selectedDate, selectedTime)"
-            class="Button Button--disabled u-marginTlg"
-            disabled
-          >Boka tid</button>
-          <div></div>
+          <button v-else class="Button Button--large Button--disabled u-marginTlg" disabled>Boka tid</button>
         </div>
       </div>
     </div>
@@ -109,12 +110,18 @@
 <script>
 import moment from "moment";
 import "moment/locale/sv";
+import Blank from "./Blank.vue";
+import BookingInformation from "./BookingInformation.vue";
 moment.updateLocale("sv", {
   week: {
     dow: 1
   }
 });
 export default {
+  components: {
+    Blank,
+    BookingInformation
+  },
   data() {
     return {
       isActive: false,
@@ -134,8 +141,10 @@ export default {
       errorMessage: "",
       successMessage: "",
       bookings: [],
-      newBooking: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
-      clickedUser: {}
+      nnewBooking: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
+      clickedUser: {},
+      activeDateIndex: undefined,
+      activeTimeIndex: undefined
     };
   },
   computed: {
@@ -160,6 +169,35 @@ export default {
         "days"
       );
       return firstDay.weekday();
+    },
+    lastDayOfMonth: function() {
+      const lastDayOfMonth = Number(
+        moment(this.dateContext)
+          .endOf("month")
+          .format("d")
+      );
+      const monday = 1;
+      const tuesday = 2;
+      const wednesday = 3;
+      const thursday = 4;
+      const friday = 5;
+      const saturday = 6;
+      const sunday = 0;
+      if (lastDayOfMonth === monday) {
+        return +6;
+      } else if (lastDayOfMonth === tuesday) {
+        return +5;
+      } else if (lastDayOfMonth === wednesday) {
+        return +4;
+      } else if (lastDayOfMonth === thursday) {
+        return +3;
+      } else if (lastDayOfMonth === friday) {
+        return +2;
+      } else if (lastDayOfMonth === saturday) {
+        return +1;
+      } else if (lastDayOfMonth === sunday) {
+        return 0;
+      } else return lastDayOfMonth;
     },
     initialDate: function() {
       return this.today.get("D");
@@ -225,16 +263,26 @@ export default {
         }
       }
     },
-
+    addMonth: function() {
+      this.dateContext = moment(this.dateContext).add(1, "month");
+      this.activeDateIndex = undefined;
+    },
+    subtractMonth: function() {
+      this.dateContext = moment(this.dateContext).subtract(1, "month");
+      this.activeDateIndex = undefined;
+    },
     checkIfFullyBooked: function(date) {
       var bookings = this.$parent.formattedData;
 
-      if (
+      if (bookings.hasOwnProperty(date) === false) {
+        // console.log(false);
+        // console.log(date);
+      } else if (
         bookings.hasOwnProperty(date) === true &&
         this.$parent.formattedData[date].length >= 5
       ) {
-        console.log(true);
-        console.log(date);
+        // console.log(true);
+        // console.log(date);
         return true;
       }
     },
@@ -243,21 +291,18 @@ export default {
       var date = this.selectedDate;
       var bookings = this.$parent.formattedData;
 
-      if (bookings.hasOwnProperty(date) === true) {
-        console.log(bookings[date][0]);
+      if (bookings.hasOwnProperty(date) === false) {
+        // console.log(false);
+        // console.log(date);
+      } else if (bookings.hasOwnProperty(date) === true) {
+        //console.log(bookings[date][0]);
         for (var i = 0; i < bookings[date].length; i++) {
           if (time === bookings[date][i].bookingTime) {
-            console.log("detta kommer aldrig funka");
+            //console.log("detta kommer aldrig funka");
             return true;
           }
         }
       }
-    },
-    addMonth: function() {
-      this.dateContext = moment(this.dateContext).add(1, "month");
-    },
-    subtractMonth: function() {
-      this.dateContext = moment(this.dateContext).subtract(1, "month");
     },
     setDateId: function(date) {
       const month = this.dateContext.format("MMMM");
@@ -284,8 +329,8 @@ export default {
         selectedTime: "tid" + time,
         apartmentNumber: this.$parent.loggedInUser
       };
-      console.log(this.selectedTime);
-      console.log(this.groupBy(app.bookings, "bookingDate"));
+      // console.log(this.selectedTime);
+      // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     saveBooking: function() {
       var formData = this.toFormData(this.newBooking);
@@ -343,11 +388,12 @@ export default {
       app.errorMessage = "";
       app.successMessage = "";
     },
-    bookTime: function(date, time) {
-      if (date !== "" && time !== "") {
-        console.log(date, time);
-      }
-      return null;
+    setActiveDate: function(date, index) {
+      this.activeDateIndex = index;
+      this.activeTimeIndex = undefined;
+    },
+    setActiveTime: function(time, index) {
+      this.activeTimeIndex = index;
     }
   }
 };

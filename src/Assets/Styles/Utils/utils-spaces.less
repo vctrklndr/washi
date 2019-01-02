@@ -172,45 +172,7 @@
         @{property}-bottom: auto !important;
     }
 }
-/* stylelint-enable */
 
-/* mobile specific spaces*/
-@bpMaxSmall: ~ "only screen and (max-width: @{widthSmall}em), print";
-
-@media @bpMaxSmall {
-    .u-sd-paddingRz {
-        padding-right: 0 !important;
-    }
-
-    .u-sd-paddingLz {
-        padding-left: 0 !important;
-    }
-
-    .u-sd-paddingHmd {
-        padding-left: @spaceMedium !important;
-        padding-right: @spaceMedium !important;
-    }
-
-    .u-sd-paddingHxsm {
-        padding-left: @spaceXSmall !important;
-        padding-right: @spaceXSmall !important;
-    }
-
-    .u-sd-paddingBz {
-        padding-bottom: 0 !important;
-    }
-
-    .u-sd-paddingTz {
-        padding-top: 0 !important;
-    }
-
-    .u-sd-paddingHz {
-        padding-left: 0 !important;
-        padding-right: 0!important;
-    }
-
-    .u-sd-marginBmd {
-       margin-bottom: @spaceMedium !important;
-    }
-
+.u-spaceBetween {
+    justify-content: space-between;
 }
