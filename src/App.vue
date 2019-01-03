@@ -81,6 +81,14 @@ export default {
   },
   methods: {
     // group all bookings per day
+    setCookie: function(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+
+      //this.$parent.loggedInUser = cname;
+    },
 
     getCookie: function(cname) {
       var name = cname + "=";
@@ -117,14 +125,6 @@ export default {
     toggleMenu: function() {
       this.isActive = !this.isActive;
     },
-    disableScroll: function() {
-      const app = document.getElementById("app");
-      if (app.classList.contains("disable-scroll")) {
-        app.classList.remove("disable-scroll");
-      } else {
-        app.classList.add("disable-scroll");
-      }
-    },
     closeMenu: function() {
       this.isActive = false;
       const app = document.getElementById("app");
@@ -132,6 +132,14 @@ export default {
       window.scrollTo({
         top: 0
       });
+    },
+    disableScroll: function() {
+      const app = document.getElementById("app");
+      if (app.classList.contains("disable-scroll")) {
+        app.classList.remove("disable-scroll");
+      } else {
+        app.classList.add("disable-scroll");
+      }
     }
   }
 };

@@ -51,7 +51,7 @@
                 date < today.format('D') &&
                 month === today.format('MMMM') &&
                 year === today.format('YYYY'),
-              'Calendar-day--bookedByUser':
+              'Calendar-day--booked':
                 checkUserBookingDate(setDateId(date))
             }"
             class="Calendar-day"
@@ -79,22 +79,27 @@
           v-for="(time, index) in times"
           :key="time.id"
           class="Calendar-time"
-          @click="selectTime(index + 1), setActiveTime(time, index)"
+          @click="selectTime(index + 1), setActiveTime(time, index), cancelBooking(time, index)"
           :id="'tid' + (index + 1)"
           :class="{
             'Calendar-time--selected': activeTimeIndex === index,
             'Calendar-time--disabled' :
               checkBookedTimes(index + 1),
-            'Calendar-time--green' :
+            'Calendar-time--booked' :
               checkUserBookingTime(index + 1)
             }"
-          :disabled="checkBookedTimes(index + 1)"
+          :disabled="!checkUserBookingTime(index + 1) && checkBookedTimes(index + 1)"
         >
           <time>{{time}}</time>
         </button>
         <div class="u-textCenter">
           <button
-            v-if="selectedDate !== '' && selectedTime !== ''"
+            v-if="booked === true"
+            @click="deleteBooking()"
+            class="Button Button--large u-marginTlg"
+          >Avboka tid</button>
+          <button
+            v-else-if="selectedDate !== '' && selectedTime !== ''"
             @click="newBooking()"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
@@ -127,7 +132,7 @@ export default {
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
-      days: ["M", "T", "O", "T", "F", "L", "S"],
+      days: ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"],
       times: [
         "06.00 – 09.00",
         "09.00 – 12.00",
@@ -143,7 +148,8 @@ export default {
       bookingInfo: { selectedDate: "", selectedTime: "", apartmentNumber: "" },
       clickedUser: {},
       activeDateIndex: undefined,
-      activeTimeIndex: undefined
+      activeTimeIndex: undefined,
+      booked: false
     };
   },
   computed: {
@@ -210,15 +216,17 @@ export default {
   },
   mounted: function() {
     this.getAllUsers();
+    console.log(this.getCookie("username"));
   },
   methods: {
     toggleActive: function() {},
+
     getCookie: function(cname) {
-      var name = cname + "=";
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
+      const name = cname + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
         while (c.charAt(0) == " ") {
           c = c.substring(1);
         }
@@ -231,11 +239,10 @@ export default {
     checkUserBookingDate: function(date) {
       var apartmentNumber = this.getCookie("username");
       var bookings = this.formattedData;
-      console.log(this.$parent.loggedInUser);
       if (bookings.hasOwnProperty(date)) {
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (apartmentNumber === bookings[date][i].apartmentNumber) {
-            console.log("lägg på grön färg");
+            //console.log("lägg på grön färg");
             return true;
           }
         }
@@ -248,12 +255,12 @@ export default {
       var apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (
             time === bookings[date][i].bookingTime &&
             apartmentNumber === bookings[date][i].apartmentNumber
           ) {
-            console.log("Grön FÄRG TILL ALLA");
+            //console.log("Grön FÄRG TILL ALLA");
             return true;
           }
         }
@@ -316,6 +323,7 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
+      this.booked = false;
       //console.log(this.selectedDate);
     },
     selectTime: function(time) {
@@ -331,7 +339,6 @@ export default {
     newBooking: function() {
       this.deleteBooking();
       this.saveBooking();
-      this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
       return arrayToGroup.reduce((previous, current) => {
@@ -359,11 +366,11 @@ export default {
     },
 
     saveBooking: function() {
-      var formData = this.toFormData(this.bookingInfo);
+      const formData = this.toFormData(this.bookingInfo);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
 
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -371,13 +378,14 @@ export default {
             app.successMessage = response.data.message;
           }
         });
+      this.getAllUsers();
     },
     updateUser: function() {
-      var formData = app.toFormData(app.clickedUser);
+      const formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
         .then(function(response) {
-          console.log(response).data.bookings;
+          //console.log(response).data.bookings;
           app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -388,7 +396,7 @@ export default {
         });
     },
     deleteBooking: function() {
-      var formData = this.toFormData(this.bookingInfo);
+      const formData = this.toFormData(this.bookingInfo);
       console.log(formData);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
@@ -401,11 +409,12 @@ export default {
             app.successMessage = response.data.message;
           }
         });
+      this.getAllUsers();
     },
     toFormData: function(obj) {
       console.log(obj);
-      var form_data = new FormData();
-      for (var key in obj) {
+      const form_data = new FormData();
+      for (let key in obj) {
         form_data.append(key, obj[key]);
       }
       console.log(form_data);
@@ -421,6 +430,17 @@ export default {
     },
     setActiveTime: function(time, index) {
       this.activeTimeIndex = index;
+    },
+    cancelBooking: function(time, index) {
+      if (
+        this.selectDate !== "" &&
+        this.activeTimeIndex === index &&
+        this.checkUserBookingTime(index + 1)
+      ) {
+        this.booked = true;
+      } else if ((this.booked = true)) {
+        this.booked = false;
+      }
     }
   }
 };
