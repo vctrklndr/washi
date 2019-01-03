@@ -10,14 +10,12 @@ function getAllUsers() {
       } else {
         for (let i = 0; i < response.data.users.length; i++) {
           var user = response.data.users
-          console.log(user[i])
           // Print users in html
           var userlist = document.getElementById('userlist');
           userlist.innerHTML += `
-          <div style='padding: 5px; text-align: left; outline:1px solid black' id='${user[i].id}'>
+          <div class='createdUsers' name='${user[i].apartmentNumber}' style='padding: 5px; text-align: left; outline:1px solid black' id='${user[i].id}' data='${user[i].apartmentNumber}'>
             <p>Lägenhetsnummer: ${user[i].apartmentNumber}</p>
             <p>Lösenord: ${user[i].password}</p>
-            <p>Id: ${user[i].id}</p>
             <p>Skapad: ${user[i].dateAdded}</p>
             <button class='deleteButtons'>Ta bort</button>
           </div>
@@ -41,7 +39,7 @@ function getAllUsers() {
                 console.log(successMessage)
               }
             })
-            location.reload();
+          location.reload();
         })
       }
     })
@@ -81,9 +79,22 @@ function createNewUser () {
           console.log(successMessage)
         }
       })
-      location.reload();
+    location.reload();
   })
 }
+
+// Allows searching for users by apartmentnumber
+var searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('keyup', function () {
+  var createdUsers = document.getElementsByClassName('createdUsers')
+  for (const createdUser of createdUsers) {
+    if (createdUser.innerHTML.includes(searchInput.value)) {
+      createdUser.style.display = 'block'
+    } else {
+      createdUser.style.display = 'none'
+    }
+  }
+})
 
 getAllUsers()
 createNewUser()
