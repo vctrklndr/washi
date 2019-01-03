@@ -221,11 +221,11 @@ export default {
   methods: {
     toggleActive: function() {},
     getCookie: function(cname) {
-      var name = cname + "=";
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
+      const name = cname + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
         while (c.charAt(0) == " ") {
           c = c.substring(1);
         }
@@ -236,11 +236,11 @@ export default {
       return "";
     },
     checkUserBookingDate: function(date) {
-      var apartmentNumber = this.getCookie("username");
-      var bookings = this.$parent.formattedData;
+      const apartmentNumber = this.getCookie("username");
+      const bookings = this.$parent.formattedData;
       //console.log(this.$parent.loggedInUser);
       if (bookings.hasOwnProperty(date)) {
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (apartmentNumber === bookings[date][i].apartmentNumber) {
             //console.log("lägg på grön färg");
             return true;
@@ -249,13 +249,13 @@ export default {
       }
     },
     checkUserBookingTime: function(slot) {
-      var time = "tid" + slot;
-      var date = this.selectedDate;
-      var bookings = this.$parent.formattedData;
-      var apartmentNumber = this.getCookie("username");
+      const time = "tid" + slot;
+      const date = this.selectedDate;
+      const bookings = this.$parent.formattedData;
+      const apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (
             time === bookings[date][i].bookingTime &&
             apartmentNumber === bookings[date][i].apartmentNumber
@@ -275,7 +275,7 @@ export default {
       this.activeDateIndex = undefined;
     },
     checkIfFullyBooked: function(date) {
-      var bookings = this.$parent.formattedData;
+      const bookings = this.$parent.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
@@ -290,9 +290,9 @@ export default {
       }
     },
     checkBookedTimes(slot) {
-      var time = "tid" + slot;
-      var date = this.selectedDate;
-      var bookings = this.$parent.formattedData;
+      const time = "tid" + slot;
+      const date = this.selectedDate;
+      const bookings = this.$parent.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
@@ -337,14 +337,14 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: function() {
-      var loggedInUser = { username: this.getCookie("username") };
+      const loggedInUser = { username: this.getCookie("username") };
       console.log;
       this.deleteBooking();
       this.saveBooking();
     },
 
     saveBooking: function() {
-      var formData = this.toFormData(this.bookingInfo);
+      const formData = this.toFormData(this.bookingInfo);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
@@ -358,7 +358,7 @@ export default {
         });
     },
     updateUser: function() {
-      var formData = app.toFormData(app.clickedUser);
+      const formData = app.toFormData(app.clickedUser);
       axios
         .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
         .then(function(response) {
@@ -373,7 +373,7 @@ export default {
         });
     },
     deleteBooking: function() {
-      var formData = this.toFormData(this.bookingInfo);
+      const formData = this.toFormData(this.bookingInfo);
       console.log(formData);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
@@ -389,8 +389,8 @@ export default {
     },
     toFormData: function(obj) {
       console.log(obj);
-      var form_data = new FormData();
-      for (var key in obj) {
+      const form_data = new FormData();
+      for (let key in obj) {
         form_data.append(key, obj[key]);
       }
       console.log(form_data);
