@@ -339,8 +339,8 @@ export default {
     newBooking: function() {
       this.deleteBooking();
       this.saveBooking();
-      this.selectedDate = "";
       this.getAllUsers();
+      this.selectedDate = "";
     },
     removeBooking: function() {
       this.deleteBooking();
