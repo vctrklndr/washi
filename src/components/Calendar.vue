@@ -345,6 +345,7 @@ export default {
     removeBooking: function() {
       this.deleteBooking();
       this.selectedTime = "";
+      this.activeTimeIndex = undefined;
       this.booked = false;
       this.getAllUsers();
     },
