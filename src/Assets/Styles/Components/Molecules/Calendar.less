@@ -2,13 +2,28 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 1em;
-  padding-bottom: @spaceLarge;
-  &&--daysHeading {
-    padding-bottom: 0;
-  }
-  @media @bpMedium {
+	padding-bottom: @spaceLarge;
+	@media @bpMedium {
     margin-top: 1em;
-  }
+	}
+	&-dayNumber {
+		font-size: 0.9em;
+		@media bpSmall {
+			font-size: 1em;
+		}
+	}
+	&--daysHeading {
+		padding-bottom: 0;
+	}
+	&--spacing {
+		padding-right: 0;
+		@media @bpMedium {
+			padding-right: @spaceSmall;
+		}
+		@media @bpLarge {
+			padding-right: @spaceLarge;
+		}
+	}
 }
 
 .Calendar-header {
@@ -19,11 +34,6 @@
   margin-bottom: 1em;
   padding: 0 @spaceXSmall;
   text-align: center;
-
-  .Calendar-selectedDate {
-    font-family: @fontFamilyBold;
-  }
-
   @media @bpLarge {
     font-size: @textSizeMedium;
     padding: 0;
@@ -33,25 +43,21 @@
 .Calendar-button {
   padding: 0;
   height: 0;
-  font-family: @fontFamilyRegular;
+	font-family: @fontFamilyRegular;
+	font-size: @textSizeMedium;
   color: @brandColor;
-  border: 0;
-}
-
-.Calendar-button--disabled {
-  border: 0;
-  color: transparent;
-}
-
-.Calendar-title {
-  font-size: @textSizeMedium;
+	border: 0;
+	&&--disabled {
+		border: 0;
+		color: transparent;
+	}	
 }
 
 .Calendar-day {
-  background: #ddd;
+  background: @lighterGrey;
   border: 2px solid transparent;
   border-radius: 2px;
-  color: #313131;
+  color: @darkerGrey;
   flex-basis: 100/7.5%;
   flex-grow: 1;
   font-family: @fontFamilyRegular;
@@ -64,14 +70,51 @@
     display: block;
     padding-top: 85%;
   }
-
   &&--heading {
     background-color: @brandColor;
     color: @washiWhite;
     height: 30px;
-  }
-
-  .Calendar-day-content {
+	}
+	&&--heading:hover {
+		cursor: auto;
+	}
+	&&--selected {
+		background-color: @brandColor;
+		color: @washiWhite;
+	}
+	&&--booked {
+		background-color: @green;
+		color: @washiWhite;
+	}
+	&&--booked:hover {
+		background-color: @darkerGreen;
+		color: @washiWhite;
+		cursor: pointer;
+	}
+	&&--disabled {
+		background-color: #f3f3f3;
+		color: @lighterGrey;
+	}
+	&&--disabled:hover {
+		background-color: #f3f3f3;
+		color: @lighterGrey;
+		cursor: auto;
+	}
+	&&--today {
+		font-family: @fontFamilyBold;
+		color: @brandColor;
+	}
+	&&--today:hover {
+		color: @brandColor; 
+	}
+  &&--noDate {
+    background: transparent;
+	}
+	&&--noDate:hover {
+		background-color: transparent;
+		cursor: auto;
+	}
+	&-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -82,93 +125,46 @@
     justify-content: center;
     align-items: center;
   }
-
-  &.Calendar-day--noDate {
-    background: transparent;
-  }
-}
-
-.Calendar-dayNumber {
-  font-size: 0.9em;
-  @media bpSmall {
-    font-size: 1em;
-  }
 }
 
 .Calendar-time {
-  background-color: #ddd;
+  background-color: @lighterGrey;
   border: 2px solid transparent;
   border-radius: 2px;
-  color: #313131;
+  color: @darkerGrey;
   font-family: @fontFamilyRegular;
   margin: 1px;
   padding: @spaceDefault;
   position: relative;
-  width: 100%;
-}
-
-.Calendar-day--disabled {
-  background-color: #f3f3f3;
-  color: #ddd;
-}
-
-.Calendar-time--disabled {
-  background-color: #f3f3f3;
-  color: #ddd;
-}
-
-
-.Calendar-day--today {
-  font-family: @fontFamilyBold;
-  color: @brandColor;
-}
-
-.Calendar-day:focus,
-.Calendar-time:focus {
-  background-color: @brandColor;
-  color: @washiWhite;
+	width: 100%;
+	&&--selected {
+		background-color: @brandColor;
+		color: @washiWhite;
+	}
+	&&--disabled {
+		background-color: #f3f3f3;
+		color: @lighterGrey;
+	}
+	&&--disabled:hover {
+		background-color: #f3f3f3;
+		color: @lighterGrey;
+		cursor: auto;
+	}
+	&&--booked {
+		background-color: @green;
+		color: @washiWhite;
+	}
+	&&--booked:hover {
+		background-color: @darkerGreen;
+		color: @washiWhite;
+		cursor: pointer;
+	}
 }
 
 .Calendar-day:hover,
 .Calendar-time:hover {
   background-color: @brandColor;
   color: @washiWhite;
-  transition: all 800ms;
-  cursor: pointer;
-}
-
-.Calendar-day--disabled:hover,
-.Calendar-time--disabled:hover {
-  background-color: #f3f3f3;
-  color: #ddd;
-  cursor: auto;
-}
-
-.Calendar-day--noDate:hover {
-  background-color: transparent;
-  cursor: auto;
-}
-
-.Calendar-day--heading:hover {
-  cursor: auto;
-}
-
-.Calendar-day--selected,
-.Calendar-time--selected {
-  background-color: @brandColor;
-  color: @washiWhite;
-}
-
-.Calendar-day--today:hover {
-  color: @brandColor; 
-}
-
-.Calendar--spacing {
-  padding-right: 0;
-  @media @bpMedium {
-    padding-right: @spaceSmall;
-  }
-  @media @bpLarge {
-    padding-right: @spaceLarge;
-  }
+	transition: all 800ms;
+	cursor: pointer;
 }
