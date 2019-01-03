@@ -95,7 +95,7 @@
         <div class="u-textCenter">
           <button
             v-if="booked === true"
-            @click="deleteBooking()"
+            @click="removeBooking()"
             class="Button Button--large u-marginTlg"
           >Avboka tid</button>
           <button
@@ -339,6 +339,11 @@ export default {
     newBooking: function() {
       this.deleteBooking();
       this.saveBooking();
+      this.getAllUsers();
+    },
+    removeBooking: function() {
+      this.deleteBooking();
+      this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
       return arrayToGroup.reduce((previous, current) => {
@@ -378,22 +383,6 @@ export default {
             app.successMessage = response.data.message;
           }
         });
-      this.getAllUsers();
-    },
-    updateUser: function() {
-      const formData = app.toFormData(app.clickedUser);
-      axios
-        .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
-        .then(function(response) {
-          //console.log(response).data.bookings;
-          app.clickedUser = {};
-          if (response.data.error) {
-            app.errorMessage = response.data.message;
-          } else {
-            app.successMessage = response.data.message;
-            app.getAllUsers();
-          }
-        });
     },
     deleteBooking: function() {
       const formData = this.toFormData(this.bookingInfo);
@@ -409,7 +398,6 @@ export default {
             app.successMessage = response.data.message;
           }
         });
-      this.getAllUsers();
     },
     toFormData: function(obj) {
       console.log(obj);
