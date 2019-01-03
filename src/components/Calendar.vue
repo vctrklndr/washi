@@ -238,8 +238,8 @@ export default {
       return "";
     },
     checkUserBookingDate: function(date) {
-      var apartmentNumber = this.getCookie("username");
-      var bookings = this.formattedData;
+      const apartmentNumber = this.getCookie("username");
+      const bookings = this.formattedData;
       if (bookings.hasOwnProperty(date)) {
         for (let i = 0; i < bookings[date].length; i++) {
           if (apartmentNumber === bookings[date][i].apartmentNumber) {
@@ -250,10 +250,10 @@ export default {
       }
     },
     checkUserBookingTime: function(slot) {
-      var time = "tid" + slot;
-      var date = this.selectedDate;
-      var bookings = this.formattedData;
-      var apartmentNumber = this.getCookie("username");
+      const time = "tid" + slot;
+      const date = this.selectedDate;
+      const bookings = this.formattedData;
+      const apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
         for (let i = 0; i < bookings[date].length; i++) {
@@ -276,7 +276,7 @@ export default {
       this.activeDateIndex = undefined;
     },
     checkIfFullyBooked: function(date) {
-      var bookings = this.formattedData;
+      const bookings = this.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
@@ -291,9 +291,9 @@ export default {
       }
     },
     checkBookedTimes(slot) {
-      var time = "tid" + slot;
-      var date = this.selectedDate;
-      var bookings = this.formattedData;
+      const time = "tid" + slot;
+      const date = this.selectedDate;
+      const bookings = this.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
@@ -338,7 +338,6 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: function() {
-
       let users = this.unformattedData;
 
       for (let i = 0; i < users.length; i++) {
@@ -353,10 +352,10 @@ export default {
       this.selectedDate = "";
     },
     removeBooking: function() {
-      this.deleteBooking();
       this.selectedTime = "";
       this.activeTimeIndex = undefined;
       this.booked = false;
+      this.deleteBooking();
       this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
