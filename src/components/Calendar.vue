@@ -96,7 +96,7 @@
           <button
             v-if="booked === true"
             @click="deleteBooking()"
-            class="Button Button--large u-marginTlg"
+            class="Button Button--large Button--altDarkColor u-marginTlg"
           >Avboka tid</button>
           <button
             v-else-if="selectedDate !== '' && selectedTime !== ''"
@@ -409,6 +409,8 @@ export default {
             app.successMessage = response.data.message;
           }
         });
+      this.selectedTime = "";
+      this.booked = false;
       this.getAllUsers();
     },
     toFormData: function(obj) {
