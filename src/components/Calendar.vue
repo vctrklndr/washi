@@ -95,8 +95,8 @@
         <div class="u-textCenter">
           <button
             v-if="booked === true"
-            @click="deleteBooking()"
-            class="Button Button--large Button--altDarkColor u-marginTlg"
+            @click="removeBooking()"
+            class="Button Button--large Button--altRedColor u-marginTlg"
           >Avboka tid</button>
           <button
             v-else-if="selectedDate !== '' && selectedTime !== ''"
@@ -339,6 +339,14 @@ export default {
     newBooking: function() {
       this.deleteBooking();
       this.saveBooking();
+      this.selectedDate = "";
+      this.getAllUsers();
+    },
+    removeBooking: function() {
+      this.deleteBooking();
+      this.selectedTime = "";
+      this.booked = false;
+      this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
       return arrayToGroup.reduce((previous, current) => {
@@ -378,22 +386,6 @@ export default {
             app.successMessage = response.data.message;
           }
         });
-      this.getAllUsers();
-    },
-    updateUser: function() {
-      const formData = app.toFormData(app.clickedUser);
-      axios
-        .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
-        .then(function(response) {
-          //console.log(response).data.bookings;
-          app.clickedUser = {};
-          if (response.data.error) {
-            app.errorMessage = response.data.message;
-          } else {
-            app.successMessage = response.data.message;
-            app.getAllUsers();
-          }
-        });
     },
     deleteBooking: function() {
       const formData = this.toFormData(this.bookingInfo);
@@ -409,9 +401,6 @@ export default {
             app.successMessage = response.data.message;
           }
         });
-      this.selectedTime = "";
-      this.booked = false;
-      this.getAllUsers();
     },
     toFormData: function(obj) {
       console.log(obj);
