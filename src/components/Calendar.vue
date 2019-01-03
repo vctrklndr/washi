@@ -127,6 +127,7 @@ export default {
   },
   data() {
     return {
+      unformattedData: [],
       formattedData: [],
       isActive: false,
       today: moment(),
@@ -337,7 +338,16 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: function() {
-      this.deleteBooking();
+
+      let users = this.unformattedData;
+
+      for (let i = 0; i < users.length; i++) {
+        console.log(users[i].apartmentNumber);
+        if (users[i].apartmentNumber == "1000") {
+          console.log("true");
+          this.deleteBooking();
+        }
+      }
       this.saveBooking();
       this.getAllUsers();
       this.selectedDate = "";
@@ -368,7 +378,7 @@ export default {
               response.data.bookings,
               "bookingDate"
             );
-
+            this.unformattedData = response.data.bookings;
             console.log(this.formattedData);
           }
         });
