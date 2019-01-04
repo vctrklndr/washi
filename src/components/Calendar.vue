@@ -353,11 +353,10 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: async function() {
-      let users = this.unformattedData;
-
+      const users = this.unformattedData;
       for (let i = 0; i < users.length; i++) {
         console.log(users[i].apartmentNumber);
-        if (users[i].apartmentNumber == "1003") {
+        if (users[i].apartmentNumber === "1003") {
           console.log("true");
           await this.deleteBooking();
         }
