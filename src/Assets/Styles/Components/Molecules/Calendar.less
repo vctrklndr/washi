@@ -51,6 +51,9 @@
 		border: 0;
 		color: transparent;
 	}	
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 .Calendar-day {
@@ -123,7 +126,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+	}
+	&:hover {
+		background-color: @brandColor;
+		color: @washiWhite;
+		transition: all 800ms;
+		cursor: pointer;
+	}
 }
 
 .Calendar-time {
@@ -158,12 +167,18 @@
 		color: @washiWhite;
 		cursor: pointer;
 	}
+	&:hover {
+		background-color: @brandColor;
+		color: @washiWhite;
+		transition: all 800ms;
+		cursor: pointer;
+	}
 }
 
-.Calendar-day:hover,
-.Calendar-time:hover {
-  background-color: @brandColor;
-  color: @washiWhite;
-	transition: all 800ms;
-	cursor: pointer;
-}
+// .Calendar-day:hover,
+// .Calendar-time:hover {
+//   background-color: @brandColor;
+//   color: @washiWhite;
+// 	transition: all 800ms;
+// 	cursor: pointer;
+// }
