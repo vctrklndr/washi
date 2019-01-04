@@ -73,34 +73,21 @@
         class="Calendar--times Grid-cell u-md-size4of10 u-textCenter"
       >
         <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
-        <p class="u-textLarge u-marginAz">
-          Du har bokat en tvättid: <br />
-          <span class="u-textWeightBold">{{bookingInfo.selectedDate}}</span> kl.
-          <span
-            v-if="bookingInfo.selectedTime === 'tid1'"
-            class="u-textWeightBold"
-          >06.00 – 09.00</span>
-          <span
-            v-else-if="bookingInfo.selectedTime === 'tid2'"
-            class="u-textWeightBold"
-          >09.00 – 12.00</span>
-          <span
-            v-else-if="bookingInfo.selectedTime === 'tid3'"
-            class="u-textWeightBold"
-          >12.00 – 15.00</span>
-          <span
-            v-else-if="bookingInfo.selectedTime === 'tid4'"
-            class="u-textWeightBold"
-          >15.00 – 18.00</span>
-          <span
-            v-else-if="bookingInfo.selectedTime === 'tid5'"
-            class="u-textWeightBold"
-          >18.00 – 21.00</span>.
-          <button
-            @click="removeBooking()"
-            class="Button Button--large Button--altRedColor u-marginTlg"
-          >Avboka tid</button>
+        <p class="u-textLarge u-textWeightBold u-marginAz">Du har bokat en tvättid:</p>
+        <p class="u-textXLarge u-marginTxsm u-marginBz">
+        {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
+        <span
+          v-if="bookingInfo.selectedTime === 'tid1'"
+        >06.00 – 09.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid2'">09.00 – 12.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid3'">12.00 – 15.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid4'">15.00 – 18.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid5'">18.00 – 21.00</span>.
         </p>
+        <button
+          @click="removeBooking()"
+          class="Button Button--large Button--altRedColor u-marginTmd"
+        >Avboka tid</button>
       </div>
       <booking-information v-else-if="selectedDate === ''"/>
       <div v-else class="Calendar--times Grid-cell u-md-size4of10">
