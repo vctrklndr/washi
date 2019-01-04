@@ -74,14 +74,32 @@
       >
         <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
         <p class="u-textLarge u-marginAz">
-          Du har bokat en tvättid kl.
-          <span v-if="bookingInfo.selectedTime === 'tid1'">06.00 – 09.00</span>
-          <span v-else-if="bookingInfo.selectedTime === 'tid2'">09.00 – 12.00</span>
-          <span v-else-if="bookingInfo.selectedTime === 'tid3'">12.00 – 15.00</span>
-          <span v-else-if="bookingInfo.selectedTime === 'tid4'">15.00 – 18.00</span>
-          <span v-else-if="bookingInfo.selectedTime === 'tid5'">18.00 – 21.00</span>
-          <br>
-          {{bookingInfo.selectedDate}}
+          Du har bokat en tvättid: <br />
+          <span class="u-textWeightBold">{{bookingInfo.selectedDate}}</span> kl.
+          <span
+            v-if="bookingInfo.selectedTime === 'tid1'"
+            class="u-textWeightBold"
+          >06.00 – 09.00</span>
+          <span
+            v-else-if="bookingInfo.selectedTime === 'tid2'"
+            class="u-textWeightBold"
+          >09.00 – 12.00</span>
+          <span
+            v-else-if="bookingInfo.selectedTime === 'tid3'"
+            class="u-textWeightBold"
+          >12.00 – 15.00</span>
+          <span
+            v-else-if="bookingInfo.selectedTime === 'tid4'"
+            class="u-textWeightBold"
+          >15.00 – 18.00</span>
+          <span
+            v-else-if="bookingInfo.selectedTime === 'tid5'"
+            class="u-textWeightBold"
+          >18.00 – 21.00</span>.
+          <button
+            @click="removeBooking()"
+            class="Button Button--large Button--altRedColor u-marginTlg"
+          >Avboka tid</button>
         </p>
       </div>
       <booking-information v-else-if="selectedDate === ''"/>
@@ -353,27 +371,28 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: async function() {
-      const users = this.unformattedData;
-      for (let i = 0; i < users.length; i++) {
-        console.log(users[i].apartmentNumber);
-        if (users[i].apartmentNumber === "1003") {
-          console.log("true");
-          await this.deleteBooking();
-        }
-      }
-      this.saveBooking();
-      this.getAllUsers();
+      // const users = this.unformattedData;
+      // for (let i = 0; i < users.length; i++) {
+      //   console.log(users[i].apartmentNumber);
+      //   if (users[i].apartmentNumber === this.getCookie("username")) {
+      //     console.log("true");
+      //     this.deleteBooking();
+      //   }
+      // }
+      await this.saveBooking();
       this.selectedDate = "";
       if (this.booked === true) {
         this.booked = false;
       }
       this.booked = true;
+      this.getAllUsers();
     },
     removeBooking: async function() {
-      this.deleteBooking();
+      await this.deleteBooking();
       this.selectedTime = "";
       this.activeTimeIndex = undefined;
       this.timeIsBooked = false;
+      this.booked = false;
       this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
