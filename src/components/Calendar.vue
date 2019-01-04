@@ -68,7 +68,23 @@
           <blank v-for="blank in lastDayOfMonth" :key="blank.id"/>
         </div>
       </div>
-      <booking-information v-if="selectedDate === ''"/>
+      <div
+        v-if="selectedDate === '' && booked === true"
+        class="Calendar--times Grid-cell u-md-size4of10 u-textCenter"
+      >
+        <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
+        <p class="u-textLarge u-marginAz">
+          Du har bokat en tvättid kl.
+          <span v-if="bookingInfo.selectedTime === 'tid1'">06.00 – 09.00</span>
+          <span v-else-if="bookingInfo.selectedTime === 'tid2'">09.00 – 12.00</span>
+          <span v-else-if="bookingInfo.selectedTime === 'tid3'">12.00 – 15.00</span>
+          <span v-else-if="bookingInfo.selectedTime === 'tid4'">15.00 – 18.00</span>
+          <span v-else-if="bookingInfo.selectedTime === 'tid5'">18.00 – 21.00</span>
+          <br>
+          {{bookingInfo.selectedDate}}
+        </p>
+      </div>
+      <booking-information v-else-if="selectedDate === ''"/>
       <div v-else class="Calendar--times Grid-cell u-md-size4of10">
         <div class="Heading Heading--h2 Calendar-header u-marginTz">
           <time
@@ -94,7 +110,7 @@
         </button>
         <div class="u-textCenter">
           <button
-            v-if="booked === true"
+            v-if="timeIsBooked === true"
             @click="removeBooking()"
             class="Button Button--large Button--altRedColor u-marginTlg"
           >Avboka tid</button>
@@ -113,6 +129,7 @@
 <script>
 import moment from "moment";
 import "moment/locale/sv";
+import regeneratorRuntime from "regenerator-runtime";
 import Blank from "./Blank.vue";
 import BookingInformation from "./BookingInformation.vue";
 moment.updateLocale("sv", {
@@ -129,7 +146,6 @@ export default {
     return {
       unformattedData: [],
       formattedData: [],
-      isActive: false,
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
@@ -150,6 +166,7 @@ export default {
       clickedUser: {},
       activeDateIndex: undefined,
       activeTimeIndex: undefined,
+      timeIsBooked: false,
       booked: false
     };
   },
@@ -220,8 +237,6 @@ export default {
     console.log(this.getCookie("username"));
   },
   methods: {
-    toggleActive: function() {},
-
     getCookie: function(cname) {
       const name = cname + "=";
       const decodedCookie = decodeURIComponent(document.cookie);
@@ -300,7 +315,7 @@ export default {
         // console.log(date);
       } else if (bookings.hasOwnProperty(date) === true) {
         //console.log(bookings[date][0]);
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (time === bookings[date][i].bookingTime) {
             //console.log("detta kommer aldrig funka");
             return true;
@@ -324,7 +339,7 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
-      this.booked = false;
+      this.timeIsBooked = false;
       //console.log(this.selectedDate);
     },
     selectTime: function(time) {
@@ -337,25 +352,29 @@ export default {
       // console.log(this.selectedTime);
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
-    newBooking: function() {
+    newBooking: async function() {
       let users = this.unformattedData;
 
       for (let i = 0; i < users.length; i++) {
         console.log(users[i].apartmentNumber);
-        if (users[i].apartmentNumber == "1000") {
+        if (users[i].apartmentNumber == "1003") {
           console.log("true");
-          this.deleteBooking();
+          await this.deleteBooking();
         }
       }
       this.saveBooking();
       this.getAllUsers();
       this.selectedDate = "";
+      if (this.booked === true) {
+        this.booked = false;
+      }
+      this.booked = true;
     },
-    removeBooking: function() {
+    removeBooking: async function() {
+      this.deleteBooking();
       this.selectedTime = "";
       this.activeTimeIndex = undefined;
-      this.booked = false;
-      this.deleteBooking();
+      this.timeIsBooked = false;
       this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
@@ -389,7 +408,6 @@ export default {
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
           //console.log(response);
-
           if (response.data.error) {
             app.errorMessage = response.data.message;
           } else {
@@ -438,9 +456,9 @@ export default {
         this.activeTimeIndex === index &&
         this.checkUserBookingTime(index + 1)
       ) {
-        this.booked = true;
-      } else if ((this.booked = true)) {
-        this.booked = false;
+        this.timeIsBooked = true;
+      } else if ((this.timeIsBooked = true)) {
+        this.timeIsBooked = false;
       }
     }
   }
