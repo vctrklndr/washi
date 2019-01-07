@@ -7,60 +7,70 @@
   <title>washi°: Admin</title>
   <link rel="stylesheet" href="Assets/Styles/main.css">
   <link rel="shortcut icon" href="Assets/Images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="wysiwyg.css">
 </head>
 <body>
   <header class="Header">
     <div class="">
       <img class="Logo-header" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
       <h1 class="Heading Heading--small">Admin: 
-        <span style="font-weight: normal; text-transform: uppercase;">Kungshem Fastigheter</span>
+        <span style="font-weight: normal; text-transform: uppercase; color: #1670b1;">Kungshem Fastigheter</span>
       </h1>
     </div>
-    <nav>
+    <nav style="display: flex; align-items: center;">
+      <input id="searchInput" class="Input u-marginAz u-marginRmd" placeholder="Sök..."></input>
       <ul class="PageNav">
         <li class="PageNav-link">
-          <a href="#Admin">Administrera användare</a>
+          <a href="#admin" class="Button Button--add">Administrera användare</a>
         </li>
         <li class="PageNav-link">
-          <a href="">Uppdatera regler</a>
+          <a href="#regler" class="Button Button--add">Uppdatera regler</a>
         </li>
         <li class="PageNav-link">
-          <a href="">Logga ut</a>
-        </li>
-        <li>
-          <input id="searchInput" class="Input" placeholder="Sök på lägenhetsnummer"></input>
+          <a href="index.html" class="Button Button--delete">Logga ut</a>
         </li>
       </ul>
     </nav>
   </header>
   <main class="Main">
-    <div class="AdminUser-container">
-      <h1 class="Heading--admin" id="Admin">
-        Administrera användare
-      </h1>
-      <div class="user-form" method="post">
-        <div class="Input-container">
-          <label for="appNo"><strong>Lägenhetsnummer:</strong></label>
-          <input class="Input u-marginTxsm" type="text" id="appNo" name="appNo">
-        </div>
-        <div class="Input-container u-marginTxsm">
-          <label for="password"><strong>Lösenord:</strong></label>
-          <input class="Input u-marginTxsm" type="password" id="password" name="password">
-        </div>
-          <button id="createUserButton" class="Button Button--add">Skapa användare</button>
+    <h2 id="admin">Administrera användare</h2>
+    <h3 class="Heading--admin">
+      Lägg till användare
+    </h3>
+    <div class="user-form" method="post">
+      <div class="Input-container">
+        <label for="appNo"><strong>Lägenhetsnummer:</strong></label>
+        <input class="Input u-marginTxsm" type="text" id="appNo" name="appNo">
       </div>
-    </div>
-    <div class="current-users-container">
-      <h1 class="Heading--admin u-marginTxlg">
-        Ta bort användare
-      </h1>
-      <div class="Users-container" id="Users">
-
+      <div class="Input-container u-marginTxsm">
+        <label for="password"><strong>Lösenord:</strong></label>
+        <input class="Input u-marginTxsm" type="password" id="password" name="password">
       </div>
+      <button id="createUserButton" class="Button Button--add">Skapa användare</button>
     </div>
+    <h3 class="Heading--admin u-marginTxlg">
+      Ta bort användare
+    </h3>
+    <div class="Users-container" id="Users"></div>
+    <h2 id="regler">Administrera konto</h2>
+    <h3 class="Heading--admin">
+      Uppdatera regler
+    </h3>
+    <form action="" class="Container">
+        <div id="wysiwyg" data-height="300px" data-width="700px"></div>
+      <input class="Button Button--add" type="submit" value="Uppdatera">
+    </form>
+    <h2 class="Heading--admin u-marginTxlg">
+      Ladda upp logotyp
+    </h2>
+    <form action="">
+      <input type="file" class="Input">
+      <input class="Button Button--add" type="submit" value="Ladda upp">
+    </form>
   </main>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./user-management/get.js"></script>
+  <script src="./user-management/createUser.js"></script>
+  <script src="wysiwyg.js"></script>
 </body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="./user-management/get.js"></script>
-<script src="./user-management/createUser.js"></script>
 </html>

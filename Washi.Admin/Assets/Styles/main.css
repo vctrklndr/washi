@@ -13,6 +13,14 @@ ul {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
 .Main-login {
   height: 100vh;
   display: flex;
@@ -27,6 +35,7 @@ ul {
   padding: 0 30px;
   /* display: flex; */
   justify-content: center;
+  margin-bottom: 100px;
 }
 
 .Login-container {
@@ -62,8 +71,14 @@ ul {
   width: 250px;
   border: 1px solid #bdbdbd;
   border-radius: 4px;
+  background-color: #fff;
 }
 
+.Input--textarea {
+  width: 100%;
+  max-width: 600px;
+  height: 200px;
+}
 
 .Heading {
   margin: 0;
@@ -96,6 +111,10 @@ ul {
   display: flex;
 }
 
+.u-marginAz {
+  margin: 0;
+}
+
 .u-marginTz {
   margin-top: 0;
 }
@@ -120,14 +139,18 @@ ul {
   margin-top: 40px;
 }
 
+.u-marginRmd {
+  margin-right: 15px;
+}
+
 .u-verticalCenter {
   align-items: center;
 }
 
-.AdminUser-container {
+.Container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: flex-start;
 }
 
 .Users-container {
@@ -165,7 +188,7 @@ ul {
 
 .Button--add {
   color: #fff;
-  border-color: #1670b1;
+  border: 1px solid #1670b1;
   background-image: linear-gradient(#46a9de, #1a7ec5);
   text-shadow: 1px 1px 0px #1670b1;
   box-shadow: inset 0 1px 0 #66bfff;
