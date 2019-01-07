@@ -21,23 +21,28 @@
         <input
           class="Input"
           type="text"
-          id="username"
+          id="admin-username"
           placeholder="Användarnamn"
         />
         <label for="password">Lösenord:</label>
         <input
           class="Input"
           type="password"
-          id="password"
+          id="admin-password"
           placeholder="Lösenord"
         />
         <button
-          onclick="window.location.href='login.html'"
+          onclick=""
           class="Button Button--add"
+          id="adminLoginButton"
         >
           Logga in
         </button>
+        <p id="loginErrorMessage" style="color:red;" class="hideErrorMessage">
+          Du har skrivit fel användarnamn eller lösenord, kontakta en administratör om problemet kvarstår.
+        </p>
       </div>
     </main>
+    <script src="./user-management/adminLogin.js"></script>
   </body>
 </html>
