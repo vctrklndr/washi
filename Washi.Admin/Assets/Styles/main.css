@@ -27,7 +27,7 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('../Images/background-2.svg');
+  background-image: url('../Images/background.svg');
 }
 
 .Main {
@@ -39,14 +39,13 @@ a:hover {
 }
 
 .Login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px;
-  background-color: #fff;
-  border-style: solid;
-  border-width: 1px 3px 3px 1px;
-  border-color: #000;
+  background-image: linear-gradient(#ffffff, #cdcdcd);
+  border: 1px solid #bdbdbd;
+  margin: 0 10px 10px 0;
+  padding: 20px 60px;
+  border-radius: 5px;
+  font-family: sans-serif;
+  max-width: 266px;
 }
 
 .Logo {
@@ -107,6 +106,10 @@ a:hover {
   display: inline-block;
 }
 
+.u-textCenter {
+  text-align: center;
+}
+
 .u-flex {
   display: flex;
 }
@@ -141,6 +144,14 @@ a:hover {
 
 .u-marginRmd {
   margin-right: 15px;
+}
+
+.u-marginBz {
+  margin-bottom: 0;
+}
+
+.u-marginBlg {
+  margin-bottom: 20px;
 }
 
 .u-verticalCenter {
@@ -216,4 +227,10 @@ a:hover {
 
 .showErrorMessage {
   display: block;
+  font-size: .8rem;
+  color: red;
+}
+
+#loginErrorMessage {
+  margin: 0 0 10px 0;
 }
