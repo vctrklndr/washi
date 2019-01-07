@@ -33,7 +33,9 @@
 
 .toolbar__tool:hover {
   background-color: #eee;
-  border-radius: 1000px;
+  border: 1px solid #bdbdbd;
+  box-sizing: border-box;
+  border-radius: 3px;
 }
 
 .toolbar__tool--h1 {
