@@ -15,28 +15,36 @@
   <body>
     <main class="Main-login">
       <div class="Login-container">
-        <img class="Logo" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
-        <h1 class="Heading">Admin</h1>
+        <div class="u-textCenter">
+          <img class="Logo" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
+        </div>
+        <h1 class="Heading Heading--small u-textCenter u-marginBlg">Administration</h1>
         <label for="username">Användarnamn:</label>
+        <br />
         <input
           class="Input"
           type="text"
           id="username"
           placeholder="Användarnamn"
         />
-        <label for="password">Lösenord:</label>
+        <br />
+        <label for="password" class="u-marginTsm">Lösenord:</label>
+        <br />
         <input
           class="Input"
           type="password"
           id="password"
           placeholder="Lösenord"
         />
-        <button
-          onclick="window.location.href='login.html'"
-          class="Button Button--add"
-        >
-          Logga in
-        </button>
+        <br />
+        <div class="u-textCenter">
+          <button
+            onclick="window.location.href='login.html'"
+            class="Button Button--add"
+          >
+            Logga in
+          </button>
+        </div>
       </div>
     </main>
   </body>
