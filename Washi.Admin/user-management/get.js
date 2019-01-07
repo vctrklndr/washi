@@ -90,7 +90,7 @@ function createNewUser() {
 // Allows searching for users by apartmentnumber
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("keyup", function() {
-  const createdUsers = document.getElementsByClassName("createdUsers");
+  const createdUsers = document.getElementsByClassName("Users-block");
   for (let createdUser of createdUsers) {
     if (createdUser.innerHTML.includes(searchInput.value)) {
       createdUser.style.display = "block";
