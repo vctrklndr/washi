@@ -26,31 +26,34 @@
           <a href="">Logga ut</a>
         </li>
         <li>
-          <input id='searchInput' placeholder="sök"></input>
+          <input id="searchInput" class="Input" placeholder="Sök på lägenhetsnummer"></input>
         </li>
       </ul>
     </nav>
   </header>
   <main class="Main">
     <div class="AdminUser-container">
+      <h1 class="Heading--admin">
+        Administrera användare
+      </h1>
       <div class="user-form" method="post">
-        <div class="input-container">
-          <label for="appNo">Lägenhetsnummer:</label>
-          <input type="text" id="appNo" name="appNo"><br>
+        <div class="Input-container">
+          <label for="appNo"><strong>Lägenhetsnummer:</strong></label>
+          <input class="Input u-marginTxsm" type="text" id="appNo" name="appNo">
         </div>
-        <div class="input-container">
-          <label for="password">Lösenord:</label>
-          <input type="password" id="password" name="password"><br>
+        <div class="Input-container u-marginTxsm">
+          <label for="password"><strong>Lösenord:</strong></label>
+          <input class="Input u-marginTxsm" type="password" id="password" name="password">
         </div>
-          <button id="createUserButton">Skapa användare</button>
+          <button id="createUserButton" class="Button Button--add">Skapa användare</button>
       </div>
     </div>
     <div class="current-users-container">
-      <h1>
-        Användare:
+      <h1 class="Heading--admin u-marginTxlg">
+        Ta bort användare
       </h1>
-      <div class="list-of-users">
-        <div id="userlist" class="users"></div>
+      <div class="Users-container" id="Users">
+
       </div>
     </div>
   </main>

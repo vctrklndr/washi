@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-color: #f0f0f0;
+  font-family: sans-serif;
 }
 
 h1, h2, a {
@@ -22,7 +24,6 @@ ul {
 
 .Main {
   margin-top: 20px;
-  text-align: center;
   padding: 0 30px;
   /* display: flex; */
   justify-content: center;
@@ -31,7 +32,6 @@ ul {
 .Login-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 40px;
   background-color: #fff;
@@ -50,10 +50,17 @@ ul {
   margin-right: 40px;
 }
 
+.Input-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .Input {
+  font-size: .8rem;
   margin: 0 0 10px 0;
   padding: 10px 0 10px 10px;
   width: 250px;
+  border: 1px solid #bdbdbd;
 }
 
 
@@ -71,7 +78,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #e8e8e8;
+  border-bottom: 1px solid #bdbdbd;
 }
 
 .PageNav {
@@ -92,24 +99,89 @@ ul {
   margin-top: 0;
 }
 
+.u-marginTxsm {
+  margin-top: 5px;
+}
+
+.u-marginTsm {
+  margin-top: 10px;
+}
+
+.u-marginTmd {
+  margin-top: 15px;
+}
+
+.u-marginTlg {
+  margin-top: 20px;
+}
+
+.u-marginTxlg {
+  margin-top: 40px;
+}
+
 .u-verticalCenter {
   align-items: center;
 }
 
 .AdminUser-container {
   display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.current-users-container {
-  display: flex;
-  justify-content: center;flex-direction: column;
-}
-
-.users {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+}
+
+.Users-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Users-block {
+  background-image: linear-gradient(#ffffff, #cdcdcd);
+  border: 1px solid #bdbdbd;
+  margin: 0 10px 10px 0;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: sans-serif;
+}
+
+.Users-block > p {
+  margin: 5px 0;
+  font-size: .9rem;
+  letter-spacing: .005rem;
+}
+
+.Button {
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: .8rem;
+  letter-spacing: .008rem;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.Button:hover {
+  cursor: pointer;
+}
+
+.Button--add {
+  color: #fff;
+  border-color: #1670b1;
+  background-image: linear-gradient(#46a9de, #1a7ec5);
+  text-shadow: 1px 1px 0px #1670b1;
+  box-shadow: inset 0 1px 0 #66bfff;
+}
+
+.Button--delete {
+  color: #fff;
+  border: 1px solid #610707;
+  background-image: linear-gradient(#c72121, #8a0808);
+  text-shadow: 1px 1px 0px #610707;
+  box-shadow: inset 0 1px 0 #e43f3f;
+}
+
+.Heading--admin {
+  /* text-shadow: 2px 2px 0px #B5B5B5; */
+  color: #1670b1;
+  font-size: 1.4rem;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #bdbdbd;
 }
