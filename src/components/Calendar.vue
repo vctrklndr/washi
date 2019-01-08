@@ -6,6 +6,16 @@
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10 Calendar--spacing">
         <div class="Calendar--daysHeading">
+          <span v-if="bookedDate === null">Du har ingen bokad tid.</span>
+          <time v-else class="Calendar-selectedDate">
+            Din nästa tvättid är
+            <span class="u-textHighlight">{{bookedDate}}</span> kl.
+            <span v-if="bookedTime === 'tid1'">06.00 – 09.00</span>
+            <span v-else-if="bookedTime === 'tid2'">09.00 – 12.00</span>
+            <span v-else-if="bookedTime === 'tid3'">12.00 – 15.00</span>
+            <span v-else-if="bookedTime === 'tid4'">15.00 – 18.00</span>
+            <span v-else-if="bookedTime === 'tid5'">18.00 – 21.00</span>.
+          </time>
           <h2 class="Heading Heading--h2 Calendar-header u-marginTz u-flex u-spaceBetween">
             <button
               v-if="month !== initialMonth || year !== initialYear"
@@ -75,14 +85,14 @@
         <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
         <p class="u-textLarge u-textWeightBold u-marginAz">Du har bokat en tvättid:</p>
         <p class="u-textXLarge u-marginTxsm u-marginBz">
-        {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
-        <span
-          v-if="bookingInfo.selectedTime === 'tid1'"
-        >06.00 – 09.00</span>
-        <span v-else-if="bookingInfo.selectedTime === 'tid2'">09.00 – 12.00</span>
-        <span v-else-if="bookingInfo.selectedTime === 'tid3'">12.00 – 15.00</span>
-        <span v-else-if="bookingInfo.selectedTime === 'tid4'">15.00 – 18.00</span>
-        <span v-else-if="bookingInfo.selectedTime === 'tid5'">18.00 – 21.00</span>.
+          {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
+          <span
+            v-if="bookedTime === 'tid1'"
+          >06.00 – 09.00</span>
+          <span v-else-if="bookedTime === 'tid2'">09.00 – 12.00</span>
+          <span v-else-if="bookedTime === 'tid3'">12.00 – 15.00</span>
+          <span v-else-if="bookedTime === 'tid4'">15.00 – 18.00</span>
+          <span v-else-if="bookedTime === 'tid5'">18.00 – 21.00</span>.
         </p>
         <button
           @click="removeBooking()"
@@ -121,7 +131,7 @@
           >Avboka tid</button>
           <button
             v-else-if="selectedDate !== '' && selectedTime !== ''"
-            @click="newBooking()"
+            @click="newBooking(index)"
             class="Button Button--large u-marginTlg"
           >Boka tid</button>
           <button v-else class="Button Button--large Button--disabled u-marginTlg" disabled>Boka tid</button>
@@ -172,7 +182,9 @@ export default {
       activeDateIndex: undefined,
       activeTimeIndex: undefined,
       timeIsBooked: false,
-      booked: false
+      booked: false,
+      bookedDate: null,
+      bookedTime: null
     };
   },
   computed: {
@@ -281,7 +293,6 @@ export default {
             time === bookings[date][i].bookingTime &&
             apartmentNumber === bookings[date][i].apartmentNumber
           ) {
-            //console.log("Grön FÄRG TILL ALLA");
             return true;
           }
         }
@@ -358,28 +369,23 @@ export default {
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
     newBooking: async function() {
-      // const users = this.unformattedData;
-      // for (let i = 0; i < users.length; i++) {
-      //   console.log(users[i].apartmentNumber);
-      //   if (users[i].apartmentNumber === this.getCookie("username")) {
-      //     console.log("true");
-      //     this.deleteBooking();
-      //   }
-      // }
+      await this.removeBooking();
       await this.saveBooking();
       this.selectedDate = "";
       if (this.booked === true) {
         this.booked = false;
       }
       this.booked = true;
+      this.bookedDate = this.displayDate;
+      this.bookedTime = this.selectedTime;
       this.getAllUsers();
     },
     removeBooking: async function() {
       await this.deleteBooking();
-      this.selectedTime = "";
       this.activeTimeIndex = undefined;
       this.timeIsBooked = false;
       this.booked = false;
+      this.bookedDate = null;
       this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
@@ -396,7 +402,7 @@ export default {
           if (response.data.error) {
             app.errorMessage = response.data.message;
           } else {
-            console.log(response.data.bookings);
+            //console.log(response.data.bookings);
             this.formattedData = this.groupBy(
               response.data.bookings,
               "bookingDate"
@@ -422,11 +428,11 @@ export default {
     },
     deleteBooking: function() {
       const formData = this.toFormData(this.bookingInfo);
-      console.log(formData);
+      //console.log(formData);
       axios
         .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
           //app.clickedUser = {};
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -436,12 +442,12 @@ export default {
         });
     },
     toFormData: function(obj) {
-      console.log(obj);
+      //console.log(obj);
       const form_data = new FormData();
       for (let key in obj) {
         form_data.append(key, obj[key]);
       }
-      console.log(form_data);
+      //console.log(form_data);
       return form_data;
     },
     clearMessage: function() {
