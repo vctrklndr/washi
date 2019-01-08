@@ -68,7 +68,28 @@
           <blank v-for="blank in lastDayOfMonth" :key="blank.id"/>
         </div>
       </div>
-      <booking-information v-if="selectedDate === ''"/>
+      <div
+        v-if="selectedDate === '' && booked === true"
+        class="Calendar--times Grid-cell u-md-size4of10 u-textCenter"
+      >
+        <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
+        <p class="u-textLarge u-textWeightBold u-marginAz">Du har bokat en tvättid:</p>
+        <p class="u-textXLarge u-marginTxsm u-marginBz">
+        {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
+        <span
+          v-if="bookingInfo.selectedTime === 'tid1'"
+        >06.00 – 09.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid2'">09.00 – 12.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid3'">12.00 – 15.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid4'">15.00 – 18.00</span>
+        <span v-else-if="bookingInfo.selectedTime === 'tid5'">18.00 – 21.00</span>.
+        </p>
+        <button
+          @click="removeBooking()"
+          class="Button Button--large Button--altRedColor u-marginTmd"
+        >Avboka tid</button>
+      </div>
+      <booking-information v-else-if="selectedDate === ''"/>
       <div v-else class="Calendar--times Grid-cell u-md-size4of10">
         <div class="Heading Heading--h2 Calendar-header u-marginTz">
           <time
@@ -94,9 +115,9 @@
         </button>
         <div class="u-textCenter">
           <button
-            v-if="booked === true"
-            @click="deleteBooking()"
-            class="Button Button--large u-marginTlg"
+            v-if="timeIsBooked === true"
+            @click="removeBooking()"
+            class="Button Button--large Button--altRedColor u-marginTlg"
           >Avboka tid</button>
           <button
             v-else-if="selectedDate !== '' && selectedTime !== ''"
@@ -113,6 +134,7 @@
 <script>
 import moment from "moment";
 import "moment/locale/sv";
+import regeneratorRuntime from "regenerator-runtime";
 import Blank from "./Blank.vue";
 import BookingInformation from "./BookingInformation.vue";
 moment.updateLocale("sv", {
@@ -127,7 +149,8 @@ export default {
   },
   data() {
     return {
-      isActive: false,
+      unformattedData: [],
+      formattedData: [],
       today: moment(),
       dateContext: moment(),
       displayDate: moment().format("dddd" + " D " + "MMMM"),
@@ -148,6 +171,7 @@ export default {
       clickedUser: {},
       activeDateIndex: undefined,
       activeTimeIndex: undefined,
+      timeIsBooked: false,
       booked: false
     };
   },
@@ -214,12 +238,10 @@ export default {
     }
   },
   mounted: function() {
-    console.log(this.$parent.loggedInUser);
-    console.log("mounted");
-    console.log(this.$parent.formattedData);
+    this.getAllUsers();
+    console.log(this.getCookie("username"));
   },
   methods: {
-    toggleActive: function() {},
     getCookie: function(cname) {
       const name = cname + "=";
       const decodedCookie = decodeURIComponent(document.cookie);
@@ -237,8 +259,7 @@ export default {
     },
     checkUserBookingDate: function(date) {
       const apartmentNumber = this.getCookie("username");
-      const bookings = this.$parent.formattedData;
-      //console.log(this.$parent.loggedInUser);
+      const bookings = this.formattedData;
       if (bookings.hasOwnProperty(date)) {
         for (let i = 0; i < bookings[date].length; i++) {
           if (apartmentNumber === bookings[date][i].apartmentNumber) {
@@ -251,7 +272,7 @@ export default {
     checkUserBookingTime: function(slot) {
       const time = "tid" + slot;
       const date = this.selectedDate;
-      const bookings = this.$parent.formattedData;
+      const bookings = this.formattedData;
       const apartmentNumber = this.getCookie("username");
 
       if (bookings.hasOwnProperty(date) === true) {
@@ -275,14 +296,14 @@ export default {
       this.activeDateIndex = undefined;
     },
     checkIfFullyBooked: function(date) {
-      const bookings = this.$parent.formattedData;
+      const bookings = this.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
         // console.log(date);
       } else if (
         bookings.hasOwnProperty(date) === true &&
-        this.$parent.formattedData[date].length >= 5
+        this.formattedData[date].length >= 5
       ) {
         // console.log(true);
         // console.log(date);
@@ -292,14 +313,14 @@ export default {
     checkBookedTimes(slot) {
       const time = "tid" + slot;
       const date = this.selectedDate;
-      const bookings = this.$parent.formattedData;
+      const bookings = this.formattedData;
 
       if (bookings.hasOwnProperty(date) === false) {
         // console.log(false);
         // console.log(date);
       } else if (bookings.hasOwnProperty(date) === true) {
         //console.log(bookings[date][0]);
-        for (var i = 0; i < bookings[date].length; i++) {
+        for (let i = 0; i < bookings[date].length; i++) {
           if (time === bookings[date][i].bookingTime) {
             //console.log("detta kommer aldrig funka");
             return true;
@@ -323,7 +344,7 @@ export default {
       this.displayDate = moment(year + month + date).format(
         "dddd" + " D " + "MMMM"
       );
-      this.booked = false;
+      this.timeIsBooked = false;
       //console.log(this.selectedDate);
     },
     selectTime: function(time) {
@@ -336,11 +357,54 @@ export default {
       // console.log(this.selectedTime);
       // console.log(this.groupBy(app.bookings, "bookingDate"));
     },
-    newBooking: function() {
-      const loggedInUser = { username: this.getCookie("username") };
-      console.log;
-      this.deleteBooking();
-      this.saveBooking();
+    newBooking: async function() {
+      // const users = this.unformattedData;
+      // for (let i = 0; i < users.length; i++) {
+      //   console.log(users[i].apartmentNumber);
+      //   if (users[i].apartmentNumber === this.getCookie("username")) {
+      //     console.log("true");
+      //     this.deleteBooking();
+      //   }
+      // }
+      await this.saveBooking();
+      this.selectedDate = "";
+      if (this.booked === true) {
+        this.booked = false;
+      }
+      this.booked = true;
+      this.getAllUsers();
+    },
+    removeBooking: async function() {
+      await this.deleteBooking();
+      this.selectedTime = "";
+      this.activeTimeIndex = undefined;
+      this.timeIsBooked = false;
+      this.booked = false;
+      this.getAllUsers();
+    },
+    groupBy: (arrayToGroup, keyToGroupBy) => {
+      return arrayToGroup.reduce((previous, current) => {
+        (previous[current[keyToGroupBy]] =
+          previous[current[keyToGroupBy]] || []).push(current);
+        return previous;
+      }, {});
+    },
+    getAllUsers: function() {
+      axios
+        .get("http://mikahl.se/VuePHP/api.php?action=read")
+        .then(response => {
+          if (response.data.error) {
+            app.errorMessage = response.data.message;
+          } else {
+            console.log(response.data.bookings);
+            this.formattedData = this.groupBy(
+              response.data.bookings,
+              "bookingDate"
+            );
+            this.unformattedData = response.data.bookings;
+            console.log(this.formattedData);
+          }
+        });
     },
 
     saveBooking: function() {
@@ -349,26 +413,10 @@ export default {
         .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
         .then(function(response) {
           //console.log(response);
-
           if (response.data.error) {
             app.errorMessage = response.data.message;
           } else {
             app.successMessage = response.data.message;
-          }
-        });
-    },
-    updateUser: function() {
-      const formData = app.toFormData(app.clickedUser);
-      axios
-        .post("http://localhost:8888/VuePHP/api.php?action=update", formData)
-        .then(function(response) {
-          //console.log(response).data.bookings;
-          app.clickedUser = {};
-          if (response.data.error) {
-            app.errorMessage = response.data.message;
-          } else {
-            app.successMessage = response.data.message;
-            app.getAllUsers();
           }
         });
     },
@@ -413,9 +461,9 @@ export default {
         this.activeTimeIndex === index &&
         this.checkUserBookingTime(index + 1)
       ) {
-        this.booked = true;
-      } else if(this.booked = true) {
-        this.booked = false;
+        this.timeIsBooked = true;
+      } else if ((this.timeIsBooked = true)) {
+        this.timeIsBooked = false;
       }
     }
   }

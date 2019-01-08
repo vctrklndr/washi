@@ -51,7 +51,7 @@ export default {
       var expires = "expires=" + d.toUTCString();
       document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 
-      this.$parent.loggedInUser = cname;
+      this.$emit("loggedInUser", this.input.apartmentNumber);
     },
     validateUser: function() {
       var formData = this.toFormData(this.input);

@@ -51,6 +51,9 @@
 		border: 0;
 		color: transparent;
 	}	
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 .Calendar-day {
@@ -83,11 +86,11 @@
 		color: @washiWhite;
 	}
 	&&--booked {
-		background-color: @green;
+		background-color: @blackish;
 		color: @washiWhite;
 	}
 	&&--booked:hover {
-		background-color: @darkerGreen;
+		background-color: @black;
 		color: @washiWhite;
 		cursor: pointer;
 	}
@@ -102,10 +105,9 @@
 	}
 	&&--today {
 		font-family: @fontFamilyBold;
-		color: @brandColor;
 	}
 	&&--today:hover {
-		color: @brandColor; 
+		color: @washiWhite; 
 	}
   &&--noDate {
     background: transparent;
@@ -124,7 +126,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+	}
+	&:hover {
+		background-color: @brandColor;
+		color: @washiWhite;
+		transition: all 800ms;
+		cursor: pointer;
+	}
 }
 
 .Calendar-time {
@@ -151,20 +159,26 @@
 		cursor: auto;
 	}
 	&&--booked {
-		background-color: @green;
+		background-color: @blackish;
 		color: @washiWhite;
 	}
 	&&--booked:hover {
-		background-color: @darkerGreen;
+		background-color: @black;
 		color: @washiWhite;
+		cursor: pointer;
+	}
+	&:hover {
+		background-color: @brandColor;
+		color: @washiWhite;
+		transition: all 800ms;
 		cursor: pointer;
 	}
 }
 
-.Calendar-day:hover,
-.Calendar-time:hover {
-  background-color: @brandColor;
-  color: @washiWhite;
-	transition: all 800ms;
-	cursor: pointer;
-}
+// .Calendar-day:hover,
+// .Calendar-time:hover {
+//   background-color: @brandColor;
+//   color: @washiWhite;
+// 	transition: all 800ms;
+// 	cursor: pointer;
+// }
