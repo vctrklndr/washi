@@ -29,9 +29,6 @@
                 <router-link class="PageNav-Link" to="/boka">Boka tvättid</router-link>
               </li>
               <li @click="closeMenu">
-                <router-link class="PageNav-Link" to="/hjalp">Hjälp</router-link>
-              </li>
-              <li @click="closeMenu">
                 <router-link class="PageNav-Link" to="/regler">Regler</router-link>
               </li>
               <li @click="closeMenu">
@@ -56,16 +53,16 @@
         <router-view @authenticated="setAuthenticated"/>
       </main>
     </div>
-    <w-footer v-if="authenticated"/>
+    <foot v-if="authenticated"/>
   </div>
 </template>
 
 <script>
-import WFooter from "./components/Footer.vue";
+import Foot from "./components/Footer.vue";
 export default {
   name: "App",
   components: {
-    WFooter
+    Foot
   },
   data() {
     return {
@@ -82,20 +79,20 @@ export default {
   methods: {
     // group all bookings per day
     setCookie: function(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
+      const date = new Date();
+      date.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
       document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 
       //this.$parent.loggedInUser = cname;
     },
 
     getCookie: function(cname) {
-      var name = cname + "=";
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
+      const name = cname + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const ca = decodedCookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
         while (c.charAt(0) == " ") {
           c = c.substring(1);
         }
@@ -106,7 +103,7 @@ export default {
       return "";
     },
     checkCookie: function() {
-      var user = this.getCookie("username");
+      const user = this.getCookie("username");
       if (user != "") {
         this.loggedInUser = this.getCookie("username");
         this.$router.replace({ name: "home" });
