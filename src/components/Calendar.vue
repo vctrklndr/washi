@@ -82,8 +82,8 @@
         v-if="selectedDate === '' && booked === true"
         class="Calendar--times Grid-cell u-md-size4of10 u-textCenter"
       >
-        <h2 class="Heading Heading--h2 Calendar-header u-marginTz">Tvättid bokad!</h2>
-        <p class="u-textLarge u-textWeightBold u-marginAz">Du har bokat en tvättid:</p>
+        <h2 class="Heading Heading--h2 Calendar-header u-marginTz">&nbsp;</h2>
+        <h3 class="Heading u-textWeightSemiBold u-textXLarge u-marginAz">Du har bokat en tvättid:</h3>
         <p class="u-textXLarge u-marginTxsm u-marginBz">
           {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
           <span
