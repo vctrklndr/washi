@@ -2,16 +2,6 @@
   <section class="Section Section--contain">
     <div>
       <h1 class="Heading Heading--h1 Heading-line">Boka tvättid</h1>
-      <span v-if="bookedDate === null">Du har ingen bokad tid.</span>
-      <time v-else class="Calendar-selectedDate">
-        Din nästa tvättid är
-        <span class="u-textHighlight">{{bookedDate}}</span> kl.
-        <span v-if="bookedTime === 'tid1'">06.00 – 09.00</span>
-        <span v-else-if="bookedTime === 'tid2'">09.00 – 12.00</span>
-        <span v-else-if="bookedTime === 'tid3'">12.00 – 15.00</span>
-        <span v-else-if="bookedTime === 'tid4'">15.00 – 18.00</span>
-        <span v-else-if="bookedTime === 'tid5'">18.00 – 21.00</span>.
-      </time>
     </div>
     <div class="Grid u-marginTlg">
       <div class="Grid-cell u-md-size6of10 Calendar--spacing">
@@ -181,7 +171,6 @@ export default {
       activeTimeIndex: undefined,
       timeIsBooked: false,
       booked: false,
-      bookedDate: null,
       bookedTime: null
     };
   },
@@ -351,7 +340,6 @@ export default {
         this.booked = false;
       }
       this.booked = true;
-      this.bookedDate = this.displayDate;
       this.bookedTime = this.selectedTime;
       this.getAllUsers();
     },
@@ -360,7 +348,6 @@ export default {
       this.activeTimeIndex = undefined;
       this.timeIsBooked = false;
       this.booked = false;
-      this.bookedDate = null;
       this.getAllUsers();
     },
     groupBy: (arrayToGroup, keyToGroupBy) => {
