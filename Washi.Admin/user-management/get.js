@@ -1,4 +1,5 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
+const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read"
 
 // Load and delete users
 function getAllUsers() {
@@ -33,6 +34,52 @@ function getAllUsers() {
           const formData = toFormData(userId);
           axios
             .post("http://mikahl.se/VuePHP/users.php?action=delete", formData)
+            .then(function(response) {
+              if (response.data.error) {
+                const errorMessage = response.data.message;
+                console.log(errorMessage);
+              } else {
+                const successMessage = response.data.message;
+                console.log(successMessage);
+              }
+            });
+          location.reload();
+        });
+      }
+    });
+}
+
+function getAllRules() {
+  axios
+    .get(rulesURL)
+    .then(function(response) {
+      if (response.data.error) {
+        app.errorMessage = response.data.message;
+      } else {
+        console.log(response)
+        for (let i = 0; i < response.data.rules.length; i++) {
+          const rule = response.data.rules;
+          // Print rules in html
+          const Rules = document.getElementById("Rules");
+          Rules.innerHTML += `
+          <div class='Users-block' name='${rule[i].id}' id='${
+            rule[i].id
+          }' data='${rule[i].id}'>
+            ${rule[i].textField}
+            <button class='Button Button--delete u-marginTlg'>Ta bort</button>
+          </div>
+          `;
+        }
+      }
+    })
+    .then(function() {
+      const deleteRuleButtons = document.getElementsByClassName("Button--delete");
+      for (let deleteRuleButton of deleteRuleButtons) {
+        deleteRuleButton.addEventListener("click", function() {
+          const userId = { id: this.parentElement.id };
+          const formData = toFormData(userId);
+          axios
+            .post("http://mikahl.se/VuePHP/rules.php?action=delete", formData)
             .then(function(response) {
               if (response.data.error) {
                 const errorMessage = response.data.message;
@@ -87,6 +134,36 @@ function createNewUser() {
   });
 }
 
+// Create new rule
+function createNewRule() {
+  var update = document.getElementById("update");
+  let editor = document.getElementById("editor");
+
+  update.addEventListener('click', function () {
+    const rule = {
+      textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML
+    };
+
+    const newRule = toFormData(rule);
+    axios
+      .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
+      .then(function(response) {
+        console.log(response);
+        if (response.data.error) {
+          const errorMessage = response.data.message;
+          console.log(errorMessage);
+        } else {
+          const successMessage = response.data.message;
+          console.log(successMessage);
+        }
+      });
+    location.reload();
+
+    console.log('Hello!');
+    console.log(editor.contentDocument.getElementsByTagName("body")[0].innerHTML)
+  })
+}
+
 // Allows searching for users by apartmentnumber
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("keyup", function() {
@@ -101,4 +178,5 @@ searchInput.addEventListener("keyup", function() {
 });
 
 getAllUsers();
-createNewUser();
+getAllRules();
+createNewRule();

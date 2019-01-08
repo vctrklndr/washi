@@ -1,7 +1,7 @@
 (function() {
   let wysiwyg = document.getElementById("wysiwyg");
   wysiwyg.innerHTML = `
-    <div id="toolbar"> 
+    <div id="toolbar">
       <div class="toolbar__tool toolbar__tool--bold" onclick="format('bold')">
         <img src="https://png.icons8.com/android/48/000000/bold.png" width="16">
       </div>
@@ -35,6 +35,7 @@
 
   this.getHtml = function() {
     let code = editor.contentDocument.getElementsByTagName("body")[0].innerHTML;
+    console.log(code)
     return code;
   };
 })();

@@ -13,7 +13,7 @@
   <header class="Header">
     <div class="">
       <img class="Logo-header" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
-      <h1 class="Heading Heading--small">Admin: 
+      <h1 class="Heading Heading--small">Admin:
         <span style="font-weight: normal; text-transform: uppercase; color: #1670b1;">Kungshem Fastigheter</span>
       </h1>
     </div>
@@ -33,7 +33,7 @@
     </nav>
   </header>
   <main class="Main">
-    <h3 class="Heading--admin u-marginTxlg" id="admin">
+    <h3 class="Heading--admin u-marginTxlg">
       Lägg till användare
     </h3>
     <div class="user-form" method="post">
@@ -51,13 +51,17 @@
       Ta bort användare
     </h3>
     <div class="Users-container" id="Users"></div>
-    <h3 id="regler" class="Heading--admin u-marginTxlg">
-      Uppdatera regler
+    <h3 class="Heading--admin u-marginTxlg">
+      Ta bort regler
     </h3>
-    <form action="" class="Container">
+    <div class="Rules-container" id="Rules"></div>
+    <h3 id="regler" class="Heading--admin u-marginTxlg">
+      Redigera regler
+    </h3>
+    <div class="Container">
       <div id="wysiwyg" data-height="300px" data-width="700px"></div>
-      <input class="Button Button--add u-marginTxsm" type="submit" value="Uppdatera">
-    </form>
+      <button class="Button Button--add u-marginTxsm" id="update">Uppdatera</button>
+    </div>
     <h2 class="Heading--admin u-marginTxlg">
       Ladda upp logotyp
     </h2>
@@ -67,8 +71,12 @@
     </form>
   </main>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="wysiwyg.js"></script>
   <script src="./user-management/get.js"></script>
   <script src="./user-management/createUser.js"></script>
-  <script src="wysiwyg.js"></script>
 </body>
 </html>
