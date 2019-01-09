@@ -57,20 +57,8 @@ function getAllRules() {
         app.errorMessage = response.data.message;
       } else {
         console.log(response)
-        for (let i = 0; i < response.data.rules.length; i++) {
-          const rule = response.data.rules;
-          // Print rules in html
-          const Rules = document.getElementById("Rules");
-          Rules.innerHTML += `
-          <div class='Users-block' name='${rule[i].id}' id='${
-            rule[i].id
-          }' data='${rule[i].id}'>
-            ${rule[i].textField}
-            <button class='Button Button--delete u-marginTlg'>Ta bort</button>
-          </div>
-          `;
-          editor.contentDocument.getElementsByTagName("body")[0].innerHTML = rule[0].textField
-        }
+        const rule = response.data.rules;
+        editor.contentDocument.getElementsByTagName("body")[0].innerHTML = rule[0].textField
       }
     })
 }
