@@ -69,30 +69,10 @@ function getAllRules() {
             <button class='Button Button--delete u-marginTlg'>Ta bort</button>
           </div>
           `;
+          editor.contentDocument.getElementsByTagName("body")[0].innerHTML = rule[0].textField
         }
       }
     })
-    .then(function() {
-      const deleteRuleButtons = document.getElementsByClassName("Button--delete");
-      for (let deleteRuleButton of deleteRuleButtons) {
-        deleteRuleButton.addEventListener("click", function() {
-          const userId = { id: this.parentElement.id };
-          const formData = toFormData(userId);
-          axios
-            .post("http://mikahl.se/VuePHP/rules.php?action=delete", formData)
-            .then(function(response) {
-              if (response.data.error) {
-                const errorMessage = response.data.message;
-                console.log(errorMessage);
-              } else {
-                const successMessage = response.data.message;
-                console.log(successMessage);
-              }
-            });
-          location.reload();
-        });
-      }
-    });
 }
 
 function toFormData(obj) {
@@ -140,6 +120,22 @@ function createNewRule() {
   let editor = document.getElementById("editor");
 
   update.addEventListener('click', function () {
+    axios
+      .post("http://mikahl.se/VuePHP/rules.php?action=delete")
+      .then(function(response) {
+        if (response.data.error) {
+          console.log('tried to delete');
+
+          const errorMessage = response.data.message;
+          console.log(errorMessage);
+        } else {
+          console.log('deleted');
+
+          const successMessage = response.data.message;
+          console.log(successMessage);
+        }
+      });
+
     const rule = {
       textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML
     };
@@ -153,14 +149,9 @@ function createNewRule() {
           const errorMessage = response.data.message;
           console.log(errorMessage);
         } else {
-          const successMessage = response.data.message;
-          console.log(successMessage);
+          location.reload();
         }
       });
-    location.reload();
-
-    console.log('Hello!');
-    console.log(editor.contentDocument.getElementsByTagName("body")[0].innerHTML)
   })
 }
 
