@@ -2,7 +2,7 @@
   <section class="Section Section--contain">
     <div class="Page-container">
       <h1 class="Heading Heading--h1 Heading-line">Regler</h1>
-      <div id="Rules">
+      <div id="Rules" class="Grid">
       </div>
     </div>
   </section>
