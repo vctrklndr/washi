@@ -4,7 +4,9 @@ body {
   font-family: sans-serif;
 }
 
-h1, h2, a {
+h1,
+h2,
+a {
   font-family: sans-serif;
 }
 
@@ -27,7 +29,7 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('../Images/background.svg');
+  background-color: #cdcdcd;
 }
 
 .Main {
@@ -64,7 +66,7 @@ a:hover {
 }
 
 .Input {
-  font-size: .8rem;
+  font-size: 0.8rem;
   margin: 0 0 10px 0;
   padding: 10px 0 10px 10px;
   width: 250px;
@@ -108,6 +110,10 @@ a:hover {
 
 .u-textCenter {
   text-align: center;
+}
+
+.u-textSmall {
+  font-size: 0.8rem;
 }
 
 .u-flex {
@@ -180,15 +186,15 @@ a:hover {
 
 .Users-block > p {
   margin: 5px 0;
-  font-size: .9rem;
-  letter-spacing: .005rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.005rem;
 }
 
 .Button {
   font-family: sans-serif;
   font-weight: 600;
-  font-size: .8rem;
-  letter-spacing: .008rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.008rem;
   padding: 10px 15px;
   border-radius: 10px;
 }
@@ -227,7 +233,7 @@ a:hover {
 
 .showErrorMessage {
   display: block;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: red;
 }
 

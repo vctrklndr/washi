@@ -16,11 +16,16 @@
     <main class="Main-login">
       <div class="Login-container">
         <div class="u-textCenter">
-          <img class="Logo" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
+          <img
+            class="Logo"
+            src="Assets/Images/washi-logo.svg"
+            alt="Washi logo"
+          />
         </div>
-        <h1 class="Heading Heading--small u-textCenter u-marginBlg">Administratör</h1>
-        <label for="username">Användarnamn:</label>
-        <br />
+        <h1 class="Heading Heading--small u-textCenter u-marginBlg">
+          Administratör
+        </h1>
+        <label for="username">Användarnamn:</label> <br />
         <input
           class="Input"
           type="text"
@@ -28,8 +33,7 @@
           placeholder="Användarnamn"
         />
         <br />
-        <label for="password" class="u-marginTsm">Lösenord:</label>
-        <br />
+        <label for="password" class="u-marginTsm">Lösenord:</label> <br />
         <input
           class="Input"
           type="password"
@@ -38,17 +42,17 @@
         />
         <div class="u-textCenter">
           <p id="loginErrorMessage" class="hideErrorMessage">
-            Du har skrivit fel användarnamn eller lösenord. Kontakta en administratör om problemet kvarstår.
+            Du har skrivit fel användarnamn eller lösenord. Kontakta en
+            administratör om problemet kvarstår.
           </p>
-          <button
-            onclick=""
-            class="Button Button--add"
-            id="adminLoginButton"
-          >
+          <button onclick="" class="Button Button--add" id="adminLoginButton">
             Logga in
           </button>
         </div>
       </div>
+      <p class="u-textSmall u-textCenter">
+        Vid problem eller frågor, vänligen kontakta admin. <br />ferb@admin.io
+      </p>
     </main>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./user-management/adminLogin.js"></script>
