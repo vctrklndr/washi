@@ -2,48 +2,43 @@
   <section class="Section Section--contain">
     <div class="Page-container">
       <h1 class="Heading Heading--h1 Heading-line">Regler</h1>
-      <p class="u-textLarge u-lg-size2of3">
-        Tänk på att tvättstugorna är ett gemensamt utrymme där alla skall trivas
-        och kunna utföra sitt tvättande på ett bra sätt. Lämna tvättstugan på samma
-        sätt som Du önskar att den skall vara när Du kommer för att tvätta.
-      </p>
-      <ul class="u-lg-size2of3 u-marginTlg">
-        <li class="List-item u-textSpacing">Den som inte tar bort luddet ska dö</li>
-        <li class="List-item u-textSpacing">Du kan tvätta mellan klockan
-          <span class="u-textHighlight">07.00</span> och
-          <span class="u-textHighlight">22.00</span> (efter kl. 22.30 kommer du inte in)
-        </li>
-        <li class="List-item u-textSpacing">
-          Du kommer in i tvättstugan upp till 30 min efter avslutat pass - för att ta hand
-          om tvätten som har torkat.
-          <span class="u-textHighlight">Tänk på att inte starta en maskin precis innan passets slut!</span>
-        </li>
-        <li class="List-item u-textSpacing">
-          Den som har bokat ett tvättpass och inte påbörjat tvättningen senast 30 minuter in på
-          tvättpasset har förbrukat sin rätt till tvättpasset. Annan bostadsrättsinnehavare kan då
-          boka och utnyttja tvättpasset.
-        </li>
-        <li class="List-item u-textSpacing">
-          Den som har använt tvättstugan ska se till att lokalerna och all utrustning rengörs
-          noga. Golvet ska sopas och våttorkas.
-        </li>
-        <li class="List-item u-textSpacing">
-          <span class="u-textHighlight">Filtret i torktumlaren ska rensas</span> (brandrisk om detta inte sker)
-        </li>
-        <li class="List-item u-textSpacing">
-          Var rädd om maskinerna. Om det uppstår skador på tvättutrustningen som du orsakat
-          genom oaktsamhet kan Du bli ersättningsskyldig.
-        </li>
-        <li class="List-item u-textSpacing">Det är absolut förbjudet att färga kläder i tvättmaskinerna.</li>
-        <li class="List-item u-textSpacing">Mattor och annan grovtvätt får endast tvättas i
-          <span class="u-textHighlight">grovtvättmaskinen</span>.
-        </li>
-        <li class="List-item u-textSpacing">
-          <span
-            class="u-textHighlight"
-          >Mattor med gummerad undersidan får inte tvättas i någon maskin</span>.
-        </li>
-      </ul>
+      <div id="Rules">
+      </div>
     </div>
   </section>
+</template>
+
+<script>
+export default {
+  mounted: function() {
+    this.getAllRules();
+  },
+  methods: {
+    getAllRules() {
+      const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read"
+      axios
+        .get(rulesURL)
+        .then(function(response) {
+          if (response.data.error) {
+            app.errorMessage = response.data.message;
+          } else {
+            console.log(response)
+            for (let i = 0; i < response.data.rules.length; i++) {
+              const rule = response.data.rules;
+              // Print rules in html
+              const Rules = document.getElementById("Rules");
+              Rules.innerHTML += `
+              <div class='Users-block' name='${rule[i].id}' id='${
+                rule[i].id
+              }' data='${rule[i].id}'>
+                ${rule[i].textField}
+              </div>
+              `;
+            }
+          }
+        })
+      }
+  },
+};
+</script>
 </template>
