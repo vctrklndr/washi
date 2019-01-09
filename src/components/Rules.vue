@@ -28,7 +28,7 @@ export default {
               // Print rules in html
               const Rules = document.getElementById("Rules");
               Rules.innerHTML += `
-              <div class='Users-block' name='${rule[i].id}' id='${
+              <div class='u-md-size2of3 u-textLarge' name='${rule[i].id}' id='${
                 rule[i].id
               }' data='${rule[i].id}'>
                 ${rule[i].textField}
