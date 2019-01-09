@@ -1,5 +1,5 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
-const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read"
+const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 
 // Load and delete users
 function getAllUsers() {
@@ -50,21 +50,18 @@ function getAllUsers() {
 }
 
 function getAllRules() {
-  axios
-    .get(rulesURL)
-    .then(function(response) {
-      if (response.data.error) {
-        app.errorMessage = response.data.message;
-      } else {
-        console.log(response)
-        const rule = response.data.rules;
-        editor.contentDocument.getElementsByTagName("body")[0].innerHTML = rule[0].textField
-      }
-    })
+  axios.get(rulesURL).then(function(response) {
+    if (response.data.error) {
+      app.errorMessage = response.data.message;
+    } else {
+      const rule = response.data.rules;
+      editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
+        rule[0].textField;
+    }
+  });
 }
 
 function toFormData(obj) {
-  console.log(obj);
   const formData = new FormData();
   for (let key in obj) {
     formData.append(key, obj[key]);
@@ -89,7 +86,6 @@ function createNewUser() {
     axios
       .post("http://mikahl.se/VuePHP/users.php?action=create", newUser)
       .then(function(response) {
-        console.log(response);
         if (response.data.error) {
           const errorMessage = response.data.message;
           console.log(errorMessage);
@@ -107,32 +103,28 @@ function createNewRule() {
   var update = document.getElementById("update");
   let editor = document.getElementById("editor");
 
-  update.addEventListener('click', function () {
+  update.addEventListener("click", function() {
     axios
       .post("http://mikahl.se/VuePHP/rules.php?action=delete")
       .then(function(response) {
         if (response.data.error) {
-          console.log('tried to delete');
-
           const errorMessage = response.data.message;
           console.log(errorMessage);
         } else {
-          console.log('deleted');
-
           const successMessage = response.data.message;
           console.log(successMessage);
         }
       });
 
     const rule = {
-      textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML
+      textField: editor.contentDocument.getElementsByTagName("body")[0]
+        .innerHTML
     };
 
     const newRule = toFormData(rule);
     axios
       .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
       .then(function(response) {
-        console.log(response);
         if (response.data.error) {
           const errorMessage = response.data.message;
           console.log(errorMessage);
@@ -140,7 +132,7 @@ function createNewRule() {
           location.reload();
         }
       });
-  })
+  });
 }
 
 // Allows searching for users by apartmentnumber
