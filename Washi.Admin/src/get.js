@@ -37,10 +37,8 @@ function getAllUsers() {
             .then(function(response) {
               if (response.data.error) {
                 const errorMessage = response.data.message;
-                console.log(errorMessage);
               } else {
                 const successMessage = response.data.message;
-                console.log(successMessage);
               }
             });
           location.reload();
@@ -88,10 +86,8 @@ function createNewUser() {
       .then(function(response) {
         if (response.data.error) {
           const errorMessage = response.data.message;
-          console.log(errorMessage);
         } else {
           const successMessage = response.data.message;
-          console.log(successMessage);
         }
       });
     location.reload();
@@ -109,10 +105,8 @@ function createNewRule() {
       .then(function(response) {
         if (response.data.error) {
           const errorMessage = response.data.message;
-          console.log(errorMessage);
         } else {
           const successMessage = response.data.message;
-          console.log(successMessage);
         }
       });
 
@@ -127,7 +121,6 @@ function createNewRule() {
       .then(function(response) {
         if (response.data.error) {
           const errorMessage = response.data.message;
-          console.log(errorMessage);
         } else {
           location.reload();
         }

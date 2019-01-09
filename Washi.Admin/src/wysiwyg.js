@@ -35,7 +35,6 @@
 
   this.getHtml = function() {
     let code = editor.contentDocument.getElementsByTagName("body")[0].innerHTML;
-    console.log(code)
     return code;
   };
 })();
