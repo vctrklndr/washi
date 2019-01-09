@@ -334,7 +334,7 @@ export default {
     },
     newBooking: async function() {
       await this.removeBooking();
-      this.saveBooking();
+      await this.saveBooking();
       this.selectedDate = "";
       if (this.booked === true) {
         this.booked = false;
