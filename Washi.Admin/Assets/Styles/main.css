@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+body > div > ul{
+  font-family: sans-serif;
+}
+
 h1,
 h2,
 a {
