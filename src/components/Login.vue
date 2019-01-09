@@ -46,36 +46,31 @@ export default {
   },
   methods: {
     setCookie: function(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
+      const date = new Date();
+      date.setTime(date.getTime() + exdays * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
       document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 
       this.$emit("loggedInUser", this.input.apartmentNumber);
     },
     validateUser: function() {
-      var formData = this.toFormData(this.input);
+      const formData = this.toFormData(this.input);
       axios
         .post("http://mikahl.se/VuePHP/users.php?action=login", formData)
         .then(response => {
-          console.log(response);
           if (response.data.error) {
-            console.log(response.data.message);
             this.errorMessage =
               "Lägenhetsnumret eller lösenordet stämmer inte.";
           } else {
             this.$emit("authenticated", true);
             this.$router.replace({ name: "home" });
             this.setCookie("username", this.input.apartmentNumber, 2);
-            console.log(this.input.apartmentNumber);
-            console.log(response.data);
           }
         });
     },
     toFormData: function(obj) {
-      console.log(obj);
-      var form_data = new FormData();
-      for (var key in obj) {
+      const form_data = new FormData();
+      for (let key in obj) {
         form_data.append(key, obj[key]);
       }
       return form_data;
