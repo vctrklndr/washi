@@ -158,4 +158,5 @@ searchInput.addEventListener("keyup", function() {
 
 getAllUsers();
 getAllRules();
+createNewUser();
 createNewRule();
