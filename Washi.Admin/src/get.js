@@ -53,17 +53,17 @@ function getAllUsers() {
 // Get rules
 function getAllRules() {
   axios
-  .get("http://mikahl.se/VuePHP/rules.php?action=read")
-  .then(function(response) {
-    if (response.data.error) {
-      app.errorMessage = response.data.message;
-    } else {
-      checkRules = response.data.rules;
-      const rule = response.data.rules;
-      editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
-        rule[0].textField;
-    }
-  });
+    .get("http://mikahl.se/VuePHP/rules.php?action=read")
+    .then(function(response) {
+      if (response.data.error) {
+        app.errorMessage = response.data.message;
+      } else {
+        checkRules = response.data.rules;
+        const rule = response.data.rules;
+        editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
+          rule[0].textField;
+      }
+    });
 }
 
 // Get logo
@@ -76,6 +76,10 @@ function getLogo() {
       } else {
         const logo = response.data.logo[0].logoUrl;
         document.getElementById("logoInput").value = logo;
+        const imageContainer = document.getElementById("imageContainer");
+        imageContainer.innerHTML += `
+          <img src="${logo}" class="Logo-current">
+        `;
       }
     });
 }
@@ -104,14 +108,19 @@ function createNewUser() {
     password: passwordInput
   };
   const newUser = toFormData(user);
-  postData("users", "create", newUser);
+  if (apartmentNumberInput === "") {
+    alert("Felmeddelande: Du har glömt ange lägenhetsnummer");
+  } else if (passwordInput === "") {
+    alert("Felmeddelande: Du har glömt ange lösenord");
+  } else {
+    postData("users", "create", newUser);
+  }
 }
 
 const createUserButton = document.getElementById("createUserButton");
 createUserButton.addEventListener("click", function() {
   createNewUser();
 });
-
 
 // Create new rule
 function createNewRule() {

@@ -64,6 +64,10 @@ a:hover {
   margin-right: 40px;
 }
 
+.Logo-current {
+  max-width: 100px;
+}
+
 .Input-container {
   display: flex;
   flex-direction: column;
