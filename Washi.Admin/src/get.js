@@ -1,5 +1,5 @@
 let checkRules = {};
-let logo = {};
+let checkLogo = {};
 
 function postData(update, action, data) {
   axios
@@ -8,7 +8,7 @@ function postData(update, action, data) {
       if (response.data.error) {
         console.log(response.data.message);
       } else {
-        location.reload();
+        //location.reload();
       }
     });
 }
@@ -74,24 +74,34 @@ function getLogo() {
       if (response.data.error) {
         app.errorMessage = response.data.message;
       } else {
-        const logo = response.data.logo[0].logoUrl;
-        document.getElementById("logoInput").value = logo;
+        checkLogo = response.data.logo[0]
+        document.getElementById("logoInput").value = checkLogo.logoUrl;
+        console.log(checkLogo)
       }
     });
 }
 
 // Add new logo
 function addLogo() {
-  const logoUrlInput = document.getElementById("logoInput").value;
-  const logo = {
-    logoUrl: logoUrlInput
-  };
-  const addLogo = toFormData(logo);
-  postData("logo", "create", addLogo);
-}
+    const mumma = checkLogo.urlId
+    const logoUrlInput = document.getElementById("logoInput").value;
+    const logo = {
+      logoUrl: logoUrlInput,
+      urlId: mumma
+    };
+    console.log(logo)
+    const addLogo = toFormData(logo);
 
-const addLogoButton = document.getElementById("uploadLogo");
-addLogoButton.addEventListener("click", function() {
+    if (logo.length < 1) {
+      postData("logo", "create", addLogo);
+    } else {
+      postData("logo", "update", addLogo);
+    }
+
+  }
+
+const addLogobutton = document.getElementById("uploadLogo");
+addLogobutton.addEventListener("click", function() {
   addLogo();
 });
 
