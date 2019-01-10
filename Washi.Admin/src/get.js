@@ -1,6 +1,18 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 
+function postData(action, data) {
+  axios
+    .post(`http://mikahl.se/VuePHP/users.php?action=${action}`, data)
+    .then(function(response) {
+      if (response.data.error) {
+        const errorMessage = response.data.message;
+      } else {
+        const successMessage = response.data.message;
+      }
+    });
+}
+
 // Load and delete users
 function getAllUsers() {
   axios
@@ -32,15 +44,7 @@ function getAllUsers() {
         deleteButton.addEventListener("click", function() {
           const userId = { id: this.parentElement.id };
           const formData = toFormData(userId);
-          axios
-            .post("http://mikahl.se/VuePHP/users.php?action=delete", formData)
-            .then(function(response) {
-              if (response.data.error) {
-                const errorMessage = response.data.message;
-              } else {
-                const successMessage = response.data.message;
-              }
-            });
+          postData("delete", formData);
           location.reload();
         });
       }
@@ -81,52 +85,45 @@ function createNewUser() {
     };
 
     const newUser = toFormData(user);
-    axios
-      .post("http://mikahl.se/VuePHP/users.php?action=create", newUser)
-      .then(function(response) {
-        if (response.data.error) {
-          const errorMessage = response.data.message;
-        } else {
-          const successMessage = response.data.message;
-        }
-      });
+    postData("create", newUser);
     location.reload();
   });
 }
 
+
 // Create new rule
 function createNewRule() {
-  var update = document.getElementById("update");
-  let editor = document.getElementById("editor");
+  const editor = document.getElementById("editor");
+  axios
+    .post("http://mikahl.se/VuePHP/rules.php?action=delete")
+    .then(function(response) {
+      if (response.data.error) {
+        const errorMessage = response.data.message;
+      } else {
+        const successMessage = response.data.message;
+      }
+    });
 
-  update.addEventListener("click", function() {
-    axios
-      .post("http://mikahl.se/VuePHP/rules.php?action=delete")
-      .then(function(response) {
-        if (response.data.error) {
-          const errorMessage = response.data.message;
-        } else {
-          const successMessage = response.data.message;
-        }
-      });
+  const rule = {
+    textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML
+  };
 
-    const rule = {
-      textField: editor.contentDocument.getElementsByTagName("body")[0]
-        .innerHTML
-    };
-
-    const newRule = toFormData(rule);
-    axios
-      .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
-      .then(function(response) {
-        if (response.data.error) {
-          const errorMessage = response.data.message;
-        } else {
-          location.reload();
-        }
-      });
-  });
+  const newRule = toFormData(rule);
+  axios
+    .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
+    .then(function(response) {
+      if (response.data.error) {
+        const errorMessage = response.data.message;
+      } else {
+        location.reload();
+      }
+    });
 }
+
+const update = document.getElementById("update");
+update.addEventListener("click", function() {
+  createNewRule();
+});
 
 // Allows searching for users by apartmentnumber
 const searchInput = document.getElementById("searchInput");
@@ -144,4 +141,4 @@ searchInput.addEventListener("keyup", function() {
 getAllUsers();
 getAllRules();
 createNewUser();
-createNewRule();
+//createNewRule();
