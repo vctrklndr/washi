@@ -74,7 +74,8 @@ function getLogo() {
       if (response.data.error) {
         app.errorMessage = response.data.message;
       } else {
-        logo = response.data.logo;
+        const logo = response.data.logo[0].logoUrl;
+        document.getElementById("logoInput").value = logo;
       }
     });
 }
