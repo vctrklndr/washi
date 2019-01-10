@@ -133,8 +133,8 @@
 
 <script>
 import regeneratorRuntime from "regenerator-runtime";
-import BookingInformation from "./BookingInformation.vue";
-import Blank from "./Blank.vue";
+import BookingInformation from "BookingInformation.vue";
+import Blank from "Blank.vue";
 import moment from "moment";
 import "moment/locale/sv";
 moment.updateLocale("sv", {
@@ -396,10 +396,6 @@ export default {
         form_data.append(key, obj[key]);
       }
       return form_data;
-    },
-    clearMessage: function() {
-      app.errorMessage = "";
-      app.successMessage = "";
     },
     setActiveDate: function(date, index) {
       this.activeDateIndex = index;
