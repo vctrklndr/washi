@@ -1,6 +1,6 @@
 <template>
-  <section class="Section Section--contain Section--fullHeight">
-    <div class="u-sizeFull u-textCenter">
+  <section class="Section u-marginVxlg">
+    <div class="Section--fullHeight u-sizeFull u-textCenter">
       <img id="Logo-estate" :src="logo" title="Fastighetslogotyp" /><br />
       <router-link class="Button Button--medium u-marginTlg" to="/boka">Klicka här för att boka tvättid</router-link>
     </div>

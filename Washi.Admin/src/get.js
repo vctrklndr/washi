@@ -8,7 +8,7 @@ function postData(update, action, data) {
       if (response.data.error) {
         console.log(response.data.message);
       } else {
-        //location.reload();
+        location.reload();
       }
     });
 }
@@ -92,9 +92,7 @@ function addLogo() {
       logoUrl: logoUrlInput,
       urlId: mumma
     };
-    console.log(logo)
     const addLogo = toFormData(logo);
-
     if (logo.length < 1) {
       postData("logo", "create", addLogo);
     } else {
