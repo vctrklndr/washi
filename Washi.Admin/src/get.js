@@ -1,5 +1,3 @@
-const usersURL = "http://mikahl.se/VuePHP/users.php?action=read";
-const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 let checkRules = {};
 let logo = {};
 
@@ -18,7 +16,7 @@ function postData(update, action, data) {
 // Load and delete users
 function getAllUsers() {
   axios
-    .get(usersURL)
+    .get("http://mikahl.se/VuePHP/users.php?action=read")
     .then(function(response) {
       if (response.data.error) {
         app.errorMessage = response.data.message;
@@ -52,8 +50,11 @@ function getAllUsers() {
     });
 }
 
+// Get rules
 function getAllRules() {
-  axios.get(rulesURL).then(function(response) {
+  axios
+  .get("http://mikahl.se/VuePHP/rules.php?action=read")
+  .then(function(response) {
     if (response.data.error) {
       app.errorMessage = response.data.message;
     } else {
@@ -64,6 +65,8 @@ function getAllRules() {
     }
   });
 }
+
+// Get logo
 function getLogo() {
   axios
     .get("http://mikahl.se/VuePHP/logo.php?action=read")
@@ -72,50 +75,42 @@ function getLogo() {
         app.errorMessage = response.data.message;
       } else {
         logo = response.data.logo;
-        console.log(logo);
       }
     });
 }
+
+// Add new logo
 function addLogo() {
-  const addLogoButton = document.getElementById("uploadLogo");
-
-  addLogoButton.addEventListener("click", function() {
-    const logoUrlInput = document.getElementById("logoInput").value;
-
-    const logo = {
-      logoUrl: logoUrlInput
-    };
-
-    const addLogo = toFormData(logo);
-    postData("logo", "create", addLogo);
-  });
+  const logoUrlInput = document.getElementById("logoInput").value;
+  const logo = {
+    logoUrl: logoUrlInput
+  };
+  const addLogo = toFormData(logo);
+  postData("logo", "create", addLogo);
 }
 
-function toFormData(obj) {
-  const formData = new FormData();
-  for (let key in obj) {
-    formData.append(key, obj[key]);
-  }
-  return formData;
-}
+const addLogoButton = document.getElementById("uploadLogo");
+addLogoButton.addEventListener("click", function() {
+  addLogo();
+});
 
 // Create new user
 function createNewUser() {
-  const createUserButton = document.getElementById("createUserButton");
-
-  createUserButton.addEventListener("click", function() {
-    const apartmentNumberInput = document.getElementById("appNo").value;
-    const passwordInput = document.getElementById("password").value;
-
-    const user = {
-      apartmentNumber: apartmentNumberInput,
-      password: passwordInput
-    };
-
-    const newUser = toFormData(user);
-    postData("users", "create", newUser);
-  });
+  const apartmentNumberInput = document.getElementById("appNo").value;
+  const passwordInput = document.getElementById("password").value;
+  const user = {
+    apartmentNumber: apartmentNumberInput,
+    password: passwordInput
+  };
+  const newUser = toFormData(user);
+  postData("users", "create", newUser);
 }
+
+const createUserButton = document.getElementById("createUserButton");
+createUserButton.addEventListener("click", function() {
+  createNewUser();
+});
+
 
 // Create new rule
 function createNewRule() {
@@ -150,8 +145,14 @@ searchInput.addEventListener("keyup", function() {
   }
 });
 
+function toFormData(obj) {
+  const formData = new FormData();
+  for (let key in obj) {
+    formData.append(key, obj[key]);
+  }
+  return formData;
+}
+
 getAllUsers();
 getAllRules();
-createNewUser();
 getLogo();
-addLogo();
