@@ -133,8 +133,8 @@
 
 <script>
 import regeneratorRuntime from "regenerator-runtime";
-import BookingInformation from "BookingInformation.vue";
-import Blank from "Blank.vue";
+import BookingInformation from "./BookingInformation.vue";
+import Blank from "./Blank.vue";
 import moment from "moment";
 import "moment/locale/sv";
 moment.updateLocale("sv", {
