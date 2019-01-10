@@ -1,14 +1,15 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
+let checkRules = {};
 
-function postData(action, data) {
+function postData(update, action, data) {
   axios
-    .post(`http://mikahl.se/VuePHP/users.php?action=${action}`, data)
+    .post(`http://mikahl.se/VuePHP/${update}.php?action=${action}`, data)
     .then(function(response) {
       if (response.data.error) {
-        const errorMessage = response.data.message;
+        console.log(response.data.message);
       } else {
-        const successMessage = response.data.message;
+        location.reload();
       }
     });
 }
@@ -44,8 +45,7 @@ function getAllUsers() {
         deleteButton.addEventListener("click", function() {
           const userId = { id: this.parentElement.id };
           const formData = toFormData(userId);
-          postData("delete", formData);
-          location.reload();
+          postData("users", "delete", formData);
         });
       }
     });
@@ -56,6 +56,7 @@ function getAllRules() {
     if (response.data.error) {
       app.errorMessage = response.data.message;
     } else {
+      checkRules = response.data.rules;
       const rule = response.data.rules;
       editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
         rule[0].textField;
@@ -85,39 +86,23 @@ function createNewUser() {
     };
 
     const newUser = toFormData(user);
-    postData("create", newUser);
-    location.reload();
+    postData("users", "create", newUser);
   });
 }
-
 
 // Create new rule
 function createNewRule() {
   const editor = document.getElementById("editor");
-  axios
-    .post("http://mikahl.se/VuePHP/rules.php?action=delete")
-    .then(function(response) {
-      if (response.data.error) {
-        const errorMessage = response.data.message;
-      } else {
-        const successMessage = response.data.message;
-      }
-    });
-
   const rule = {
-    textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML
+    textField: editor.contentDocument.getElementsByTagName("body")[0].innerHTML,
+    textId: checkRules[0].textId
   };
-
   const newRule = toFormData(rule);
-  axios
-    .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
-    .then(function(response) {
-      if (response.data.error) {
-        const errorMessage = response.data.message;
-      } else {
-        location.reload();
-      }
-    });
+  if (checkRules.length < 1) {
+    postData("rules", "create", newRule);
+  } else {
+    postData("rules", "update", newRule);
+  }
 }
 
 const update = document.getElementById("update");
@@ -141,4 +126,3 @@ searchInput.addEventListener("keyup", function() {
 getAllUsers();
 getAllRules();
 createNewUser();
-//createNewRule();
