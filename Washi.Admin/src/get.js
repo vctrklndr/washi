@@ -63,6 +63,30 @@ function getAllRules() {
     }
   });
 }
+function getLogo() {
+  axios.get("http://mikahl.se/VuePHP/logo.php?action=read").then(function(response) {
+    if (response.data.error) {
+      app.errorMessage = response.data.message;
+    } else {
+      const logo = response.data.logo;
+      console.log(logo)
+    }
+  });
+}
+function addLogo() {
+  const addLogoButton = document.getElementById("uploadLogo");
+
+  addLogoButton.addEventListener("click", function() {
+    const logoUrlInput = document.getElementById("logoInput").value;
+
+    const logo = {
+      logoUrl: logoUrlInput,
+    };
+
+    const addLogo = toFormData(logo);
+    postData("logo", "create", addLogo);
+  });
+}
 
 function toFormData(obj) {
   const formData = new FormData();
@@ -126,3 +150,5 @@ searchInput.addEventListener("keyup", function() {
 getAllUsers();
 getAllRules();
 createNewUser();
+getLogo()
+addLogo()
