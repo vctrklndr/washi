@@ -1,6 +1,7 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 let checkRules = {};
+let logo = {}
 
 function postData(update, action, data) {
   axios
@@ -68,7 +69,7 @@ function getLogo() {
     if (response.data.error) {
       app.errorMessage = response.data.message;
     } else {
-      const logo = response.data.logo;
+      logo = response.data.logo;
       console.log(logo)
     }
   });
