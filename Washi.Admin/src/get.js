@@ -1,6 +1,7 @@
-const URL = "http://mikahl.se/VuePHP/users.php?action=read";
+const usersURL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 let checkRules = {};
+let logo = {}
 
 function postData(update, action, data) {
   axios
@@ -17,7 +18,7 @@ function postData(update, action, data) {
 // Load and delete users
 function getAllUsers() {
   axios
-    .get(URL)
+    .get(usersURL)
     .then(function(response) {
       if (response.data.error) {
         app.errorMessage = response.data.message;
@@ -61,6 +62,30 @@ function getAllRules() {
       editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
         rule[0].textField;
     }
+  });
+}
+function getLogo() {
+  axios.get("http://mikahl.se/VuePHP/logo.php?action=read").then(function(response) {
+    if (response.data.error) {
+      app.errorMessage = response.data.message;
+    } else {
+      logo = response.data.logo;
+      console.log(logo)
+    }
+  });
+}
+function addLogo() {
+  const addLogoButton = document.getElementById("uploadLogo");
+
+  addLogoButton.addEventListener("click", function() {
+    const logoUrlInput = document.getElementById("logoInput").value;
+
+    const logo = {
+      logoUrl: logoUrlInput,
+    };
+
+    const addLogo = toFormData(logo);
+    postData("logo", "create", addLogo);
   });
 }
 
@@ -126,3 +151,5 @@ searchInput.addEventListener("keyup", function() {
 getAllUsers();
 getAllRules();
 createNewUser();
+getLogo()
+addLogo()
