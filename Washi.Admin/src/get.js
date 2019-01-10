@@ -1,4 +1,4 @@
-const URL = "http://mikahl.se/VuePHP/users.php?action=read";
+const usersURL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 let checkRules = {};
 
@@ -17,7 +17,7 @@ function postData(update, action, data) {
 // Load and delete users
 function getAllUsers() {
   axios
-    .get(URL)
+    .get(usersURL)
     .then(function(response) {
       if (response.data.error) {
         app.errorMessage = response.data.message;
