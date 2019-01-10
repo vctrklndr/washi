@@ -372,10 +372,10 @@ export default {
           }
         });
     },
-    saveBooking: function() {
+    databaseActionCall: function(action){
       const formData = this.toFormData(this.bookingInfo);
       axios
-        .post("http://mikahl.se/VuePHP/api.php?action=create", formData)
+        .post(`http://mikahl.se/VuePHP/api.php?action=${action}`, formData)
         .then(function(response) {
           if (response.data.error) {
             app.errorMessage = response.data.message;
@@ -384,17 +384,11 @@ export default {
           }
         });
     },
+    saveBooking: function() {
+      this.databaseActionCall("create");
+    },
     deleteBooking: function() {
-      const formData = this.toFormData(this.bookingInfo);
-      axios
-        .post("http://mikahl.se/VuePHP/api.php?action=delete", formData)
-        .then(function(response) {
-          if (response.data.error) {
-            app.errorMessage = response.data.message;
-          } else {
-            app.successMessage = response.data.message;
-          }
-        });
+      this.databaseActionCall("delete");
     },
     toFormData: function(obj) {
       const form_data = new FormData();
