@@ -1,5 +1,6 @@
 const URL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
+var checkRules = {}
 
 // Load and delete users
 function getAllUsers() {
@@ -52,6 +53,7 @@ function getAllRules() {
     if (response.data.error) {
       app.errorMessage = response.data.message;
     } else {
+      checkRules = response.data.rules;
       const rule = response.data.rules;
       editor.contentDocument.getElementsByTagName("body")[0].innerHTML =
         rule[0].textField;
@@ -100,31 +102,50 @@ function createNewRule() {
   let editor = document.getElementById("editor");
 
   update.addEventListener("click", function() {
-    axios
-      .post("http://mikahl.se/VuePHP/rules.php?action=delete")
-      .then(function(response) {
-        if (response.data.error) {
-          const errorMessage = response.data.message;
-        } else {
-          const successMessage = response.data.message;
-        }
-      });
+    // axios
+    //   .post("http://mikahl.se/VuePHP/rules.php?action=delete")
+    //   .then(function(response) {
+    //     if (response.data.error) {
+    //       const errorMessage = response.data.message;
+    //     } else {
+    //       const successMessage = response.data.message;
+    //     }
+    //   });
 
     const rule = {
       textField: editor.contentDocument.getElementsByTagName("body")[0]
-        .innerHTML
+        .innerHTML,
+      textId: checkRules[0].textId
     };
-
+    
+  
     const newRule = toFormData(rule);
+ 
+    if(checkRules.length < 1){
+ 
     axios
       .post("http://mikahl.se/VuePHP/rules.php?action=create", newRule)
       .then(function(response) {
         if (response.data.error) {
           const errorMessage = response.data.message;
         } else {
-          location.reload();
+          //location.reload();
         }
       });
+    }
+    else {
+      console.log("else körs")
+      axios
+      .post("http://mikahl.se/VuePHP/rules.php?action=update", newRule)
+      .then(function(response) {
+        if (response.data.error) {
+          const errorMessage = response.data.message;
+        } else {
+          //location.reload();
+        }
+      });
+      
+    }
   });
 }
 
@@ -145,3 +166,4 @@ getAllUsers();
 getAllRules();
 createNewUser();
 createNewRule();
+
