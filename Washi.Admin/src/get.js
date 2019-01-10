@@ -1,7 +1,7 @@
 const usersURL = "http://mikahl.se/VuePHP/users.php?action=read";
 const rulesURL = "http://mikahl.se/VuePHP/rules.php?action=read";
 let checkRules = {};
-let logo = {}
+let logo = {};
 
 function postData(update, action, data) {
   axios
@@ -65,14 +65,16 @@ function getAllRules() {
   });
 }
 function getLogo() {
-  axios.get("http://mikahl.se/VuePHP/logo.php?action=read").then(function(response) {
-    if (response.data.error) {
-      app.errorMessage = response.data.message;
-    } else {
-      logo = response.data.logo;
-      console.log(logo)
-    }
-  });
+  axios
+    .get("http://mikahl.se/VuePHP/logo.php?action=read")
+    .then(function(response) {
+      if (response.data.error) {
+        app.errorMessage = response.data.message;
+      } else {
+        logo = response.data.logo;
+        console.log(logo);
+      }
+    });
 }
 function addLogo() {
   const addLogoButton = document.getElementById("uploadLogo");
@@ -81,7 +83,7 @@ function addLogo() {
     const logoUrlInput = document.getElementById("logoInput").value;
 
     const logo = {
-      logoUrl: logoUrlInput,
+      logoUrl: logoUrlInput
     };
 
     const addLogo = toFormData(logo);
@@ -151,5 +153,5 @@ searchInput.addEventListener("keyup", function() {
 getAllUsers();
 getAllRules();
 createNewUser();
-getLogo()
-addLogo()
+getLogo();
+addLogo();
