@@ -40,6 +40,6 @@ require 'header.php';
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   <script src="src/wysiwyg.js"></script>
-  <script src="src/get.js"></script>
+  <script src="src/main.js"></script>
 </body>
 </html>
