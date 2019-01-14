@@ -6,8 +6,5 @@
     require 'src/partials/edit_rules.php';
     require 'src/partials/update_logo.php';
   ?>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="src/js/wysiwyg.js"></script>
-  <script src="src/js/main.js"></script>
 </main>
 <?php } ?>
