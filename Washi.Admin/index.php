@@ -10,7 +10,7 @@ require 'src/partials/head.php';
   {
     unset($_SESSION['login']);
   }
-  // Login
+  // Logged in
   if (isset($_SESSION['login']) && $_SESSION['login'] == $hash) {
     session_header();
     session_logged_in();
@@ -25,7 +25,7 @@ require 'src/partials/head.php';
       session_logged_in();
     } 
     else {
-      // Display login form with error (error message is set in the function)
+      // Show login form
       display_login_form();
     }
   }	 

@@ -1,5 +1,4 @@
-<?php
-function session_header(){ ?>
+<?php function session_header(){ ?>
 <header class="Header">
   <div class="">
     <img class="Logo-header" src="src/Assets/Images/washi-logo.svg" alt="Washi logo" />

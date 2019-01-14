@@ -1,5 +1,4 @@
-<?php
-function display_login_form(){ ?>
+<?php function display_login_form(){ ?>
   <main class="Main-login">
     <div class="Login-container">
       <div class="u-textCenter">
