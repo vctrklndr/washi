@@ -334,12 +334,12 @@ export default {
     },
     newBooking: async function() {
       await this.removeBooking();
-      await this.saveBooking();
-      this.selectedDate = "";
       if (this.booked === true) {
         this.booked = false;
       }
       this.booked = true;
+      await this.saveBooking();
+      this.selectedDate = "";
       this.bookedTime = this.selectedTime;
       this.getAllUsers();
     },
