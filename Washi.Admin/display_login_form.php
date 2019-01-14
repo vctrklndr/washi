@@ -22,21 +22,38 @@ function display_login_form(){ ?>
           placeholder="Användarnamn"
         />
         <br />
-        <label for="password" class="u-marginTsm">Lösenord:</label> <br />
+        <label for="password" class="u-marginTsm">Lösenord:</label>
+        <br />
         <input
-          class="Input"
+          class="Input u-marginBz"
           type="password"
           name="password"
           id="password"
           placeholder="Lösenord"
         />
-        <div class="u-textCenter">
+        <?php
+        if (isset($_POST['submit'])) {
+          // Display error message
+          ?>
+          <p class="u-textError u-textSmall u-textCenter u-marginTsm u-marginBz">
+            Du har skrivit fel användarnamn eller lösenord. Kontakta en
+            administratör om problemet kvarstår.
+          </p>
+          <?php
+        }	 
+        else { 
+          ?>
+          <span></span>
+          <?php
+        } ?>
+        <div class="u-textCenter u-marginTsm">
           <input class="Button Button--add" type="submit" name="submit" value="Logga in">
-        </form>	
+        </form>
       </div>
     </div>
     <p class="u-textSmall u-textCenter">
-      Vid problem eller frågor, vänligen kontakta admin. <br />ferb@admin.io
+      Vid problem eller frågor, vänligen kontakta admin.
+      <br />ferb@admin.io
     </p>
   </main>
-  <?php } ?>
+<?php } ?>

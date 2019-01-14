@@ -2,7 +2,6 @@
 session_start();
 require 'variables.php';
 require 'display_login_form.php';
-require 'display_login_form_error.php';
 require 'logged_in.php';
 require 'session_header.php';
 require 'header.php';
@@ -26,8 +25,8 @@ require 'header.php';
       logged_in();
     } 
     else {
-      // Display login form with error
-      display_login_form_error();
+      // Display login form with error (error message is set in the function)
+      display_login_form();
     }
   }	 
   // Show login form
