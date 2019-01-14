@@ -1,5 +1,5 @@
 <?php
-function logged_in(){ ?>
+function session_logged_in(){ ?>
 <main class="Main">
   <h3 class="Heading--admin u-marginTxlg">
     Lägg till användare

@@ -2,7 +2,7 @@
 session_start();
 require 'src/partials/variables.php';
 require 'src/partials/functions/display_login_form.php';
-require 'src/partials/functions/logged_in.php';
+require 'src/partials/functions/session_logged_in.php';
 require 'src/partials/functions/session_header.php';
 require 'src/partials/header.php';
   // Logout
@@ -13,7 +13,7 @@ require 'src/partials/header.php';
   // Login
   if (isset($_SESSION['login']) && $_SESSION['login'] == $hash) {
     session_header();
-    logged_in();
+    session_logged_in();
   }
   // Form has been submitted
   else if (isset($_POST['submit'])) {
@@ -22,7 +22,7 @@ require 'src/partials/header.php';
       $_SESSION["login"] = $hash;
 		  header("Location: $_SERVER[PHP_SELF]");
       session_header();
-      logged_in();
+      session_logged_in();
     } 
     else {
       // Display login form with error (error message is set in the function)
