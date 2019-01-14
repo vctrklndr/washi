@@ -38,4 +38,7 @@ function logged_in(){ ?>
     </div>
   </div>
 </main>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="src/wysiwyg.js"></script>
+<script src="src/main.js"></script>
 <?php } ?>

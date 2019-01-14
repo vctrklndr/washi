@@ -34,12 +34,5 @@ require 'header.php';
     display_login_form();
   }
   ?>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <script src="src/wysiwyg.js"></script>
-  <script src="src/main.js"></script>
 </body>
 </html>
