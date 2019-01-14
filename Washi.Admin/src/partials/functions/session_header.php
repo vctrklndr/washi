@@ -2,7 +2,7 @@
 function session_header(){ ?>
 <header class="Header">
   <div class="">
-    <img class="Logo-header" src="Assets/Images/washi-logo.svg" alt="Washi logo" />
+    <img class="Logo-header" src="src/Assets/Images/washi-logo.svg" alt="Washi logo" />
     <h1 class="Heading Heading--small">Administratör</h1>
   </div>
   <nav style="display: flex; align-items: center;">

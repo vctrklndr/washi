@@ -5,7 +5,7 @@ function display_login_form(){ ?>
       <div class="u-textCenter">
         <img
           class="Logo"
-          src="Assets/Images/washi-logo.svg"
+          src="src/Assets/Images/washi-logo.svg"
           alt="Washi logo"
         />
       </div>

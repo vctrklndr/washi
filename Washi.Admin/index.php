@@ -1,10 +1,10 @@
 <?php
 session_start();
-require 'variables.php';
-require 'display_login_form.php';
-require 'logged_in.php';
-require 'session_header.php';
-require 'header.php';
+require 'src/partials/variables.php';
+require 'src/partials/functions/display_login_form.php';
+require 'src/partials/functions/logged_in.php';
+require 'src/partials/functions/session_header.php';
+require 'src/partials/header.php';
   // Logout
   if(isset($_GET['logout']))
   {
