@@ -4,7 +4,7 @@ require 'src/partials/variables.php';
 require 'src/partials/functions/display_login_form.php';
 require 'src/partials/functions/session_logged_in.php';
 require 'src/partials/functions/session_header.php';
-require 'src/partials/header.php';
+require 'src/partials/head.php';
   // Logout
   if(isset($_GET['logout']))
   {
