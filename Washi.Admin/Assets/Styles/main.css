@@ -124,6 +124,11 @@ a:hover {
   font-size: 0.8rem;
 }
 
+.u-textError {
+  font-weight: bold;
+  color: red;
+}
+
 .u-flex {
   display: flex;
 }
