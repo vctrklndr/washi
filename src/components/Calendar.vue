@@ -78,16 +78,20 @@
           {{displayDate.charAt(0).toUpperCase() + displayDate.slice(1)}} kl.
           <span
             v-if="bookedTime === 'tid1'"
-          >06.00 – 09.00</span>
-          <span v-else-if="bookedTime === 'tid2'">09.00 – 12.00</span>
-          <span v-else-if="bookedTime === 'tid3'">12.00 – 15.00</span>
-          <span v-else-if="bookedTime === 'tid4'">15.00 – 18.00</span>
-          <span v-else-if="bookedTime === 'tid5'">18.00 – 21.00</span>.
+          >06.00 – 09.00*</span>
+          <span v-else-if="bookedTime === 'tid2'">09.00 – 12.00*</span>
+          <span v-else-if="bookedTime === 'tid3'">12.00 – 15.00*</span>
+          <span v-else-if="bookedTime === 'tid4'">15.00 – 18.00*</span>
+          <span v-else-if="bookedTime === 'tid5'">18.00 – 21.00*</span>.
         </p>
         <button
           @click="removeBooking()"
           class="Button Button--large Button--altRedColor u-marginTmd"
         >Avboka tid</button>
+        <p class="u-textSmall">
+          *På grund av högt tryck går bokningen ibland lite segt. Har du fått det här meddelandet har bokningen gått
+          in. Vänligen uppdatera sidan om din tid inte markerats i kalendern.
+        </p>
       </div>
       <booking-information v-else-if="selectedDate === ''"/>
       <div v-else class="Calendar--times Grid-cell u-md-size4of10">
@@ -334,11 +338,11 @@ export default {
     },
     newBooking: async function() {
       await this.removeBooking();
+      await this.saveBooking();
       if (this.booked === true) {
         this.booked = false;
       }
       this.booked = true;
-      await this.saveBooking();
       this.selectedDate = "";
       this.bookedTime = this.selectedTime;
       this.getAllUsers();
@@ -372,7 +376,7 @@ export default {
           }
         });
     },
-    databaseActionCall: function(action){
+    databaseActionCall: function(action) {
       const formData = this.toFormData(this.bookingInfo);
       axios
         .post(`http://mikahl.se/VuePHP/api.php?action=${action}`, formData)
