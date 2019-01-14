@@ -1,6 +1,6 @@
 <?php function session_header(){ ?>
 <header class="Header">
-  <div class="">
+  <div>
     <img class="Logo-header" src="src/Assets/Images/washi-logo.svg" alt="Washi logo" />
     <h1 class="Heading Heading--small">Administratör</h1>
   </div>
