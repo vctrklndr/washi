@@ -11,11 +11,11 @@ out how to use it with the JS.
 switch ($_GET['page'])
   {
     case "add_user":
-    add_user();
+    require 'src/partials/add_user.php';
     break;
 
     case "remove_user":
-    remove_user();
+    require 'src/partials/remove_user.php';
     break;
 
     case "edit_rules":
@@ -27,6 +27,6 @@ switch ($_GET['page'])
     break;
 
     default:
-    add_user();
+    require 'src/partials/add_user.php';
   }
 include($_GET['page']);
