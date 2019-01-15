@@ -2,9 +2,7 @@
   <section class="Section Section--contain">
     <div class="Page-container">
       <h1 class="Heading Heading--h1 Heading-line">Regler</h1>
-      <div id="Rules" class="Grid">
-        <div v-html="rules" class="u-md-size2of3 u-textLarge"></div>
-      </div>
+      <div id="Rules" v-html="rules" class="u-md-size2of3 u-textLarge"></div>
     </div>
   </section>
 </template>
