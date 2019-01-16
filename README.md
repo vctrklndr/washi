@@ -3,6 +3,6 @@
 > Laundry booking system by @InteraktionsMicke @axelferb @vctrklndr 
 
 # `Washi app`
-* Admin view in `/Washi.Admin`
 * API stuff in `/Washi.API`
+* Admin view in `/Washi.Admin`
 * User view in `/Washi.User`
