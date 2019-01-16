@@ -6,7 +6,10 @@
 
 ```
 # Start your local servers with MAMP or other host.
+
 # Surf to localhost/washi/Washi.Admin
+
 # Log in with username and password
+
 # Have fun!
 ```
