@@ -5,7 +5,7 @@
 ## `App`
 
 ```
-# Start your local servers with MAMP or other host.
+# Start your local servers with MAMP or other host
 
 # Surf to localhost/washi/Washi.Admin
 
