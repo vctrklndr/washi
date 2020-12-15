@@ -21,7 +21,7 @@
     "vue": "vue/dist/vue.common.js"
   },
   "dependencies": {
-    "ecstatic": "^2.0.0",
+    "ecstatic": "^4.1.4",
     "event-stream": "^3.3.4",
     "moment": "^2.22.2",
     "normalize.less": "^1.0.0",
