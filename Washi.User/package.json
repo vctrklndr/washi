@@ -49,7 +49,7 @@
     "http-server": "^0.9.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^7.0.0",
     "npm-run-all": "^2.3.0",
     "proxyquireify": "^3.0.1",
     "sass-loader": "^7.1.0",
